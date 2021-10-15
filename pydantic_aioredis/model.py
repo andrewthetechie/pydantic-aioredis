@@ -145,6 +145,10 @@ class Model(_AbstractModel):
     ) -> Optional[List[Any]]:
         """
         Selects given rows or sets of rows in the table
+
+        Pagination is accomplished by using the below variables
+            skip: Optional[int]
+            limit: Optional[int]
         """
         all_keys, _ = await cls._ids_to_primary_keys(ids)
         if limit is not None and skip is not None:
