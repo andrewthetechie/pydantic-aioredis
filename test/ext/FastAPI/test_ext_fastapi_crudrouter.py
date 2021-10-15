@@ -13,6 +13,7 @@ from pydantic_aioredis.store import Store
 class Model(PAModel):
     _primary_key_field = "name"
     name: str
+    value: int
 
 
 @pytest.fixture()
@@ -33,7 +34,11 @@ async def test_app(redis_server):
 
 @pytest.fixture()
 def test_models():
-    return [Model(name="test"), Model(name="test2"), Model(name="test3")]
+    return [
+        Model(name="test", value=1),
+        Model(name="test2", value=2),
+        Model(name="test3", value=3),
+    ]
 
 
 @pytest.mark.asyncio
@@ -108,16 +113,20 @@ async def test_crudrouter_put_404(test_app, test_models):
     assert response.status_code == 404
 
 
-# @pytest.mark.asyncio
-# async def test_crudrouter_put_200(test_app, test_models):
-#     """Tests that crudrouter put will 404 when no instance exists"""
-#     await test_app[2].insert(test_models)
-#     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
-#         response = await client.put(f"/model/{test_models[0].name}", json=test_models[0].dict())
+@pytest.mark.asyncio
+async def test_crudrouter_put_200(test_app, test_models):
+    """Tests that crudrouter put will 404 when no instance exists"""
+    await test_app[2].insert(test_models)
+    async with AsyncClient(app=test_app[1], base_url="http://test") as client:
+        response = await client.put(
+            f"/model/{test_models[0].name}",
+            json={"name": test_models[0].name, "value": 100},
+        )
 
-#     assert response.status_code == 200
-#     result = response.json()
-#     assert result['name'] == test_models[0].name
+    assert response.status_code == 200
+    result = response.json()
+    assert result["name"] == test_models[0].name
+    assert result["value"] == 100
 
 
 @pytest.mark.asyncio

@@ -84,11 +84,11 @@ class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
 
     def _update(self, *args: Any, **kwargs: Any) -> CALLABLE:
         async def route(item_id: str, model: self.update_schema) -> SCHEMA:  # type: ignore
-            redis_model = await self.schema.select(ids=[item_id])
-            if redis_model is None:
+            if await self.schema.select(ids=[item_id]) is None:
                 raise NOT_FOUND
             await self.schema.update(item_id, data=model.dict())
-            return await self.schema.select(ids=item_id)
+            result = await self.schema.select(ids=item_id)
+            return result[0]
 
         return route
 
