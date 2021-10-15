@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    = 
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = datacenter_composer
+SPHINXPROJ    = pydantic_aioredis
 SOURCEDIR     = .
 BUILDDIR      = _build
 

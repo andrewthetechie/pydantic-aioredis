@@ -7,9 +7,6 @@ FastAPI
 -------
 The `FastAPI <https://fastapi.tiangolo.com/>`_ extra adds a new base model called FastAPIModel. It has a single additional classmethod, select_or_404.
 
-.. automodule:: pydantic_aioredis.ext.FastAPI.model
-    ::member::
-
 Usage
 ^^^^^
 .. code::block python
@@ -34,13 +31,15 @@ Usage
     async def get_endpoint():
         return await Model.select_or_404()
 
+Module
+^^^^^^
+.. automodule:: pydantic_aioredis.ext.FastAPI.model
+    ::member::
+
 FastAPI Crudrouter
 ------------------
 `FastAPI Crud Router <https://fastapi-crudrouter.awtkns.com/>`_ extra adds a CRUD generator for use with FastAPI Crud Router.
 You can use your pydantic-aioredis models with fastapi-crudrouter to automatically generate crud routes.
-
-.. automodule:: pydantic_aioredis.ext.FastAPI.crudrouter
-    ::member::
 
 Usage
 ^^^^^
@@ -66,3 +65,8 @@ Usage
 
     router = PydanticAioredisCRUDRouter(schema=Model, store=store)
     app.include_router(router)
+
+Module
+^^^^^^
+.. automodule:: pydantic_aioredis.ext.FastAPI.crudrouter
+    ::member::
