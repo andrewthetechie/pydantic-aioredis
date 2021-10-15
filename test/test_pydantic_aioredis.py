@@ -200,6 +200,20 @@ async def test_select_default(store, models, model_class):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class", parameters)
+@pytest.mark.parametrize("execution_count", range(5))
+async def test_select_pagination(store, models, model_class, execution_count):
+    """Selecting with pagination"""
+    limit = 2
+    skip = randint(0, len(models) - limit)
+    await model_class.insert(models)
+    response = await model_class.select(skip=skip, limit=limit)
+    assert len(response) == limit
+    for model in response:
+        assert model in models
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("store, models, model_class", parameters)
 async def test_select_no_contents(store, models, model_class):
     """Test that we get None when there are no models"""
     await store.redis_store.flushall()
@@ -247,14 +261,23 @@ async def test_select_some_columns(redis_store):
 
 
 @pytest.mark.asyncio
-async def test_select_some_ids(redis_store):
+@pytest.mark.parametrize("store, models, model_class", parameters)
+@pytest.mark.parametrize("execution_count", range(5))
+async def test_select_some_ids(store, models, model_class, execution_count):
     """
     Selecting some ids returns only those elements with the given ids
     """
-    await Book.insert(books)
-    ids = [book.title for book in books[:2]]
-    response = await Book.select(ids=ids)
-    assert response == books[:2]
+    await model_class.insert(models)
+    limit = 2
+    skip = randint(0, len(models) - limit)
+
+    to_select = models[skip : limit + skip]
+    select_ids = [getattr(model, model_class._primary_key_field) for model in to_select]
+    response = await model_class.select(ids=select_ids)
+    assert len(response) > 0
+    assert len(response) == len(to_select)
+    for model in response:
+        assert model in to_select
 
 
 @pytest.mark.asyncio

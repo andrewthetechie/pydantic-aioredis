@@ -49,6 +49,7 @@ class Model(_AbstractModel):
                 cls.__get_primary_key(primary_key_value=primary_key_value)
                 for primary_key_value in ids
             ]
+        keys.sort()
         return keys, table_index_key
 
     @classmethod
@@ -136,12 +137,19 @@ class Model(_AbstractModel):
 
     @classmethod
     async def select(
-        cls, columns: Optional[List[str]] = None, ids: Optional[List[Any]] = None
+        cls,
+        columns: Optional[List[str]] = None,
+        ids: Optional[List[Any]] = None,
+        skip: Optional[int] = None,
+        limit: Optional[int] = None,
     ) -> Optional[List[Any]]:
         """
         Selects given rows or sets of rows in the table
         """
-        keys, _ = await cls._ids_to_primary_keys(ids)
+        all_keys, _ = await cls._ids_to_primary_keys(ids)
+        if limit is not None and skip is not None:
+            limit = limit + skip
+        keys = all_keys[skip:limit]
         async with cls._store.redis_store.pipeline() as pipeline:
             for key in keys:
                 if columns is None:

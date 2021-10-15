@@ -34,11 +34,7 @@ async def test_app(redis_server):
 
 @pytest.fixture()
 def test_models():
-    return [
-        Model(name="test", value=1),
-        Model(name="test2", value=2),
-        Model(name="test3", value=3),
-    ]
+    return [Model(name=f"test{i}", value=i) for i in range(1, 10)]
 
 
 @pytest.mark.asyncio
@@ -58,6 +54,30 @@ async def test_crudrouter_get_one_404(test_app):
         response = await client.get("/model/test")
 
     assert response.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_crudrouter_get_many_200(test_app, test_models):
+    """Tests that select_or_404 will raise a 404 error on an empty return"""
+    await test_app[2].insert(test_models)
+    async with AsyncClient(app=test_app[1], base_url="http://test") as client:
+        response = await client.get("/model")
+
+    assert response.status_code == 200
+    result = response.json()
+    assert len(result) == len(test_models)
+
+
+@pytest.mark.asyncio
+async def test_crudrouter_get_many_200_pagination(test_app, test_models):
+    """Tests that select_or_404 will raise a 404 error on an empty return"""
+    await test_app[2].insert(test_models)
+    async with AsyncClient(app=test_app[1], base_url="http://test") as client:
+        response = await client.get("/model", params={"skip": 2, "limit": 5})
+
+    assert response.status_code == 200
+    result = response.json()
+    assert len(result) == 5
 
 
 @pytest.mark.asyncio

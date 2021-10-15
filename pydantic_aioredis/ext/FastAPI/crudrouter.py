@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Callable
+from typing import cast
 from typing import List
 from typing import Optional
 from typing import Type
@@ -58,9 +59,9 @@ class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
         async def route(
             pagination: PAGINATION = self.pagination,
         ) -> List[SCHEMA]:
-            # skip, limit = pagination.get("skip"), pagination.get("limit")
-            # skip = cast(int, skip)
-            models = await self.schema.select()
+            skip, limit = pagination.get("skip"), pagination.get("limit")
+            skip = cast(int, skip)
+            models = await self.schema.select(skip=skip, limit=limit)
             return models if models is not None else []
 
         return route
