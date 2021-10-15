@@ -9,7 +9,7 @@ The `FastAPI <https://fastapi.tiangolo.com/>`_ extra adds a new base model calle
 
 Usage
 ^^^^^
-.. code::block:: python
+.. code-block:: python
 
    from pydantic_aioredis.config import RedisConfig
    from pydantic_aioredis.store import Store
@@ -43,18 +43,18 @@ You can use your pydantic-aioredis models with fastapi-crudrouter to automatical
 Usage
 ^^^^^
 
-.. code::block:: python
-   :linenos:
+.. code-block:: python
 
-   from pydantic_aioredis.config import RedisConfig
-   from pydantic_aioredis.store import Store
-   from pydantic_aioredis.ext.FastAPI import PydanticAioredisCRUDRouter
-   from pydantic_aioredis import Model
 
-   class Model(FastAPIModel):
+    from pydantic_aioredis.config import RedisConfig
+    from pydantic_aioredis.store import Store
+    from pydantic_aioredis.ext.FastAPI import PydanticAioredisCRUDRouter
+    from pydantic_aioredis import Model
+
+    class Model(FastAPIModel):
         _primary_key_field = "name"
         name: str
-    
+
     store = Store(
         name="sample",
         redis_config=RedisConfig()
