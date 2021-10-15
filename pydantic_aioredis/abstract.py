@@ -63,6 +63,7 @@ class _AbstractModel(BaseModel):
 
     _store: _AbstractStore
     _primary_key_field: str
+    _table_name: Optional[str] = None
 
     @staticmethod
     def json_default(obj: Any) -> str:

@@ -94,9 +94,6 @@ class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
 
     def _delete_all(self, *args: Any, **kwargs: Any) -> CALLABLE_LIST:
         async def route() -> List[SCHEMA]:
-            # # get all keys in the table immediately so don't[] use a pipeline
-
-            # import pdb; pdb.set_trace()
             await self.schema.delete()
             return []
 

@@ -333,6 +333,29 @@ async def test_delete_multiple(redis_store):
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize("store, models, model_class", parameters)
+async def test_delete_all(store, models, model_class):
+    """
+    Delete all of a model from the redis
+    """
+    await model_class.insert(models)
+    result = await model_class.select()
+    assert len(result) == len(models)
+    await model_class.delete()
+    post_del_result = await model_class.select()
+    assert post_del_result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("store, models, model_class", parameters)
+async def test_delete_none(store, models, model_class):
+    """
+    Try to delete when the redis is empty for that model
+    """
+    assert await model_class.delete() is None
+
+
+@pytest.mark.asyncio
 async def test_unserializable_object(redis_store):
     class MyClass(object):
         ...

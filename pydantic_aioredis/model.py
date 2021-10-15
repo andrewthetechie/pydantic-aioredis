@@ -1,9 +1,9 @@
 """Module containing the model classes"""
-from collections.abc import Generator
 from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
+from typing import Tuple
 from typing import Union
 
 from pydantic_aioredis.abstract import _AbstractModel
@@ -20,14 +20,36 @@ class Model(_AbstractModel):
         """
         Returns the primary key value concatenated to the table name for uniqueness
         """
-        table_name = cls.__name__.lower()
+        table_name = (
+            cls.__name__.lower() if cls._table_name is None else cls._table_name
+        )
         return f"{table_name}_%&_{primary_key_value}"
 
     @classmethod
     def get_table_index_key(cls):
         """Returns the key in which the primary keys of the given table have been saved"""
-        table_name = cls.__name__.lower()
+        table_name = (
+            cls.__name__.lower() if cls._table_name is None else cls._table_name
+        )
         return f"{table_name}__index"
+
+    @classmethod
+    async def _ids_to_primary_keys(
+        cls, ids: Optional[Union[Any, List[Any]]] = None
+    ) -> Tuple[List[Optional[str]], str]:
+        """Turn passed in ids into primary key values"""
+        table_index_key = cls.get_table_index_key()
+        if ids is None:
+            keys_generator = cls._store.redis_store.sscan_iter(name=table_index_key)
+            keys = [key async for key in keys_generator]
+        else:
+            if not isinstance(ids, list):
+                ids = [ids]
+            keys = [
+                cls.__get_primary_key(primary_key_value=primary_key_value)
+                for primary_key_value in ids
+            ]
+        return keys, table_index_key
 
     @classmethod
     async def insert(
@@ -55,8 +77,6 @@ class Model(_AbstractModel):
                 primary_key_value = getattr(record, cls._primary_key_field)
                 name = cls.__get_primary_key(primary_key_value=primary_key_value)
                 mapping = cls.serialize_partially(record.dict())
-                print(name)
-                print(mapping)
                 pipeline.hset(name=name, mapping=mapping)
 
                 if life_span is not None:
@@ -98,28 +118,16 @@ class Model(_AbstractModel):
         return response
 
     @classmethod
-    async def delete(cls, ids: Union[Any, List[Any]] = None):
+    async def delete(
+        cls, ids: Optional[Union[Any, List[Any]]] = None
+    ) -> Optional[List[int]]:
         """
         deletes a given row or sets of rows in the table
         """
-        table_index_key = cls.get_table_index_key()
+        keys, table_index_key = await cls._ids_to_primary_keys(ids)
+        if len(keys) == 0:
+            return None
         async with cls._store.redis_store.pipeline(transaction=True) as pipeline:
-            if ids is not None:
-                if not isinstance(ids, list):
-                    ids = [ids]
-                keys = [
-                    cls.__get_primary_key(primary_key_value=primary_key_value)
-                    for primary_key_value in ids
-                ]
-            if ids is None:
-                keys_generator = cls._store.redis_store.sscan_iter(name=table_index_key)
-                if isinstance(keys_generator, Generator):
-                    keys = [key for key in keys_generator]
-                else:
-                    keys = [key async for key in keys_generator]
-
-            if len(keys) == 0:
-                return None
             pipeline.delete(*keys)
             # remove the primary keys from the index
             pipeline.srem(table_index_key, *keys)
@@ -133,28 +141,13 @@ class Model(_AbstractModel):
         """
         Selects given rows or sets of rows in the table
         """
+        keys, _ = await cls._ids_to_primary_keys(ids)
         async with cls._store.redis_store.pipeline() as pipeline:
-            if ids is None:
-                # get all keys in the table immediately so don't use a pipeline
-                table_index_key = cls.get_table_index_key()
-                keys = cls._store.redis_store.sscan_iter(name=table_index_key)
-            else:
-                keys = (
-                    cls.__get_primary_key(primary_key_value=primary_key)
-                    for primary_key in ids
-                )
-            if isinstance(keys, Generator):
-                for key in keys:
-                    if columns is None:
-                        pipeline.hgetall(name=key)
-                    else:
-                        pipeline.hmget(name=key, keys=columns)
-            else:
-                async for key in keys:
-                    if columns is None:
-                        pipeline.hgetall(name=key)
-                    else:
-                        pipeline.hmget(name=key, keys=columns)
+            for key in keys:
+                if columns is None:
+                    pipeline.hgetall(name=key)
+                else:
+                    pipeline.hmget(name=key, keys=columns)
 
             response = await pipeline.execute()
 
