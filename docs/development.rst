@@ -24,9 +24,9 @@ Environment Setup
 .. code-block::
 
   # We use the extra python version (3.6, 3.7, 3.8) for tox testing
-  pyenv install 3.9.6 3.6.9 3.7.11 3.8.11
-  pyenv virtualenv 3.9.6 python-aioredis
-  pyenv local python-aioredis 3.6.9 3.7.11 3.8.11
+  pyenv install 3.9.7 3.6.15 3.7.12 3.8.12
+  pyenv virtualenv 3.9.7 python-aioredis
+  pyenv local python-aioredis 3.6.15 3.7.12 3.8.12
 
 * 
   Install the dependencies
