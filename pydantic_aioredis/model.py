@@ -55,12 +55,17 @@ class Model(_AbstractModel):
                 primary_key_value = getattr(record, cls._primary_key_field)
                 name = cls.__get_primary_key(primary_key_value=primary_key_value)
                 mapping = cls.serialize_partially(record.dict())
+                print(name)
+                print(mapping)
                 pipeline.hset(name=name, mapping=mapping)
-                pipeline.expire(name=name, time=life_span)
+
+                if life_span is not None:
+                    pipeline.expire(name=name, time=life_span)
                 # save the primary key in an index
                 table_index_key = cls.get_table_index_key()
                 pipeline.sadd(table_index_key, name)
-                pipeline.expire(table_index_key, time=life_span)
+                if life_span is not None:
+                    pipeline.expire(table_index_key, time=life_span)
             response = await pipeline.execute()
 
         return response
@@ -87,31 +92,37 @@ class Model(_AbstractModel):
                 # save the primary key in an index
                 table_index_key = cls.get_table_index_key()
                 pipeline.sadd(table_index_key, name)
-                pipeline.expire(table_index_key, time=life_span)
+                if life_span is not None:
+                    pipeline.expire(table_index_key, time=life_span)
             response = await pipeline.execute()
         return response
 
     @classmethod
-    async def delete(cls, ids: Union[Any, List[Any]]):
+    async def delete(cls, ids: Union[Any, List[Any]] = None):
         """
         deletes a given row or sets of rows in the table
         """
+        table_index_key = cls.get_table_index_key()
         async with cls._store.redis_store.pipeline(transaction=True) as pipeline:
-            primary_keys = []
+            if ids is not None:
+                if not isinstance(ids, list):
+                    ids = [ids]
+                keys = [
+                    cls.__get_primary_key(primary_key_value=primary_key_value)
+                    for primary_key_value in ids
+                ]
+            if ids is None:
+                keys_generator = cls._store.redis_store.sscan_iter(name=table_index_key)
+                if isinstance(keys_generator, Generator):
+                    keys = [key for key in keys_generator]
+                else:
+                    keys = [key async for key in keys_generator]
 
-            if isinstance(ids, list):
-                primary_keys = ids
-            elif ids is not None:
-                primary_keys = [ids]
-
-            names = [
-                cls.__get_primary_key(primary_key_value=primary_key_value)
-                for primary_key_value in primary_keys
-            ]
-            pipeline.delete(*names)
+            if len(keys) == 0:
+                return None
+            pipeline.delete(*keys)
             # remove the primary keys from the index
-            table_index_key = cls.get_table_index_key()
-            pipeline.srem(table_index_key, *names)
+            pipeline.srem(table_index_key, *keys)
             response = await pipeline.execute()
         return response
 
@@ -136,6 +147,8 @@ class Model(_AbstractModel):
                 for key in keys:
                     if columns is None:
                         pipeline.hgetall(name=key)
+                    else:
+                        pipeline.hmget(name=key, keys=columns)
             else:
                 async for key in keys:
                     if columns is None:
@@ -148,18 +161,19 @@ class Model(_AbstractModel):
         if len(response) == 0:
             return None
 
-        if len(response) == 1 and response[0] == {}:
+        if response[0] == {}:
             return None
 
         if isinstance(response, list) and columns is None:
-            return [cls(**cls.deserialize_partially(record)) for record in response]
-
-        return [
-            cls.deserialize_partially(
-                {
-                    field: bytes_to_string(record[index])
-                    for index, field in enumerate(columns)
-                }
-            )
-            for record in response
-        ]
+            result = [cls(**cls.deserialize_partially(record)) for record in response]
+        else:
+            result = [
+                cls.deserialize_partially(
+                    {
+                        field: bytes_to_string(record[index])
+                        for index, field in enumerate(columns)
+                    }
+                )
+                for record in response
+            ]
+        return result
