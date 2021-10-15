@@ -9,8 +9,7 @@ The `FastAPI <https://fastapi.tiangolo.com/>`_ extra adds a new base model calle
 
 Usage
 ^^^^^
-.. code::block python
-   :linenos:
+.. code::block:: python
 
    from pydantic_aioredis.config import RedisConfig
    from pydantic_aioredis.store import Store
@@ -44,7 +43,7 @@ You can use your pydantic-aioredis models with fastapi-crudrouter to automatical
 Usage
 ^^^^^
 
-.. code::block python
+.. code::block:: python
    :linenos:
 
    from pydantic_aioredis.config import RedisConfig
