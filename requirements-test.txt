@@ -1,4 +1,5 @@
 fastapi>=0.6.3
+fastapi-crudrouter>=0.8.4
 httpx
 pytest
 pytest-asyncio
