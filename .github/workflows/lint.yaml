@@ -7,24 +7,24 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Run make setup
-      run: make setup
-    - name: Run mypy
-      run: make mypy
-      if: ${{ always() }}
-    - name: Pylint
-      id: pylint
-      run: make pylint-ci
-      if: ${{ always() }}
-    - name: Blacken
-      run: make blacken-ci
-      if: ${{ always() }}
-    - name: Flake8
-      run: make flake8-ci
-      if: ${{ always() }}
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Run make setup
+        run: make setup
+      - name: Run mypy
+        run: make mypy
+        if: ${{ always() }}
+      - name: Pylint
+        id: pylint
+        run: make pylint-ci
+        if: ${{ always() }}
+      - name: Blacken
+        run: make blacken-ci
+        if: ${{ always() }}
+      - name: Flake8
+        run: make flake8-ci
+        if: ${{ always() }}

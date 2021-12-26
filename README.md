@@ -7,7 +7,6 @@ Inspired by
 [pydantic-redis](https://github.com/sopherapps/pydantic-redis) by
 [Martin Ahindura](https://github.com/Tinitto)
 
-
 <p align="center">
     <a href="https://github.com/andrewthetechie/pydantic-aioredis" target="_blank">
         <img src="https://img.shields.io/github/last-commit/andrewthetechie/pydantic-aioredis" alt="Latest Commit">
@@ -24,26 +23,26 @@ Inspired by
 
 ## Main Dependencies
 
-
--   [Python +3.6](https://www.python.org)
--   [aioredis 2.0](https://aioredis.readthedocs.io/en/latest/)
--   [pydantic](https://github.com/samuelcolvin/pydantic/)
+- [Python +3.6](https://www.python.org)
+- [aioredis 2.0](https://aioredis.readthedocs.io/en/latest/)
+- [pydantic](https://github.com/samuelcolvin/pydantic/)
 
 ## Getting Started
 
 ### Examples
+
 Examples are in the [examples/](./examples) directory of this repo.
 
 ### Installation
+
 Install the package
 
-    
     pip install pydantic-aioredis
 
 ### Quick Usage
+
 Import the `Store`, the `RedisConfig` and the `Model` classes and use accordingly
 
-    
     from pydantic_aioredis import RedisConfig, Model, Store
 
     # Create models as you would create pydantic models i.e. using typings
@@ -103,7 +102,6 @@ Import the `Store`, the `RedisConfig` and the `Model` classes and use accordingl
 
       # Delete any number of items
       await Library.delete(ids=["The Grand Library"])
-    
 
 ## Development
 
@@ -113,54 +111,54 @@ multiple python versions easily.
 
 ### Environment Setup
 
--   Clone the repo and enter its root folder
+- Clone the repo and enter its root folder
 
-    ``` {.sourceCode .bash}
-    git clone https://github.com/andrewthetechie/pydantic-aioredis.git && cd pydantic-aioredis
-    ```
+  ```{.sourceCode .bash}
+  git clone https://github.com/andrewthetechie/pydantic-aioredis.git && cd pydantic-aioredis
+  ```
 
--   Create a python 3.9 virtual environment and activate it. We suggest
-    using [pyenv](https://github.com/pyenv/pyenv) to easily setup
-    multiple python environments on multiple versions.
+- Create a python 3.9 virtual environment and activate it. We suggest
+  using [pyenv](https://github.com/pyenv/pyenv) to easily setup
+  multiple python environments on multiple versions.
 
-    ``` {.sourceCode .bash}
-    # We use the extra python version (3.6, 3.7, 3.8) for tox testing
-    pyenv install 3.9.7 3.6.15 3.7.12 3.8.12
-    pyenv virtualenv 3.9.7 python-aioredis
-    pyenv local python-aioredis 3.6.15 3.7.12 3.8.12
-    ```
+  ```{.sourceCode .bash}
+  # We use the extra python version (3.6, 3.7, 3.8) for tox testing
+  pyenv install 3.9.7 3.6.15 3.7.12 3.8.12
+  pyenv virtualenv 3.9.7 python-aioredis
+  pyenv local python-aioredis 3.6.15 3.7.12 3.8.12
+  ```
 
--   Install the dependencies
+- Install the dependencies
 
-    ``` {.sourceCode .bash}
-    make setup
-    ```
+  ```{.sourceCode .bash}
+  make setup
+  ```
 
 ### How to Run Tests
 
--   Run the test command to run tests on only python 3.9
+- Run the test command to run tests on only python 3.9
 
-    ``` {.sourceCode .bash}
-    make test
-    ```
+  ```{.sourceCode .bash}
+  make test
+  ```
 
-    or
+  or
 
-    ``` {.sourceCode .bash}
-    pytest
-    ```
+  ```{.sourceCode .bash}
+  pytest
+  ```
 
--   Run the tox command to run all python version tests
+- Run the tox command to run all python version tests
 
-    ``` {.sourceCode .bash}
-    make tox
-    ```
+  ```{.sourceCode .bash}
+  make tox
+  ```
 
-    or
+  or
 
-    ``` {.sourceCode .base}
-    tox
-    ```
+  ```{.sourceCode .base}
+  tox
+  ```
 
 ### Test Requirements
 
@@ -175,17 +173,16 @@ lint your code for you.
 
 You can run the linting manually with make
 
-``` {.sourceCode .bash}
+```{.sourceCode .bash}
 make lint
 ```
 
 ## CI
 
-CI is run via Github Actions on all PRs and pushes to the main branch. 
+CI is run via Github Actions on all PRs and pushes to the main branch.
 
 Releases are automatically released by Github Actions to Pypi.
 
-License
--------
+## License
 
 Licensed under the [MIT License](./LICENSE)

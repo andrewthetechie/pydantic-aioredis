@@ -27,25 +27,25 @@ lint: setup blacken flake8 mypy pylint ## run python linting
 blacken: ## Runs black on our code
 	-python -m black pydantic_aioredis
 
-blacken-ci: 
+blacken-ci:
 	python -m black pydantic_aioredis
 
 flake8: ## Runs flake8 on our code
 	-python -m flake8 pydantic_aioredis
 
-flake8-ci: 
+flake8-ci:
 	python -m flake8 pydantic_aioredis
 
 mypy: ## Runs mypy on our code
 	-python -m mypy pydantic_aioredis --no-strict-optional
 
-mypy-ci: 
+mypy-ci:
 	python -m mypy pydantic_aioredis --no-strict-optional
 
 pylint: ## Runs pylint on our code
 	-python -m pylint pydantic_aioredis -E -r y -s y
 
-pylint-ci: 
+pylint-ci:
 	python -m pylint pydantic_aioredis -E -r y -s y
 
 check-version: setup ## Check the version of the pydantic-aioredis package

@@ -1,9 +1,11 @@
 # asyncio_example
 
-This is a working example using python-aioredis with FastAPI. 
+This is a working example using python-aioredis with FastAPI.
 
 # Requirements
+
 ## Fastapi and Uvicorn
+
 This example requires Fastapi and Uvicorn to run. You can install them from the requirements.txt in this directory
 
 ```bash
@@ -11,19 +13,20 @@ pip install -r requirements.txt
 ```
 
 ## Redis Server
+
 This example requires a running redis server. You can change the RedisConfig on line 28 in the example to match connecting to your running redis.
 
-For your ease of use, we've provided a Makefile in this directory that can start and stop a redis using docker. 
+For your ease of use, we've provided a Makefile in this directory that can start and stop a redis using docker.
 
-```make start-redis```
+`make start-redis`
 
-```make stop-redis```
+`make stop-redis`
 
 The example is configured to connect to this dockerized redis automatically
 
 # Expected Output
 
-This is a working example. If you try to run it and find it broken, first check your local env. If you are unable to get the 
+This is a working example. If you try to run it and find it broken, first check your local env. If you are unable to get the
 example running, please raise an Issue
 
 ```bash

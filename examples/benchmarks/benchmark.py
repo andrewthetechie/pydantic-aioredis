@@ -15,11 +15,10 @@ import aioredis
 from faker import Faker
 from pydantic import BaseModel
 from pydantic import Field
-from tqdm import tqdm
-
 from pydantic_aioredis import Model
 from pydantic_aioredis import RedisConfig
 from pydantic_aioredis import Store
+from tqdm import tqdm
 
 
 # Create models as you would create pydantic models i.e. using typings

@@ -11,7 +11,6 @@ from fastapi_crudrouter.core import NOT_FOUND
 from fastapi_crudrouter.core._types import DEPENDENCIES
 from fastapi_crudrouter.core._types import PAGINATION
 from fastapi_crudrouter.core._types import PYDANTIC_SCHEMA as SCHEMA
-
 from pydantic_aioredis.store import Store
 
 

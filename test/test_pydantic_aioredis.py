@@ -8,7 +8,6 @@ from typing import List
 from typing import Optional
 
 import pytest
-
 from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.model import Model
 from pydantic_aioredis.store import Store
@@ -380,7 +379,7 @@ async def test_delete_none(store, models, model_class):
 
 @pytest.mark.asyncio
 async def test_unserializable_object(redis_store):
-    class MyClass(object):
+    class MyClass:
         ...
 
     class TestModel(Model):

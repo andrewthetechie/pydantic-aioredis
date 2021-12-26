@@ -3,7 +3,6 @@ from typing import List
 from typing import Optional
 
 from fastapi import HTTPException
-
 from pydantic_aioredis import Model
 
 

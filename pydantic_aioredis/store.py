@@ -4,7 +4,6 @@ from typing import Dict
 from typing import Optional
 
 import aioredis
-
 from pydantic_aioredis.abstract import _AbstractStore
 from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.model import Model

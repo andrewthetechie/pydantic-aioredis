@@ -18,7 +18,7 @@ Usage
    class Model(FastAPIModel):
         _primary_key_field = "name"
         name: str
-    
+
     store = Store(
         name="sample",
         redis_config=RedisConfig()

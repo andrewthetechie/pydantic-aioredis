@@ -23,7 +23,6 @@ from pydantic.fields import SHAPE_SEQUENCE
 from pydantic.fields import SHAPE_SET
 from pydantic.fields import SHAPE_TUPLE
 from pydantic.fields import SHAPE_TUPLE_ELLIPSIS
-
 from pydantic_aioredis.config import RedisConfig
 
 JSON_DUMP_SHAPES = [
