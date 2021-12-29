@@ -1,12 +1,12 @@
-from pydantic_aioredis import Model as PAModel
-from pydantic_aioredis.config import RedisConfig
-from pydantic_aioredis.ext.FastAPI import PydanticAioredisCRUDRouter
-from pydantic_aioredis.store import Store
 from typing import List
 
 import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
+from pydantic_aioredis import Model as PAModel
+from pydantic_aioredis.config import RedisConfig
+from pydantic_aioredis.ext.FastAPI import PydanticAioredisCRUDRouter
+from pydantic_aioredis.store import Store
 
 
 class Model(PAModel):

@@ -2,15 +2,15 @@
 from datetime import date
 from ipaddress import ip_network
 from ipaddress import IPv4Network
-from pydantic_aioredis.config import RedisConfig
-from pydantic_aioredis.model import Model
-from pydantic_aioredis.store import Store
 from random import randint
 from random import sample
 from typing import List
 from typing import Optional
 
 import pytest
+from pydantic_aioredis.config import RedisConfig
+from pydantic_aioredis.model import Model
+from pydantic_aioredis.store import Store
 
 
 class Book(Model):

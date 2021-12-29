@@ -1,12 +1,12 @@
 from datetime import date
-from pydantic_aioredis import Model
-from pydantic_aioredis import RedisConfig
-from pydantic_aioredis import Store
 from typing import List
 
 import uvicorn
 from fastapi import FastAPI
 from fastapi import HTTPException
+from pydantic_aioredis import Model
+from pydantic_aioredis import RedisConfig
+from pydantic_aioredis import Store
 
 
 # Create models as you would create pydantic models i.e. using typings

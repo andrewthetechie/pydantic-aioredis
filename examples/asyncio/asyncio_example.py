@@ -1,5 +1,6 @@
 import asyncio
 from datetime import date
+
 from pydantic_aioredis import Model
 from pydantic_aioredis import RedisConfig
 from pydantic_aioredis import Store
