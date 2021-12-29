@@ -8,14 +8,14 @@ pydantic\_aioredis.model.Model
    :show-inheritance:
    :inherited-members:
 
-   
+
    .. automethod:: __init__
 
-   
+
    .. rubric:: Methods
 
    .. autosummary::
-   
+
       ~Model.__init__
       ~Model.construct
       ~Model.copy
@@ -38,9 +38,3 @@ pydantic\_aioredis.model.Model
       ~Model.update
       ~Model.update_forward_refs
       ~Model.validate
-   
-   
-
-   
-   
-   

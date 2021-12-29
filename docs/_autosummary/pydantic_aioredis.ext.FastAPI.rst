@@ -3,21 +3,21 @@ pydantic\_aioredis.ext.FastAPI
 
 .. automodule:: pydantic_aioredis.ext.FastAPI
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
-   
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -30,4 +30,3 @@ pydantic\_aioredis.ext.FastAPI
 
    pydantic_aioredis.ext.FastAPI.crudrouter
    pydantic_aioredis.ext.FastAPI.model
-

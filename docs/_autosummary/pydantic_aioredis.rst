@@ -3,21 +3,21 @@
 
 .. automodule:: pydantic_aioredis
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
-   
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -34,4 +34,3 @@
    pydantic_aioredis.model
    pydantic_aioredis.store
    pydantic_aioredis.utils
-

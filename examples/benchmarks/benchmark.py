@@ -3,6 +3,9 @@ import asyncio
 import json
 import time
 from datetime import date
+from pydantic_aioredis import Model
+from pydantic_aioredis import RedisConfig
+from pydantic_aioredis import Store
 from random import randint
 from random import random
 from random import sample
@@ -15,9 +18,6 @@ import aioredis
 from faker import Faker
 from pydantic import BaseModel
 from pydantic import Field
-from pydantic_aioredis import Model
-from pydantic_aioredis import RedisConfig
-from pydantic_aioredis import Store
 from tqdm import tqdm
 
 

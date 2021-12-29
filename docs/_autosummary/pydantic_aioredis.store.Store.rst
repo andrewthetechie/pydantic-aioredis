@@ -8,14 +8,14 @@ pydantic\_aioredis.store.Store
    :show-inheritance:
    :inherited-members:
 
-   
+
    .. automethod:: __init__
 
-   
+
    .. rubric:: Methods
 
    .. autosummary::
-   
+
       ~Store.__init__
       ~Store.construct
       ~Store.copy
@@ -31,19 +31,17 @@ pydantic\_aioredis.store.Store
       ~Store.schema_json
       ~Store.update_forward_refs
       ~Store.validate
-   
-   
 
-   
-   
+
+
+
+
    .. rubric:: Attributes
 
    .. autosummary::
-   
+
       ~Store.models
       ~Store.name
       ~Store.redis_config
       ~Store.redis_store
       ~Store.life_span_in_seconds
-   
-   

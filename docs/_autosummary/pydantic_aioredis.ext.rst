@@ -3,21 +3,21 @@ pydantic\_aioredis.ext
 
 .. automodule:: pydantic_aioredis.ext
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
-   
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -29,4 +29,3 @@ pydantic\_aioredis.ext
    :recursive:
 
    pydantic_aioredis.ext.FastAPI
-

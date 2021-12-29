@@ -6,6 +6,7 @@ from ipaddress import IPv4Address
 from ipaddress import IPv4Network
 from ipaddress import IPv6Address
 from ipaddress import IPv6Network
+from pydantic_aioredis.config import RedisConfig
 from typing import Any
 from typing import Dict
 from typing import List
@@ -23,7 +24,6 @@ from pydantic.fields import SHAPE_SEQUENCE
 from pydantic.fields import SHAPE_SET
 from pydantic.fields import SHAPE_TUPLE
 from pydantic.fields import SHAPE_TUPLE_ELLIPSIS
-from pydantic_aioredis.config import RedisConfig
 
 JSON_DUMP_SHAPES = [
     SHAPE_LIST,

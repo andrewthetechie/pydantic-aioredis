@@ -8,14 +8,14 @@ pydantic\_aioredis.config.RedisConfig
    :show-inheritance:
    :inherited-members:
 
-   
+
    .. automethod:: __init__
 
-   
+
    .. rubric:: Methods
 
    .. autosummary::
-   
+
       ~RedisConfig.__init__
       ~RedisConfig.construct
       ~RedisConfig.copy
@@ -29,15 +29,15 @@ pydantic\_aioredis.config.RedisConfig
       ~RedisConfig.schema_json
       ~RedisConfig.update_forward_refs
       ~RedisConfig.validate
-   
-   
 
-   
-   
+
+
+
+
    .. rubric:: Attributes
 
    .. autosummary::
-   
+
       ~RedisConfig.redis_url
       ~RedisConfig.host
       ~RedisConfig.port
@@ -45,5 +45,3 @@ pydantic\_aioredis.config.RedisConfig
       ~RedisConfig.password
       ~RedisConfig.ssl
       ~RedisConfig.encoding
-   
-   
