@@ -69,10 +69,7 @@ class Model(_AbstractModel):
         async with cls._store.redis_store.pipeline(transaction=True) as pipeline:
             data_list = []
 
-            if isinstance(data, list):
-                data_list = data
-            elif isinstance(data, _AbstractModel):
-                data_list = [data]
+            data_list = [data] if not isinstance(data, list) else data
 
             for record in data_list:
                 primary_key_value = getattr(record, cls._primary_key_field)

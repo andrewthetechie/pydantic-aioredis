@@ -189,6 +189,23 @@ async def test_insert_single(store, models, model_class):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class", parameters)
+async def test_insert_single_lifespan(store, models, model_class):
+    """
+    Providing a single Model instance with a lifespam
+    """
+    key = f"{type(models[0]).__name__.lower()}_%&_{getattr(models[0], type(models[0])._primary_key_field)}"
+    model = await store.redis_store.hgetall(name=key)
+    assert model == {}
+
+    await model_class.insert(models[0], life_span_seconds=60)
+
+    model = await store.redis_store.hgetall(name=key)
+    model_deser = model_class(**model_class.deserialize_partially(model))
+    assert models[0] == model_deser
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("store, models, model_class", parameters)
 async def test_select_default(store, models, model_class):
     """Selecting without arguments returns all the book models"""
     await model_class.insert(models)

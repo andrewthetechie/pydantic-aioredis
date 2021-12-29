@@ -29,6 +29,11 @@ python = "^3.7"
 pydantic = "^1.8.2"
 aioredis = "^2.0.0"
 
+[tool.poetry.extras]
+FastAPI= ['fastapi>=0.63.0']
+fastapi-crudrouter=['fastapi-crudrouter>=0.8.4']
+
+
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 coverage = {extras = ["toml"], version = "^6.2"}
@@ -80,7 +85,7 @@ source = ["pydantic_aioredis"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 100
+fail_under = 98
 
 [tool.mypy]
 strict = true
@@ -101,3 +106,16 @@ dirty = true
 
 [tool.poetry-dynamic-versioning.substitution]
 files = ["pydantic_aioredis/__init__.py"]
+
+[tool.pytest.ini_options]
+addopts = "-n 4 --cov=pydantic_aioredis --cov-report=term-missing --cov-report=xml --cov-fail-under 98"
+
+[tool.bandit]
+exclude= "tests/ examples/*"
+
+[pylint.MASTER]
+extension-pkg-whitelist="pydantic"
+suggestion-mode="yes"
+
+[pylint.'MESSAGES CONTROL']
+disable="R0903,R0801"

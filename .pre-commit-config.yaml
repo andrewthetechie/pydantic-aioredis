@@ -32,8 +32,9 @@ repos:
         entry: flake8
         language: system
         types: [python]
-        exclude: "^(tests/*|noxfile.py)"
+        exclude: "^(test/*|examples/*|noxfile.py)"
         require_serial: true
+        args: ["--config=.flake8"]
       - id: pyupgrade
         name: pyupgrade
         description: Automatically upgrade syntax for newer versions.
