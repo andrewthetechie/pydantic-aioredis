@@ -359,7 +359,7 @@ test = ["pytest (>=6.2.4,<7.0.0)", "pytest-cov (>=2.12.0,<4.0.0)", "mypy (==0.91
 
 [[package]]
 name = "fastapi-crudrouter"
-version = "0.8.4"
+version = "0.8.5"
 description = "A dynamic FastAPI router that automatically creates CRUD routes for your models"
 category = "dev"
 optional = false
@@ -1819,8 +1819,8 @@ fastapi = [
     {file = "fastapi-0.72.0.tar.gz", hash = "sha256:019ec52c00581bc055e6dfb621aaa9c2a56007c283839305412e1073a777eaf1"},
 ]
 fastapi-crudrouter = [
-    {file = "fastapi-crudrouter-0.8.4.tar.gz", hash = "sha256:e0eaa09853952e7bb3883dc8ad781035bd6ad6c88834643d6ca764b255fbf262"},
-    {file = "fastapi_crudrouter-0.8.4-py3-none-any.whl", hash = "sha256:27245b4401830c2db43dcdd8660052de926c5470cc01feb3a471334fe262059e"},
+    {file = "fastapi-crudrouter-0.8.5.tar.gz", hash = "sha256:ba73c6e39819159a4e6a879797b787b2057f0e6be3005cb956e2081243491942"},
+    {file = "fastapi_crudrouter-0.8.5-py3-none-any.whl", hash = "sha256:798a2183a630ab36a5fc08f00fe5215cead6b5eee1f87e3a3c38bf9c73c0c17d"},
 ]
 filelock = [
     {file = "filelock-3.4.2-py3-none-any.whl", hash = "sha256:cf0fc6a2f8d26bd900f19bf33915ca70ba4dd8c56903eeb14e1e7a2fd7590146"},
