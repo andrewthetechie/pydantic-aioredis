@@ -72,7 +72,7 @@ pytest-mockservers = "^0.6.0"
 pytest-xdist = "^2.5.0"
 redislite = "^6.0.674960"
 tox = "^3.24.4"
-pylint = "^2.12.2"
+pylint = "^2.13.5"
 setuptools-git-versioning = "^1.9.2"
 
 [tool.coverage.paths]
