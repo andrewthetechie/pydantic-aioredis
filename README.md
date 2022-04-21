@@ -44,6 +44,8 @@ Install the package
 Import the `Store`, the `RedisConfig` and the `Model` classes and use accordingly
 
 ```python
+import asyncio
+from datetime import date
 from pydantic_aioredis import RedisConfig, Model, Store
 
 # Create models as you would create pydantic models i.e. using typings
@@ -103,6 +105,10 @@ async def work_with_orm():
 
   # Delete any number of items
   await Library.delete(ids=["The Grand Library"])
+
+# Now run these updates
+loop = asyncio.get_event_loop()
+loop.run_until_complete(work_with_orm())
 ```
 
 ## Contributing
