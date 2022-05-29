@@ -11,3 +11,6 @@ build: setup ## build python packages
 	pip install twine build
 	python -m build --sdist --wheel --outdir dist/
 	twine check dist/*
+
+test: setup ## Run unit tests
+	pytest

@@ -24,6 +24,7 @@ from pydantic.fields import SHAPE_SET
 from pydantic.fields import SHAPE_TUPLE
 from pydantic.fields import SHAPE_TUPLE_ELLIPSIS
 from pydantic_aioredis.config import RedisConfig
+from enum import Enum
 
 JSON_DUMP_SHAPES = [
     SHAPE_LIST,
@@ -35,6 +36,7 @@ JSON_DUMP_SHAPES = [
     SHAPE_FROZENSET,
     SHAPE_DICT,
     SHAPE_DEFAULTDICT,
+    Enum
 ]
 
 
