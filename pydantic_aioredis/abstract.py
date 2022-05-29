@@ -2,6 +2,7 @@
 import json
 from datetime import date
 from datetime import datetime
+from enum import Enum
 from ipaddress import IPv4Address
 from ipaddress import IPv4Network
 from ipaddress import IPv6Address
@@ -35,6 +36,7 @@ JSON_DUMP_SHAPES = [
     SHAPE_FROZENSET,
     SHAPE_DICT,
     SHAPE_DEFAULTDICT,
+    Enum,
 ]
 
 

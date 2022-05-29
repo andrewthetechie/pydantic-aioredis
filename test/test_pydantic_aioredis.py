@@ -1,5 +1,6 @@
 """Tests for the redis orm"""
 from datetime import date
+from enum import Enum
 from ipaddress import ip_network
 from ipaddress import IPv4Network
 from random import randint
@@ -408,3 +409,25 @@ async def test_unserializable_object(redis_store):
     this_model = TestModel(name="test", object=MyClass())
     with pytest.raises(TypeError):
         await TestModel.insert(this_model)
+
+
+@pytest.mark.asyncio
+async def test_enum_support(redis_store):
+    """Test case for aioredis support"""
+
+    class TestEnum(str, Enum):
+        test = "test"
+        foo = "foo"
+        bar = "bar"
+        baz = "baz"
+
+    class EnumModel(Model):
+        _primary_key_field = "id"
+        id: int
+        enum: TestEnum
+
+    redis_store.register_model(EnumModel)
+    this_model = EnumModel(id=0, enum="foo")
+    await EnumModel.insert(this_model)
+    from_redis = await EnumModel.select()
+    assert from_redis[0] == this_model
