@@ -7,6 +7,8 @@ from random import randint
 from random import sample
 from typing import List
 from typing import Optional
+from uuid import UUID
+from uuid import uuid4
 
 import pytest
 from pydantic_aioredis.config import RedisConfig
@@ -413,7 +415,7 @@ async def test_unserializable_object(redis_store):
 
 @pytest.mark.asyncio
 async def test_enum_support(redis_store):
-    """Test case for aioredis support"""
+    """Test case for enum support"""
 
     class TestEnum(str, Enum):
         test = "test"
@@ -431,3 +433,20 @@ async def test_enum_support(redis_store):
     await EnumModel.insert(this_model)
     from_redis = await EnumModel.select()
     assert from_redis[0] == this_model
+
+
+@pytest.mark.asyncio
+async def test_uuid_support(redis_store):
+    """Test case for uuid support"""
+
+    class UUIDModel(Model):
+        _primary_key_field = "id"
+        id: int
+        uuid: UUID
+
+    redis_store.register_model(UUIDModel)
+    this_model = UUIDModel(id=0, uuid=uuid4())
+    await UUIDModel.insert(this_model)
+    from_redis = await UUIDModel.select()
+    assert from_redis[0] == this_model
+    assert isinstance(from_redis[0].uuid, UUID)

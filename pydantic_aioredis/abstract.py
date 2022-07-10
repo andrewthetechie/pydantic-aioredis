@@ -12,6 +12,7 @@ from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Union
+from uuid import UUID
 
 import aioredis
 from pydantic import BaseModel
@@ -26,7 +27,8 @@ from pydantic.fields import SHAPE_TUPLE
 from pydantic.fields import SHAPE_TUPLE_ELLIPSIS
 from pydantic_aioredis.config import RedisConfig
 
-JSON_DUMP_SHAPES = [
+# JSON_DUMP_SHAPES are object types that are serialized to JSON using json.dumps
+JSON_DUMP_SHAPES = (
     SHAPE_LIST,
     SHAPE_SET,
     SHAPE_MAPPING,
@@ -37,7 +39,11 @@ JSON_DUMP_SHAPES = [
     SHAPE_DICT,
     SHAPE_DEFAULTDICT,
     Enum,
-]
+)
+
+# STR_DUMP_SHAPES are object types that are serialized to strings using str(obj)
+# They are stored in redis as strings and rely on pydantic to deserialize them
+STR_DUMP_SHAPES = (IPv4Address, IPv4Network, IPv6Address, IPv6Network, UUID)
 
 
 class _AbstractStore(BaseModel):
@@ -76,7 +82,7 @@ class _AbstractModel(BaseModel):
         if isinstance(obj, (datetime, date)):
             return obj.isoformat()
 
-        if isinstance(obj, (IPv4Network, IPv4Address, IPv6Network, IPv6Address)):
+        if isinstance(obj, STR_DUMP_SHAPES):
             return str(obj)
 
         raise TypeError("Type %s not serializable" % type(obj))
