@@ -676,7 +676,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "mypy"
-version = "0.960"
+version = "0.961"
 description = "Optional static typing for Python"
 category = "dev"
 optional = false
@@ -1603,7 +1603,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "aa16afaf64cae893f16e4923baec9c92b52eb1cb0eb083e2c763779c02beebeb"
+content-hash = "bc41563ea2b9a8b4fd11a483898331f7b7cd9a5a9fe2147f11cceee5a33d9ecc"
 
 [metadata.files]
 aiohttp = []
