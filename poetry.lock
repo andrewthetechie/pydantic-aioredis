@@ -1198,7 +1198,7 @@ requests = "*"
 
 [[package]]
 name = "setuptools-git-versioning"
-version = "1.9.2"
+version = "1.10.0"
 description = "Use git repo data for building a version number according PEP-440"
 category = "dev"
 optional = false
@@ -1594,7 +1594,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "d1642ba56d9a93f48f14ef44ad3eb089429b0e661369b1435dc1d8ff2333faf8"
+content-hash = "2b85c95a5b01b74f5997cf244a973d4a8fc20b29ef96d73bd557df9e3309d99f"
 
 [metadata.files]
 aiohttp = [
@@ -2456,8 +2456,8 @@ safety = [
     {file = "safety-2.1.1.tar.gz", hash = "sha256:dbc5dffa2e47da76cc43dfe8cbbbfca99d29118d0c6c54dfcfa11c2bd349dff6"},
 ]
 setuptools-git-versioning = [
-    {file = "setuptools-git-versioning-1.9.2.tar.gz", hash = "sha256:3cee8ff9e73d2092f9e281a324a0a62c21e0cc66c233597c3d679f0b9cab0e40"},
-    {file = "setuptools_git_versioning-1.9.2-py3-none-any.whl", hash = "sha256:66acb4f5896956e5d2aec2250b1e41342a0bf3228e577d54171d9a06d5f8637b"},
+    {file = "setuptools-git-versioning-1.10.0.tar.gz", hash = "sha256:88c694accba404996223c4a8e42d2947a928474f1b5b6a56482fc32c9cdecdaf"},
+    {file = "setuptools_git_versioning-1.10.0-py3-none-any.whl", hash = "sha256:069145d1056f74f7d3d7eff7fd268b3b0e3e4e44f4b499dfd8f893e12125d473"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},

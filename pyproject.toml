@@ -72,7 +72,7 @@ pytest-xdist = "^2.5.0"
 redislite = "^6.0.674960"
 tox = "^3.25.0"
 pylint = "^2.13.9"
-setuptools-git-versioning = "^1.9.2"
+setuptools-git-versioning = "^1.10.0"
 
 [tool.coverage.paths]
 source = ["pydantic_aioredis", "*/site-packages"]
