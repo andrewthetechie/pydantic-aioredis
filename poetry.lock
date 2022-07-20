@@ -1183,7 +1183,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "safety"
-version = "2.1.0"
+version = "2.1.1"
 description = "Checks installed dependencies for known vulnerabilities and licenses."
 category = "dev"
 optional = false
@@ -1594,7 +1594,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "1200874d1a3e4535dccb9a3e9c11a8c2cdb72724e67492e3762e69c88adf0f61"
+content-hash = "cdfd3d37d7f1e7baceb8e0f936ab9c7fe7a93d8e76d2d17de76a9a2998eafdd1"
 
 [metadata.files]
 aiohttp = [
@@ -2452,8 +2452,8 @@ rfc3986 = [
     {file = "ruamel.yaml.clib-0.2.6.tar.gz", hash = "sha256:4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd"},
 ]
 safety = [
-    {file = "safety-2.1.0-py3-none-any.whl", hash = "sha256:2f8d95cdab74461e53972ad654ce5fee3a3b3bf6b6f139cc595a6011378b28c8"},
-    {file = "safety-2.1.0.tar.gz", hash = "sha256:6211d4bf228694ef262a55e58dd3573650b979861f40a49dc7d534f8f0b339b3"},
+    {file = "safety-2.1.1-py3-none-any.whl", hash = "sha256:05ba551fb61ef24c864835d21089f75bc8b37292680047b9f29693a6552e2fc7"},
+    {file = "safety-2.1.1.tar.gz", hash = "sha256:dbc5dffa2e47da76cc43dfe8cbbbfca99d29118d0c6c54dfcfa11c2bd349dff6"},
 ]
 setuptools-git-versioning = [
     {file = "setuptools-git-versioning-1.9.2.tar.gz", hash = "sha256:3cee8ff9e73d2092f9e281a324a0a62c21e0cc66c233597c3d679f0b9cab0e40"},

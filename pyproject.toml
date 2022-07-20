@@ -37,7 +37,7 @@ fastapi-crudrouter=['fastapi-crudrouter>=0.8.4']
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
 coverage = {extras = ["toml"], version = "^6.4"}
-safety = "^2.1.0"
+safety = "^2.1.1"
 mypy = "^0.961"
 typeguard = "^2.13.2"
 xdoctest = {extras = ["colors"], version = "^1.0.1"}
