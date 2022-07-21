@@ -11,14 +11,16 @@ Inspired by
     <a href="https://github.com/andrewthetechie/pydantic-aioredis" target="_blank">
         <img src="https://img.shields.io/github/last-commit/andrewthetechie/pydantic-aioredis" alt="Latest Commit">
     </a>
-        <img src="https://github.com/andrewthetechie/pydantic-aioredis/actions/workflows/run_tests_with_tox.yaml/badge.svg?branch=main">
-        <img src="https://img.shields.io/codecov/c/github/andrewthetechie/pydantic-aioredis">
+    <img src="https://img.shields.io/badge/license-MIT-green">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/andrewthetechie/pydantic-aioredis?label=Latest%20Release">
+    <br />
+    <a href="https://github.com/andrewthetechie/pydantic-aioredis/issues"><img src="https://img.shields.io/github/issues/andrewthetechie/pydantic-aioredis" /></a>
+    <img alt="GitHub Workflow Status Test and Lint (branch)" src="https://img.shields.io/github/workflow/status/andrewthetechie/pydantic-aioredis/Tests/main?label=Tests">
     <br />
     <a href="https://pypi.org/project/pydantic-aioredis" target="_blank">
         <img src="https://img.shields.io/pypi/v/pydantic-aioredis" alt="Package version">
     </a>
     <img src="https://img.shields.io/pypi/pyversions/pydantic-aioredis">
-    <img src="https://img.shields.io/badge/license-MIT-green">
 </p>
 
 ## Main Dependencies
