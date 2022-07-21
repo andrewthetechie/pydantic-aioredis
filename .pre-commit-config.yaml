@@ -58,3 +58,7 @@ repos:
     rev: v2.5.1
     hooks:
       - id: prettier
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.6.15
+    hooks:
+      - id: actionlint-docker
