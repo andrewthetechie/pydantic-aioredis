@@ -23,8 +23,8 @@ Inspired by
 
 ## Main Dependencies
 
-- [Python +3.6](https://www.python.org)
-- [aioredis 2.0](https://aioredis.readthedocs.io/en/latest/)
+- [Python +3.7](https://www.python.org)
+- [redis-py <4.3.0](https://github.com/redis/redis-py)
 - [pydantic](https://github.com/samuelcolvin/pydantic/)
 
 ## Getting Started
