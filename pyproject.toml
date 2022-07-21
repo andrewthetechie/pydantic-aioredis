@@ -27,7 +27,7 @@ Changelog = "https://github.com/andrewthetechie/pydantic-aioredis/releases"
 [tool.poetry.dependencies]
 python = "^3.7"
 pydantic = "^1.8.2"
-aioredis = "^2.0.0"
+redis = "^4.3.4"
 
 [tool.poetry.extras]
 FastAPI= ['fastapi>=0.63.0']

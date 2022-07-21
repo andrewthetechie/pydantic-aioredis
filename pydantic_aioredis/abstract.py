@@ -14,7 +14,6 @@ from typing import Optional
 from typing import Union
 from uuid import UUID
 
-import aioredis
 from pydantic import BaseModel
 from pydantic.fields import SHAPE_DEFAULTDICT
 from pydantic.fields import SHAPE_DICT
@@ -26,6 +25,7 @@ from pydantic.fields import SHAPE_SET
 from pydantic.fields import SHAPE_TUPLE
 from pydantic.fields import SHAPE_TUPLE_ELLIPSIS
 from pydantic_aioredis.config import RedisConfig
+from redis import asyncio as aioredis
 
 # JSON_DUMP_SHAPES are object types that are serialized to JSON using json.dumps
 JSON_DUMP_SHAPES = (
