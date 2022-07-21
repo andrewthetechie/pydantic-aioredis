@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydantic-aioredis"
-version = "0.6.0.post15.dev0+8cb7c71"
+version = "0.7.0"
 description = "Use your pydantic models as an ORM, storing data in Redis."
 authors = ["Andrew Herrington <andrew.the.techie@gmail.com>"]
 license = "MIT"
