@@ -1484,7 +1484,7 @@ test = ["pytest", "typing-extensions", "mypy"]
 
 [[package]]
 name = "types-croniter"
-version = "1.3.0"
+version = "1.3.1"
 description = "Typing stubs for croniter"
 category = "dev"
 optional = false
@@ -1594,7 +1594,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "bf20922eb4c7b4cb31297ca1e7b2232022b20e093d543bf59e36bcc44ef3c97a"
+content-hash = "c6e19489b74d41732e5912ecb278728c866b73089e29254bee719dc92bbb8fe4"
 
 [metadata.files]
 aiohttp = [
@@ -2583,8 +2583,8 @@ typeguard = [
     {file = "typeguard-2.13.3.tar.gz", hash = "sha256:00edaa8da3a133674796cf5ea87d9f4b4c367d77476e185e80251cc13dfbb8c4"},
 ]
 types-croniter = [
-    {file = "types-croniter-1.3.0.tar.gz", hash = "sha256:2cbcd76d2e00db4a4e168d734e56051f3fe71b2ad8f5c84ddcbe1df4261cc529"},
-    {file = "types_croniter-1.3.0-py3-none-any.whl", hash = "sha256:2602f7916f4e6d0a82e3a65f7bcc646cf0845dfda080f1c8c7b1dd4e2c1d3e5f"},
+    {file = "types-croniter-1.3.1.tar.gz", hash = "sha256:e1a972e23d7a2a066e8092fc0533f54f1e7ae07bb9ebe87120a8de1efb0d3965"},
+    {file = "types_croniter-1.3.1-py3-none-any.whl", hash = "sha256:b8fa3fc5dc93df32115c8a43a1056c9f5a9df8cefc2f7ed41cce27b9d936b1f8"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.3.0-py3-none-any.whl", hash = "sha256:25642c956049920a5aa49edcdd6ab1e06d7e5d467fc00e0506c44ac86fbfca02"},
