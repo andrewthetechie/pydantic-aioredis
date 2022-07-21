@@ -1106,7 +1106,7 @@ redis = "*"
 
 [[package]]
 name = "reorder-python-imports"
-version = "3.8.1"
+version = "3.8.2"
 description = "Tool for reordering python imports"
 category = "dev"
 optional = false
@@ -1594,7 +1594,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "bf20922eb4c7b4cb31297ca1e7b2232022b20e093d543bf59e36bcc44ef3c97a"
+content-hash = "acbe9ae670e01a997ca9dd400aeddd4f3d45763bf9030172b07fe925cb2cfe05"
 
 [metadata.files]
 aiohttp = [
@@ -2406,8 +2406,8 @@ redislite = [
     {file = "redislite-6.2.805324.tar.gz", hash = "sha256:603b28bcdfdbe45edfe0046dc99b0fcbe3d5c533d1b7e5d9c3ff6208a656e7f1"},
 ]
 reorder-python-imports = [
-    {file = "reorder_python_imports-3.8.1-py2.py3-none-any.whl", hash = "sha256:bfa44fa719595766c18c59ff552e6e02c071f896425746f94b2a34f4b93e217c"},
-    {file = "reorder_python_imports-3.8.1.tar.gz", hash = "sha256:33a981a477875ac79588dbc6f80d7db85eccd2f5529ff289fe51283afd5affb5"},
+    {file = "reorder_python_imports-3.8.2-py2.py3-none-any.whl", hash = "sha256:c362190fc61f28c9ed3657de0ae702694ce97f90da54617716b23d70b4d4771c"},
+    {file = "reorder_python_imports-3.8.2.tar.gz", hash = "sha256:bc5bd5e01548423fdcf62da767b28d5df6e613b03f9f795438f72b08b75dfba8"},
 ]
 requests = [
     {file = "requests-2.28.1-py3-none-any.whl", hash = "sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349"},
