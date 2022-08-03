@@ -1,0 +1,23 @@
+name: Issues to Discord
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+      - deleted
+      - closed
+jobs:
+  issue-to-discord:
+    name: issue-to-discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to discord
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_ISSUES }}
+          ACTION: ${{ github.event.action }}
+          REPO: ${{ github.repository }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_USER: ${{ github.event.issue.user.login }}
+        with:
+          args: "{{ REPO }} had an issue {{ ACTION }} by {{ ISSUE_USER }} at {{ ISSUE_URL }}."
