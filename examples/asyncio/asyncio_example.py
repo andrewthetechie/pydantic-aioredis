@@ -1,5 +1,6 @@
 import asyncio
 from datetime import date
+from typing import Optional
 
 from pydantic_aioredis import Model
 from pydantic_aioredis import RedisConfig
@@ -13,6 +14,7 @@ class Book(Model):
     author: str
     published_on: date
     in_stock: bool = True
+    locations: Optional[list[str]]
 
 
 # Do note that there is no concept of relationships here
@@ -21,6 +23,7 @@ class Library(Model):
     _primary_key_field: str = "name"
     name: str
     address: str
+    details: Optional[dict[str, str]]
 
 
 # Redisconfig. Change this configuration to match your redis server
@@ -57,12 +60,17 @@ books = [
         title="Wuthering Heights",
         author="Jane Austen",
         published_on=date(year=1600, month=4, day=4),
+        locations=["one", "two", "three"],
     ),
 ]
 # Some library objects
 libraries = [
     Library(name="The Grand Library", address="Kinogozi, Hoima, Uganda"),
-    Library(name="Christian Library", address="Buhimba, Hoima, Uganda"),
+    Library(
+        name="Christian Library",
+        address="Buhimba, Hoima, Uganda",
+        details={"catalog": "huge", "fun_factor": "over 9000"},
+    ),
 ]
 
 
@@ -90,8 +98,12 @@ async def work_with_orm():
     # Update any book or library
     await Book.update(_id="Oliver Twist", data={"author": "John Doe"})
 
+    all_libraries = await Library.select()
+    print(all_libraries)
     # Delete any number of items
     await Library.delete(ids=["The Grand Library"])
+    after_delete = await Library.select()
+    print(after_delete)
 
 
 if __name__ == "__main__":
