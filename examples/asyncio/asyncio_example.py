@@ -1,6 +1,8 @@
 import asyncio
 from datetime import date
-from typing import Optional, List, Dict
+from typing import Dict
+from typing import List
+from typing import Optional
 
 from pydantic_aioredis import Model
 from pydantic_aioredis import RedisConfig
