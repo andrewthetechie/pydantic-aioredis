@@ -1,6 +1,6 @@
 import asyncio
 from datetime import date
-from typing import Optional
+from typing import Optional, List, Dict
 
 from pydantic_aioredis import Model
 from pydantic_aioredis import RedisConfig
@@ -14,7 +14,7 @@ class Book(Model):
     author: str
     published_on: date
     in_stock: bool = True
-    locations: Optional[list[str]]
+    locations: Optional[List[str]]
 
 
 # Do note that there is no concept of relationships here
@@ -23,7 +23,7 @@ class Library(Model):
     _primary_key_field: str = "name"
     name: str
     address: str
-    details: Optional[dict[str, str]]
+    details: Optional[Dict[str, str]]
 
 
 # Redisconfig. Change this configuration to match your redis server
