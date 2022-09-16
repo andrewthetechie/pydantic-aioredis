@@ -46,7 +46,6 @@ sphinx-autobuild = ">=2021.3.14"
 pre-commit = ">=2.12.1"
 flake8 = ">=3.9.1"
 black = ">=21.10b0"
-flake8-bandit = "^3.0.0"
 flake8-bugbear = ">=21.9.2"
 flake8-docstrings = "^1.6.0"
 flake8-rst-docstrings = "^0.2.7"
@@ -73,6 +72,9 @@ redislite = "^6.0.674960"
 tox = "^3.26.0"
 pylint = "^2.13.9"
 setuptools-git-versioning = "^1.10.1"
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.4"
 
 [tool.coverage.paths]
 source = ["pydantic_aioredis", "*/site-packages"]
