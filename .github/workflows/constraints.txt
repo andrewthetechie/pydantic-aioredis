@@ -4,3 +4,4 @@ nox-poetry==1.0.1
 poetry==1.2.0
 virtualenv==20.16.5
 poetry-dynamic-versioning==0.18.0
+toml

@@ -113,6 +113,15 @@ loop = asyncio.get_event_loop()
 loop.run_until_complete(work_with_orm())
 ```
 
+#### Custom Fields in Model
+
+| Field Name          | Required | Default      | Description                                                          |
+| ------------------- | -------- | ------------ | -------------------------------------------------------------------- |
+| \_primary_key_field | Yes      | None         | The field of your model that is the primary key                      |
+| \_redis_prefix      | No       | None         | If set, will be added to the beginning of the keys we store in redis |
+| \_redis_separator   | No       | :            | Defaults to :, used to separate prefix, table_name, and primary_key  |
+| \_table_name        | NO       | cls.**name** | Defaults to the model's name, can set a custom name in redis         |
+
 ## Contributing
 
 Contributions are very welcome.

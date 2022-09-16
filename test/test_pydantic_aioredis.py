@@ -11,6 +11,7 @@ from uuid import UUID
 from uuid import uuid4
 
 import pytest
+import pytest_asyncio
 from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.model import Model
 from pydantic_aioredis.store import Store
@@ -85,7 +86,7 @@ test_ip_models = [
 ]
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def redis_store(redis_server):
     """Sets up a redis store using the redis_server fixture and adds the book model to it"""
     store = Store(
@@ -150,10 +151,10 @@ parameters = [
 async def test_bulk_insert(store, models, model_class):
     """Providing a list of Model instances to the insert method inserts the records in redis"""
     keys = [
-        f"{type(model).__name__.lower()}_%&_{getattr(model, type(model)._primary_key_field)}"
+        f"{type(model).__name__.lower()}:{getattr(model, type(model)._primary_key_field)}"
         for model in models
     ]
-    # keys = [f"book_%&_{book.title}" for book in models]
+    # keys = [f"book:{book.title}" for book in models]
     await store.redis_store.delete(*keys)
 
     for key in keys:
@@ -179,7 +180,7 @@ async def test_insert_single(store, models, model_class):
     """
     Providing a single Model instance
     """
-    key = f"{type(models[0]).__name__.lower()}_%&_{getattr(models[0], type(models[0])._primary_key_field)}"
+    key = f"{type(models[0]).__name__.lower()}:{getattr(models[0], type(models[0])._primary_key_field)}"
     model = await store.redis_store.hgetall(name=key)
     assert model == {}
 
@@ -196,7 +197,7 @@ async def test_insert_single_lifespan(store, models, model_class):
     """
     Providing a single Model instance with a lifespam
     """
-    key = f"{type(models[0]).__name__.lower()}_%&_{getattr(models[0], type(models[0])._primary_key_field)}"
+    key = f"{type(models[0]).__name__.lower()}:{getattr(models[0], type(models[0])._primary_key_field)}"
     model = await store.redis_store.hgetall(name=key)
     assert model == {}
 
@@ -317,7 +318,7 @@ async def test_update(redis_store):
     await Book.insert(books)
     title = books[0].title
     new_author = "John Doe"
-    key = f"book_%&_{title}"
+    key = f"book:{title}"
     old_book_data = await redis_store.redis_store.hgetall(name=key)
     old_book = Book(**Book.deserialize_partially(old_book_data))
     assert old_book == books[0]
@@ -355,8 +356,8 @@ async def test_delete_multiple(redis_store):
     ids_to_delete = [book.title for book in books_to_delete]
     ids_to_leave_intact = [book.title for book in books_left_in_db]
 
-    keys_to_delete = [f"book_%&_{_id}" for _id in ids_to_delete]
-    keys_to_leave_intact = [f"book_%&_{_id}" for _id in ids_to_leave_intact]
+    keys_to_delete = [f"book:{_id}" for _id in ids_to_delete]
+    keys_to_leave_intact = [f"book:{_id}" for _id in ids_to_leave_intact]
 
     await Book.delete(ids=ids_to_delete)
 

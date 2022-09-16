@@ -7,6 +7,7 @@ from pathlib import Path
 from textwrap import dedent
 
 import nox
+import toml
 
 try:
     from nox_poetry import Session
@@ -35,24 +36,8 @@ nox.options.sessions = (
     "docs-build",
 )
 mypy_type_packages = ()
-test_requirements = (
-    "coverage[toml]",
-    "pytest",
-    "pygments",
-    "fastapi>=0.6.3",
-    "fastapi-crudrouter>=0.8.4",
-    "httpx",
-    "pytest-asyncio",
-    "pytest-cov",
-    "pytest-env",
-    "pytest-lazy-fixture",
-    "pytest-mock",
-    "pytest-mockservers",
-    "pytest-xdist",
-    "redislite",
-    "pytest-asyncio",
-    "pytest-lazy-fixture",
-)
+pyproject = toml.load("pyproject.toml")
+test_requirements = pyproject["tool"]["poetry"]["dev-dependencies"].keys()
 
 
 def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
