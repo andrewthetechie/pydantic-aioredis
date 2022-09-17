@@ -1,13 +1,13 @@
 """Module containing the model classes"""
+from functools import lru_cache
+from pydantic_aioredis.abstract import _AbstractModel
+from pydantic_aioredis.utils import bytes_to_string
 from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Tuple
 from typing import Union
-
-from pydantic_aioredis.abstract import _AbstractModel
-from pydantic_aioredis.utils import bytes_to_string
 
 
 class Model(_AbstractModel):
@@ -28,21 +28,23 @@ class Model(_AbstractModel):
     """
 
     @classmethod
-    @property
-    def _prefix(cls):
-        return getattr(cls, "_redis_prefix", "").lower()
+    @lru_cache(1)
+    def _get_prefix(cls) -> str:
+        prefix_str = getattr(cls, "_redis_prefix", "").lower()
+        return f"{prefix_str}{cls._get_separator()}" if prefix_str != "" else ""
 
     @classmethod
-    @property
-    def _separator(cls):
+    @lru_cache(1)
+    def _get_separator(cls):
         return getattr(cls, "_redis_separator", ":").lower()
 
     @classmethod
-    @property
-    def _tablename(cls):
+    @lru_cache(1)
+    def _get_tablename(cls):
         return cls.__name__.lower() if cls._table_name is None else cls._table_name
 
     @classmethod
+    @lru_cache(1)
     def __get_primary_key(cls, primary_key_value: Any):
         """
         Uses _table_name, _table_refix, and _redis_separator from the model to build our primary key.
@@ -54,13 +56,13 @@ class Model(_AbstractModel):
         The key is contructed as {_prefix}{_redis_separator}{_table_name}{_redis_separator}{primary_key_value}
         So a model named ThisModel with a primary key of id, by default would result in a key of thismodel:id
         """
-        prefix = f"{cls._prefix}{cls._separator}" if cls._prefix != "" else ""
-        return f"{prefix}{cls._tablename}{cls._separator}{primary_key_value}"
+
+        return f"{cls._get_prefix()}{cls._get_tablename()}{cls._get_separator()}{primary_key_value}"
 
     @classmethod
     def get_table_index_key(cls):
         """Returns the key in which the primary keys of the given table have been saved"""
-        return f"{cls._tablename}{cls._separator}__index"
+        return f"{cls._get_prefix()}{cls._get_tablename()}{cls._get_separator()}__index"
 
     @classmethod
     async def _ids_to_primary_keys(
