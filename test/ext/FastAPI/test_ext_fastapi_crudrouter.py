@@ -16,6 +16,13 @@ class Model(PAModel):
     value: int
 
 
+class ModelNoSync(PAModel):
+    _primary_key_field = "name"
+    name: str
+    value: int
+    _auto_sync = False
+
+
 @pytest_asyncio.fixture()
 async def test_app(redis_server):
     store = Store(
@@ -135,7 +142,7 @@ async def test_crudrouter_put_404(test_app, test_models):
 
 @pytest.mark.asyncio
 async def test_crudrouter_put_200(test_app, test_models):
-    """Tests that crudrouter put will 404 when no instance exists"""
+    """Tests that crudrouter put will 200 on a successful update"""
     await test_app[2].insert(test_models)
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
         response = await client.put(
@@ -146,6 +153,33 @@ async def test_crudrouter_put_200(test_app, test_models):
     assert response.status_code == 200
     result = response.json()
     assert result["name"] == test_models[0].name
+    assert result["value"] == 100
+
+
+@pytest.mark.asyncio
+async def test_crudrouter_put_200_no_autosync(redis_server):
+    """Tests that crudrouter put will 404 when no instance exists"""
+    store = Store(
+        name="sample",
+        redis_config=RedisConfig(port=redis_server, db=1),  # nosec
+        life_span_in_seconds=3600,
+    )
+    store.register_model(ModelNoSync)
+
+    app = FastAPI()
+
+    router = PydanticAioredisCRUDRouter(schema=ModelNoSync, store=store)
+    app.include_router(router)
+    await ModelNoSync.insert(ModelNoSync(name="test", value=20))
+    async with AsyncClient(app=app, base_url="http://test") as client:
+        response = await client.put(
+            f"/modelnosync/test",
+            json={"name": "test", "value": 100},
+        )
+
+    assert response.status_code == 200
+    result = response.json()
+    assert result["name"] == "test"
     assert result["value"] == 100
 
 

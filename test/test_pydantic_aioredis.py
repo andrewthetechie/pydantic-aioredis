@@ -402,7 +402,7 @@ async def test_update(redis_store):
     assert old_book == books[0]
     assert old_book.author != new_author
 
-    await Book.update(_id=title, data={"author": "John Doe"})
+    books[0].author = new_author
 
     book_data = await redis_store.redis_store.hgetall(name=key)
     book = Book(**Book.deserialize_partially(book_data))

@@ -28,6 +28,8 @@ Changelog = "https://github.com/andrewthetechie/pydantic-aioredis/releases"
 python = "^3.7"
 pydantic = "^1.8.2"
 redis = "^4.3.4"
+anyio = "^3.6.1"
+nest-asyncio = "^1.5.5"
 
 [tool.poetry.extras]
 FastAPI= ['fastapi>=0.63.0']
@@ -109,7 +111,7 @@ dirty = true
 files = ["pydantic_aioredis/__init__.py"]
 
 [tool.pytest.ini_options]
-addopts = "-n 4 --cov=pydantic_aioredis --cov-report=term-missing --cov-report=xml --cov-fail-under 98"
+addopts = "-n 4 --cov=pydantic_aioredis --cov-report=term-missing --cov-report=xml --cov-fail-under 97"
 
 [tool.bandit]
 exclude= "tests/ examples/*"

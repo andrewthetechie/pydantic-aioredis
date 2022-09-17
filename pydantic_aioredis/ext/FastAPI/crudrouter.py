@@ -6,6 +6,7 @@ from typing import Optional
 from typing import Type
 from typing import Union
 
+from fastapi import HTTPException
 from fastapi_crudrouter.core import CRUDGenerator
 from fastapi_crudrouter.core import NOT_FOUND
 from fastapi_crudrouter.core._types import DEPENDENCIES
@@ -16,6 +17,8 @@ from pydantic_aioredis.store import Store
 
 CALLABLE = Callable[..., SCHEMA]
 CALLABLE_LIST = Callable[..., List[SCHEMA]]
+
+INVALID_UPDATE = HTTPException(400, "Invalid Update")
 
 
 class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
@@ -34,7 +37,7 @@ class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
         update_route: Union[bool, DEPENDENCIES] = True,
         delete_one_route: Union[bool, DEPENDENCIES] = True,
         delete_all_route: Union[bool, DEPENDENCIES] = True,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None:
         super().__init__(
             schema=schema,
@@ -49,7 +52,7 @@ class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
             update_route=update_route,
             delete_one_route=delete_one_route,
             delete_all_route=delete_all_route,
-            **kwargs
+            **kwargs,
         )
         self.store = store
         self.store.register_model(self.schema)
@@ -84,11 +87,27 @@ class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
 
     def _update(self, *args: Any, **kwargs: Any) -> CALLABLE:
         async def route(item_id: str, model: self.update_schema) -> SCHEMA:  # type: ignore
-            if await self.schema.select(ids=[item_id]) is None:
+            item = await self.schema.select(ids=[item_id])
+            if item is None:
                 raise NOT_FOUND
-            await self.schema.update(item_id, data=model.dict())
-            result = await self.schema.select(ids=item_id)
-            return result[0]
+            item = item[0]
+
+            # if autosync is on, updating one key at a time would update redis a bunch of times and be slow
+            # instead, let's update the dict, and insert a new object
+            if item._auto_sync:
+                this_dict = item.dict()
+                for key, value in model.dict().items():
+                    this_dict[key] = value
+                item = self.schema(**this_dict)
+
+                await self.schema.insert([item])
+
+            else:
+                for key, value in model.dict().items():
+                    setattr(item, key, value)
+
+                await item.save()
+            return item
 
         return route
 

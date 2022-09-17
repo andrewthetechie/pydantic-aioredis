@@ -1,12 +1,14 @@
 """Module containing the model classes"""
+import asyncio
 from functools import lru_cache
+from sys import version_info
 from typing import Any
-from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Tuple
 from typing import Union
 
+import nest_asyncio
 from pydantic_aioredis.abstract import _AbstractModel
 from pydantic_aioredis.utils import bytes_to_string
 
@@ -27,6 +29,8 @@ class Model(_AbstractModel):
     keys stored in redis would be
     thismodel:key
     """
+
+    _auto_sync = True
 
     @classmethod
     @lru_cache(1)
@@ -120,32 +124,26 @@ class Model(_AbstractModel):
 
         return response
 
-    @classmethod
-    async def update(
-        cls, _id: Any, data: Dict[str, Any], life_span_seconds: Optional[int] = None
-    ):
-        """
-        Updates a given row or sets of rows in the table
-        """
-        life_span = (
-            life_span_seconds
-            if life_span_seconds is not None
-            else cls._store.life_span_in_seconds
-        )
-        async with cls._store.redis_store.pipeline(transaction=True) as pipeline:
+    def __setattr__(self, name: str, value: Any):
+        super().__setattr__(name, value)
+        store = getattr(self, "_store", None)
+        if self._auto_sync and store is not None:
+            if version_info.major == 3 and version_info.minor < 10:
+                # less than 3.10.0
+                io_loop = asyncio.get_event_loop()
+            else:
+                # equal or greater than 3.10.0
+                try:
+                    io_loop = asyncio.get_running_loop()
+                except RuntimeError:
+                    io_loop = asyncio.new_event_loop()
+            # https://github.com/erdewit/nest_asyncio
+            # Use nest_asyncio so we can call the async save
+            nest_asyncio.apply()
+            io_loop.run_until_complete(self.save())
 
-            if isinstance(data, dict):
-                name = cls.__get_primary_key(primary_key_value=_id)
-                pipeline.hset(name=name, mapping=cls.serialize_partially(data))
-                if life_span is not None:
-                    pipeline.expire(name=name, time=life_span)
-                # save the primary key in an index
-                table_index_key = cls.get_table_index_key()
-                pipeline.sadd(table_index_key, name)
-                if life_span is not None:
-                    pipeline.expire(table_index_key, time=life_span)
-            response = await pipeline.execute()
-        return response
+    async def save(self):
+        await self.insert(self)
 
     @classmethod
     async def delete(
