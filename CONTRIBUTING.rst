@@ -13,9 +13,9 @@ Here is a list of important resources for contributors:
 - `Code of Conduct`_
 
 .. _MIT license: https://opensource.org/licenses/MIT
-.. _Source Code: https://github.com/andrewthetechie/py-healthchecks.io
-.. _Documentation: https://py-healthchecks.io.readthedocs.io/
-.. _Issue Tracker: https://github.com/andrewthetechie/py-healthchecks.io/issues
+.. _Source Code: https://github.com/andrewthetechie/pydantic-aioredis
+.. _Documentation: https://pydantic-aioredis.readthedocs.io/
+.. _Issue Tracker: https://github.com/andrewthetechie/pydantic-aioredis/issues
 
 How to report a bug
 -------------------
@@ -117,6 +117,6 @@ To run linting and code formatting checks before committing your change, you can
 It is recommended to open an issue before starting work on anything.
 This will allow a chance to talk it over with the owners and validate your approach.
 
-.. _pull request: https://github.com/andrewthetechie/py-healthchecks.io/pulls
+.. _pull request: https://github.com/andrewthetechie/pydantic-aioredis/pulls
 .. github-only
 .. _Code of Conduct: CODE_OF_CONDUCT.rst
