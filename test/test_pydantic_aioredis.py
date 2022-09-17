@@ -3,9 +3,6 @@ from datetime import date
 from enum import Enum
 from ipaddress import ip_network
 from ipaddress import IPv4Network
-from pydantic_aioredis.config import RedisConfig
-from pydantic_aioredis.model import Model
-from pydantic_aioredis.store import Store
 from random import randint
 from random import sample
 from typing import List
@@ -15,6 +12,9 @@ from uuid import uuid4
 
 import pytest
 import pytest_asyncio
+from pydantic_aioredis.config import RedisConfig
+from pydantic_aioredis.model import Model
+from pydantic_aioredis.store import Store
 
 
 class Book(Model):

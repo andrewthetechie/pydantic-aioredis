@@ -1,13 +1,14 @@
 """Module containing the model classes"""
 from functools import lru_cache
-from pydantic_aioredis.abstract import _AbstractModel
-from pydantic_aioredis.utils import bytes_to_string
 from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Tuple
 from typing import Union
+
+from pydantic_aioredis.abstract import _AbstractModel
+from pydantic_aioredis.utils import bytes_to_string
 
 
 class Model(_AbstractModel):
