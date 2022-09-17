@@ -1,6 +1,7 @@
 from typing import List
 
 import pytest
+import pytest_asyncio
 from fastapi import FastAPI
 from httpx import AsyncClient
 from pydantic_aioredis import Model as PAModel
@@ -15,7 +16,7 @@ class Model(PAModel):
     value: int
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def test_app(redis_server):
     store = Store(
         name="sample",
@@ -31,7 +32,7 @@ async def test_app(redis_server):
     yield store, app, Model
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 def test_models():
     return [Model(name=f"test{i}", value=i) for i in range(1, 10)]
 

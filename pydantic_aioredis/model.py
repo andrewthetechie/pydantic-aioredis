@@ -1,4 +1,5 @@
 """Module containing the model classes"""
+from functools import lru_cache
 from typing import Any
 from typing import Dict
 from typing import List
@@ -13,25 +14,56 @@ from pydantic_aioredis.utils import bytes_to_string
 class Model(_AbstractModel):
     """
     The section in the store that saves rows of the same kind
+
+    Model has some custom fields you can set in your models that alter the behavior of how this is stored in redis
+
+    _primary_key_field -- The field of your model that is the primary key
+    _redis_prefix -- If set, will be added to the beginning of the keys we store in redis
+    _redis_separator -- Defaults to :, used to separate prefix, table_name, and primary_key
+    _table_name -- Defaults to the model's name, can set a custom name in redis
+
+
+    If your model was named ThisModel, the primary key was "key", and prefix and separator were left at default (not set), the
+    keys stored in redis would be
+    thismodel:key
     """
 
     @classmethod
+    @lru_cache(1)
+    def _get_prefix(cls) -> str:
+        prefix_str = getattr(cls, "_redis_prefix", "").lower()
+        return f"{prefix_str}{cls._get_separator()}" if prefix_str != "" else ""
+
+    @classmethod
+    @lru_cache(1)
+    def _get_separator(cls):
+        return getattr(cls, "_redis_separator", ":").lower()
+
+    @classmethod
+    @lru_cache(1)
+    def _get_tablename(cls):
+        return cls.__name__.lower() if cls._table_name is None else cls._table_name
+
+    @classmethod
+    @lru_cache(1)
     def __get_primary_key(cls, primary_key_value: Any):
         """
-        Returns the primary key value concatenated to the table name for uniqueness
+        Uses _table_name, _table_refix, and _redis_separator from the model to build our primary key.
+
+        _table_name defaults to the name of the model class if it is not set
+        _redis_separator defualts to : if it is not set
+        _prefix defaults to nothing if it is not set
+
+        The key is contructed as {_prefix}{_redis_separator}{_table_name}{_redis_separator}{primary_key_value}
+        So a model named ThisModel with a primary key of id, by default would result in a key of thismodel:id
         """
-        table_name = (
-            cls.__name__.lower() if cls._table_name is None else cls._table_name
-        )
-        return f"{table_name}_%&_{primary_key_value}"
+
+        return f"{cls._get_prefix()}{cls._get_tablename()}{cls._get_separator()}{primary_key_value}"
 
     @classmethod
     def get_table_index_key(cls):
         """Returns the key in which the primary keys of the given table have been saved"""
-        table_name = (
-            cls.__name__.lower() if cls._table_name is None else cls._table_name
-        )
-        return f"{table_name}__index"
+        return f"{cls._get_prefix()}{cls._get_tablename()}{cls._get_separator()}__index"
 
     @classmethod
     async def _ids_to_primary_keys(

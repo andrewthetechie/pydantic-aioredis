@@ -7,6 +7,7 @@ from pathlib import Path
 from textwrap import dedent
 
 import nox
+import toml
 
 try:
     from nox_poetry import Session
@@ -35,24 +36,8 @@ nox.options.sessions = (
     "docs-build",
 )
 mypy_type_packages = ()
-test_requirements = (
-    "coverage[toml]",
-    "pytest",
-    "pygments",
-    "fastapi>=0.6.3",
-    "fastapi-crudrouter>=0.8.4",
-    "httpx",
-    "pytest-asyncio",
-    "pytest-cov",
-    "pytest-env",
-    "pytest-lazy-fixture",
-    "pytest-mock",
-    "pytest-mockservers",
-    "pytest-xdist",
-    "redislite",
-    "pytest-asyncio",
-    "pytest-lazy-fixture",
-)
+pyproject = toml.load("pyproject.toml")
+test_requirements = pyproject["tool"]["poetry"]["dev-dependencies"].keys()
 
 
 def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
@@ -128,20 +113,7 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
 def precommit(session: Session) -> None:
     """Lint using pre-commit."""
     args = session.posargs or ["run", "--all-files", "--show-diff-on-failure"]
-    session.install(
-        "black",
-        "darglint",
-        "flake8",
-        "flake8-bandit",
-        "flake8-bugbear",
-        "flake8-docstrings",
-        "flake8-rst-docstrings",
-        "pep8-naming",
-        "pre-commit",
-        "pre-commit-hooks",
-        "pyupgrade",
-        "reorder-python-imports",
-    )
+    session.install(*test_requirements)
     session.install(".")
     session.run("pre-commit", *args)
     if args and args[0] == "install":
@@ -170,6 +142,7 @@ def mypy(session: Session) -> None:
 @session(python=python_versions[0])
 def bandit(session: Session) -> None:
     """Run bandit security tests"""
+    session.install("bandit")
     args = session.posargs or ["-r", "./pydantic_aioredis"]
     session.run("bandit", *args)
 

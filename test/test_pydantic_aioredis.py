@@ -11,6 +11,7 @@ from uuid import UUID
 from uuid import uuid4
 
 import pytest
+import pytest_asyncio
 from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.model import Model
 from pydantic_aioredis.store import Store
@@ -68,6 +69,32 @@ class ModelWithIP(Model):
     ip_network: IPv4Network
 
 
+class ModelWithPrefix(Model):
+    _primary_key_field = "name"
+    _redis_prefix = "prefix"
+    name: str
+
+
+class ModelWithSeparator(Model):
+    _primary_key_field = "name"
+    _redis_separator = "!!"
+    name: str
+
+
+class ModelWithTableName(Model):
+    _primary_key_field = "name"
+    _table_name = "tablename"
+    name: str
+
+
+class ModelWithFullCustomKey(Model):
+    _primary_key_field = "name"
+    _redis_prefix = "prefix"
+    _redis_separator = "!!"
+    _table_name = "custom"
+    name: str
+
+
 extended_books = [
     ExtendedBook(**book.dict(), editions=sample(editions, randint(0, len(editions))))
     for book in books
@@ -84,8 +111,29 @@ test_ip_models = [
     ModelWithIP(name="test2", ip_network=ip_network("192.168.0.0/16")),
 ]
 
+test_models_with_prefix = [
+    ModelWithPrefix(name="test"),
+    ModelWithPrefix(name="test2"),
+]
 
-@pytest.fixture()
+test_models_with_separator = [
+    ModelWithSeparator(name="test"),
+    ModelWithSeparator(name="test2"),
+]
+
+
+test_models_with_tablename = [
+    ModelWithTableName(name="test"),
+    ModelWithTableName(name="test2"),
+]
+
+test_models_with_fullcustom = [
+    ModelWithFullCustomKey(name="test"),
+    ModelWithFullCustomKey(name="test2"),
+]
+
+
+@pytest_asyncio.fixture()
 async def redis_store(redis_server):
     """Sets up a redis store using the redis_server fixture and adds the book model to it"""
     store = Store(
@@ -97,6 +145,10 @@ async def redis_store(redis_server):
     store.register_model(ExtendedBook)
     store.register_model(ModelWithNone)
     store.register_model(ModelWithIP)
+    store.register_model(ModelWithPrefix)
+    store.register_model(ModelWithSeparator)
+    store.register_model(ModelWithTableName)
+    store.register_model(ModelWithFullCustomKey)
     yield store
     await store.redis_store.flushall()
 
@@ -138,22 +190,47 @@ def test_store_model(redis_store):
 
 
 parameters = [
-    (pytest.lazy_fixture("redis_store"), books, Book),
-    (pytest.lazy_fixture("redis_store"), extended_books, ExtendedBook),
-    (pytest.lazy_fixture("redis_store"), test_models, ModelWithNone),
-    (pytest.lazy_fixture("redis_store"), test_ip_models, ModelWithIP),
+    (pytest.lazy_fixture("redis_store"), books, Book, "book:"),
+    (pytest.lazy_fixture("redis_store"), extended_books, ExtendedBook, "extendedbook:"),
+    (pytest.lazy_fixture("redis_store"), test_models, ModelWithNone, "modelwithnone:"),
+    (pytest.lazy_fixture("redis_store"), test_ip_models, ModelWithIP, "modelwithip:"),
+    (
+        pytest.lazy_fixture("redis_store"),
+        test_models_with_prefix,
+        ModelWithPrefix,
+        "prefix:modelwithprefix:",
+    ),
+    (
+        pytest.lazy_fixture("redis_store"),
+        test_models_with_separator,
+        ModelWithSeparator,
+        "modelwithseparator!!",
+    ),
+    (
+        pytest.lazy_fixture("redis_store"),
+        test_models_with_tablename,
+        ModelWithTableName,
+        "tablename:",
+    ),
+    (
+        pytest.lazy_fixture("redis_store"),
+        test_models_with_fullcustom,
+        ModelWithFullCustomKey,
+        "prefix!!custom!!",
+    ),
 ]
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
-async def test_bulk_insert(store, models, model_class):
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
+async def test_bulk_insert(store, models, model_class, key_prefix: str):
     """Providing a list of Model instances to the insert method inserts the records in redis"""
     keys = [
-        f"{type(model).__name__.lower()}_%&_{getattr(model, type(model)._primary_key_field)}"
+        f"{key_prefix}{getattr(model, type(model)._primary_key_field)}"
         for model in models
     ]
-    # keys = [f"book_%&_{book.title}" for book in models]
+    # keys = [f"book:{book.title}" for book in models]
+
     await store.redis_store.delete(*keys)
 
     for key in keys:
@@ -174,12 +251,12 @@ async def test_bulk_insert(store, models, model_class):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
-async def test_insert_single(store, models, model_class):
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
+async def test_insert_single(store, models, model_class, key_prefix: str):
     """
     Providing a single Model instance
     """
-    key = f"{type(models[0]).__name__.lower()}_%&_{getattr(models[0], type(models[0])._primary_key_field)}"
+    key = f"{key_prefix}{getattr(models[0], type(models[0])._primary_key_field)}"
     model = await store.redis_store.hgetall(name=key)
     assert model == {}
 
@@ -191,12 +268,12 @@ async def test_insert_single(store, models, model_class):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
-async def test_insert_single_lifespan(store, models, model_class):
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
+async def test_insert_single_lifespan(store, models, model_class, key_prefix: str):
     """
     Providing a single Model instance with a lifespam
     """
-    key = f"{type(models[0]).__name__.lower()}_%&_{getattr(models[0], type(models[0])._primary_key_field)}"
+    key = f"{key_prefix}{getattr(models[0], type(models[0])._primary_key_field)}"
     model = await store.redis_store.hgetall(name=key)
     assert model == {}
 
@@ -208,8 +285,8 @@ async def test_insert_single_lifespan(store, models, model_class):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
-async def test_select_default(store, models, model_class):
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
+async def test_select_default(store, models, model_class, key_prefix):
     """Selecting without arguments returns all the book models"""
     await model_class.insert(models)
     response = await model_class.select()
@@ -218,9 +295,11 @@ async def test_select_default(store, models, model_class):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 @pytest.mark.parametrize("execution_count", range(5))
-async def test_select_pagination(store, models, model_class, execution_count):
+async def test_select_pagination(
+    store, models, model_class, key_prefix, execution_count
+):
     """Selecting with pagination"""
     limit = 2
     skip = randint(0, len(models) - limit)
@@ -232,8 +311,8 @@ async def test_select_pagination(store, models, model_class, execution_count):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
-async def test_select_no_contents(store, models, model_class):
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
+async def test_select_no_contents(store, models, model_class, key_prefix):
     """Test that we get None when there are no models"""
     await store.redis_store.flushall()
     response = await model_class.select()
@@ -280,9 +359,9 @@ async def test_select_some_columns(redis_store):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 @pytest.mark.parametrize("execution_count", range(5))
-async def test_select_some_ids(store, models, model_class, execution_count):
+async def test_select_some_ids(store, models, model_class, key_prefix, execution_count):
     """
     Selecting some ids returns only those elements with the given ids
     """
@@ -317,7 +396,7 @@ async def test_update(redis_store):
     await Book.insert(books)
     title = books[0].title
     new_author = "John Doe"
-    key = f"book_%&_{title}"
+    key = f"book:{title}"
     old_book_data = await redis_store.redis_store.hgetall(name=key)
     old_book = Book(**Book.deserialize_partially(old_book_data))
     assert old_book == books[0]
@@ -355,8 +434,8 @@ async def test_delete_multiple(redis_store):
     ids_to_delete = [book.title for book in books_to_delete]
     ids_to_leave_intact = [book.title for book in books_left_in_db]
 
-    keys_to_delete = [f"book_%&_{_id}" for _id in ids_to_delete]
-    keys_to_leave_intact = [f"book_%&_{_id}" for _id in ids_to_leave_intact]
+    keys_to_delete = [f"book:{_id}" for _id in ids_to_delete]
+    keys_to_leave_intact = [f"book:{_id}" for _id in ids_to_leave_intact]
 
     await Book.delete(ids=ids_to_delete)
 
@@ -375,8 +454,8 @@ async def test_delete_multiple(redis_store):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
-async def test_delete_all(store, models, model_class):
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
+async def test_delete_all(store, models, model_class, key_prefix):
     """
     Delete all of a model from the redis
     """
@@ -389,8 +468,8 @@ async def test_delete_all(store, models, model_class):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("store, models, model_class", parameters)
-async def test_delete_none(store, models, model_class):
+@pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
+async def test_delete_none(store, models, model_class, key_prefix):
     """
     Try to delete when the redis is empty for that model
     """
