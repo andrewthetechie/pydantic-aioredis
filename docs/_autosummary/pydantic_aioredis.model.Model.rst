@@ -31,10 +31,10 @@ pydantic\_aioredis.model.Model
       ~Model.parse_file
       ~Model.parse_obj
       ~Model.parse_raw
+      ~Model.save
       ~Model.schema
       ~Model.schema_json
       ~Model.select
       ~Model.serialize_partially
-      ~Model.update
       ~Model.update_forward_refs
       ~Model.validate

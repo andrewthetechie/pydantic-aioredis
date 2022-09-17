@@ -71,6 +71,7 @@ class _AbstractModel(BaseModel):
     _store: _AbstractStore
     _primary_key_field: str
     _table_name: Optional[str] = None
+    _auto_sync: bool = True
 
     @staticmethod
     def json_default(obj: Any) -> str:
@@ -147,13 +148,6 @@ class _AbstractModel(BaseModel):
     ):  # pragma: no cover
         """Insert into the redis store"""
         raise NotImplementedError("insert should be implemented")
-
-    @classmethod
-    async def update(
-        cls, _id: Any, data: Dict[str, Any], life_span_seconds: Optional[int] = None
-    ):  # pragma: no cover
-        """Update an existing key in the redis store"""
-        raise NotImplementedError("update should be implemented")
 
     @classmethod
     async def delete(cls, ids: Union[Any, List[Any]]):  # pragma: no cover

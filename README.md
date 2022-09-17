@@ -66,7 +66,7 @@ class Library(Model):
     address: str
 
 # Create the store and register your models
-store = Store(name='some_name', redis_config=RedisConfig(db=5, host='localhost', port=6379),life_span_in_seconds=3600)
+store = Store(name='some_name', redis_config=RedisConfig(db=5, host='localhost', port=6379), life_span_in_seconds=3600)
 store.register_model(Book)
 store.register_model(Library)
 
@@ -102,8 +102,16 @@ async def work_with_orm():
   books_with_few_fields = await Book.select(columns=["author", "in_stock"])
   print(books_with_few_fields) # Will print [{"author": "'Charles Dickens", "in_stock": "True"},...]
 
-  # Update any book or library
-  await Book.update(_id="Oliver Twist", data={"author": "John Doe"})
+  # When _auto_sync = True (default), updating any attribute will update that field in Redis too
+  this_book = Book(title="Moby Dick", author='Herman Melvill', published_on=date(year=1851, month=10, day=18))
+  await Book.insert(this_book)
+  # oops, there was a typo. Fix it
+  this_book.author = "Herman Melville"
+  this_book_from_redis = await Book.select(ids=["Moby Dick"])
+  assert this_book_from_redis[0].author == "Herman Melville"
+
+  # If you have _auto_save set to false on a model, you have to await .save() to update a model in tedis
+  await this_book.save()
 
   # Delete any number of items
   await Library.delete(ids=["The Grand Library"])

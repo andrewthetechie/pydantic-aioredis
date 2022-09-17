@@ -97,8 +97,20 @@ async def work_with_orm():
         books_with_few_fields
     )  # Will print [{"author": "'Charles Dickens", "in_stock": "True"},...]
 
-    # Update any book or library
-    await Book.update(_id="Oliver Twist", data={"author": "John Doe"})
+    # When _auto_sync = True (default), updating any attribute will update that field in Redis too
+    this_book = Book(
+        title="Moby Dick",
+        author="Herman Melvill",
+        published_on=date(year=1851, month=10, day=18),
+    )
+    await Book.insert(this_book)
+    # oops, there was a typo. Fix it
+    this_book.author = "Herman Melville"
+    this_book_from_redis = await Book.select(ids=["Moby Dick"])
+    assert this_book_from_redis[0].author == "Herman Melville"
+
+    # If you have _auto_save set to false on a model, you have to await .save() to update a model in tedis
+    await this_book.save()
 
     all_libraries = await Library.select()
     print(all_libraries)
@@ -109,5 +121,4 @@ async def work_with_orm():
 
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(work_with_orm())
+    asyncio.run(work_with_orm())
