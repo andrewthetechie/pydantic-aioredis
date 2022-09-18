@@ -1,2 +1,1 @@
-Faker
-tqdm
+pytest-benchmark==3.4.1

@@ -152,25 +152,7 @@ def tests(session: Session) -> None:
     """Run the test suite."""
     session.install(".")
     session.install(*test_requirements)
-    try:
-        session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
-    finally:
-        ...
-        # if session.interactive:
-        #     session.notify("coverage", posargs=[])
-
-
-@session(python=python_versions[0])
-def coverage(session: Session) -> None:
-    """Produce the coverage report."""
-    args = session.posargs or ["report"]
-
-    session.install("coverage[toml]")
-
-    if not session.posargs and any(Path().glob(".coverage.*")):
-        session.run("coverage", "combine")
-
-    session.run("coverage", *args)
+    session.run("poetry", "run", "pytest", *session.posargs)
 
 
 @session(python=python_versions)
