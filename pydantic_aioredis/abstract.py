@@ -97,8 +97,8 @@ class _AbstractModel(BaseModel):
             None - will be converted to the string "None"
             More complex data types will be json dumped.
 
-        The json dumper uses class.json_serial as its default serializer.
-        Users can override json_serial with a custom json serializer if they chose to.
+        The json dumper uses class.json_default as its default serializer.
+        Users can override json_default with a custom json serializer if they chose to.
         Users can override serialze paritally and deserialze partially
         """
         columns = data.keys()
