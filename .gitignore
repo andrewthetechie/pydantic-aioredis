@@ -9,3 +9,5 @@ coverage.xml
 /docs/_build/
 /src/*.egg-info/
 __pycache__/
+examples/benchmarks/.benchmarks
+examples/benchmarks/.coverage

@@ -111,7 +111,7 @@ dirty = true
 files = ["pydantic_aioredis/__init__.py"]
 
 [tool.pytest.ini_options]
-addopts = "-n 4 --cov=pydantic_aioredis --cov-report=term-missing --cov-report=xml --cov-fail-under 97"
+addopts = "-n 4 --ignore examples --cov=pydantic_aioredis --cov-report=term-missing --cov-fail-under 97"
 
 [tool.bandit]
 exclude= "tests/ examples/*"
