@@ -73,8 +73,13 @@ class _AbstractModel(BaseModel):
     _table_name: Optional[str] = None
     _auto_sync: bool = True
 
-    @staticmethod
-    def json_default(obj: Any) -> str:
+    @classmethod
+    def json_object_hook(cls, obj: dict):
+        """Can be overridden to handle custom json -> object"""
+        return obj
+
+    @classmethod
+    def json_default(cls, obj: Any) -> str:
         """
         JSON serializer for objects not serializable by default json library
         Currently handles: datetimes -> obj.isoformat, ipaddress and ipnetwork -> str
@@ -127,9 +132,9 @@ class _AbstractModel(BaseModel):
             if field not in columns:
                 continue
             if cls.__fields__[field].type_ not in [str, float, int]:
-                data[field] = json.loads(data[field])
+                data[field] = json.loads(data[field], object_hook=cls.json_object_hook)
             if getattr(cls.__fields__[field], "shape", None) in JSON_DUMP_SHAPES:
-                data[field] = json.loads(data[field])
+                data[field] = json.loads(data[field], object_hook=cls.json_object_hook)
             if getattr(cls.__fields__[field], "allow_none", False):
                 if data[field] == "None":
                     data[field] = None
