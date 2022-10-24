@@ -73,7 +73,7 @@ pytest-xdist = "^2.5.0"
 redislite = "^6.0.674960"
 tox = "^3.26.0"
 pylint = "^2.13.9"
-setuptools-git-versioning = "^1.12.0"
+setuptools-git-versioning = "^1.12.1"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.4"
