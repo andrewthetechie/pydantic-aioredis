@@ -959,18 +959,6 @@ pytest = ">=7.1.3"
 test = ["coverage (>=6.5)", "pytest-mock (>=3.10)"]
 
 [[package]]
-name = "pytest-forked"
-version = "1.4.0"
-description = "run tests in isolated forked subprocesses"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-py = "*"
-pytest = ">=3.10"
-
-[[package]]
 name = "pytest-lazy-fixture"
 version = "0.6.3"
 description = "It helps to use fixtures in pytest.mark.parametrize"
@@ -1010,7 +998,7 @@ pytest-asyncio = ">=0.10.0"
 
 [[package]]
 name = "pytest-xdist"
-version = "2.5.0"
+version = "3.0.2"
 description = "pytest xdist plugin for distributed testing and loop-on-failing modes"
 category = "dev"
 optional = false
@@ -1019,7 +1007,6 @@ python-versions = ">=3.6"
 [package.dependencies]
 execnet = ">=1.1"
 pytest = ">=6.2.0"
-pytest-forked = "*"
 
 [package.extras]
 psutil = ["psutil (>=3.0)"]
@@ -1595,7 +1582,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8e02deaf5835ceb92e49c7881e3ac8a11aa9991cd23e24b692fbb2eda357e08e"
+content-hash = "3b2b86e5de815a0296133c6e3bff3b1814581bd51e1fc53de06e07362e60cdf7"
 
 [metadata.files]
 aiohttp = [
@@ -2337,10 +2324,6 @@ pytest-env = [
     {file = "pytest_env-0.8.1-py3-none-any.whl", hash = "sha256:8c0605ae09a5b7e41c20ebcc44f2c906eea9654095b4b0c342b3814bcc3a8492"},
     {file = "pytest_env-0.8.1.tar.gz", hash = "sha256:d7b2f5273ec6d1e221757998bc2f50d2474ed7d0b9331b92556011fadc4e9abf"},
 ]
-pytest-forked = [
-    {file = "pytest-forked-1.4.0.tar.gz", hash = "sha256:8b67587c8f98cbbadfdd804539ed5455b6ed03802203485dd2f53c1422d7440e"},
-    {file = "pytest_forked-1.4.0-py3-none-any.whl", hash = "sha256:bbbb6717efc886b9d64537b41fb1497cfaf3c9601276be8da2cccfea5a3c8ad8"},
-]
 pytest-lazy-fixture = [
     {file = "pytest-lazy-fixture-0.6.3.tar.gz", hash = "sha256:0e7d0c7f74ba33e6e80905e9bfd81f9d15ef9a790de97993e34213deb5ad10ac"},
     {file = "pytest_lazy_fixture-0.6.3-py3-none-any.whl", hash = "sha256:e0b379f38299ff27a653f03eaa69b08a6fd4484e46fd1c9907d984b9f9daeda6"},
@@ -2354,8 +2337,8 @@ pytest-mockservers = [
     {file = "pytest_mockservers-0.6.0-py3-none-any.whl", hash = "sha256:a65b2b88fefb60ba352e8f65c6f3e6b69694206a3574114daa6b274dc332c099"},
 ]
 pytest-xdist = [
-    {file = "pytest-xdist-2.5.0.tar.gz", hash = "sha256:4580deca3ff04ddb2ac53eba39d76cb5dd5edeac050cb6fbc768b0dd712b4edf"},
-    {file = "pytest_xdist-2.5.0-py3-none-any.whl", hash = "sha256:6fe5c74fec98906deb8f2d2b616b5c782022744978e7bd4695d39c8f42d0ce65"},
+    {file = "pytest-xdist-3.0.2.tar.gz", hash = "sha256:688da9b814370e891ba5de650c9327d1a9d861721a524eb917e620eec3e90291"},
+    {file = "pytest_xdist-3.0.2-py3-none-any.whl", hash = "sha256:9feb9a18e1790696ea23e1434fa73b325ed4998b0e9fcb221f16fd1945e6df1b"},
 ]
 pytz = [
     {file = "pytz-2022.2.1-py2.py3-none-any.whl", hash = "sha256:220f481bdafa09c3955dfbdddb7b57780e9a94f5127e35456a48589b9e0c0197"},
