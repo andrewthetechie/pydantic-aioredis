@@ -1036,7 +1036,7 @@ python-versions = "*"
 
 [[package]]
 name = "pyupgrade"
-version = "2.38.2"
+version = "3.2.2"
 description = "A tool to automatically upgrade syntax for newer versions."
 category = "dev"
 optional = false
@@ -1595,7 +1595,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8e02deaf5835ceb92e49c7881e3ac8a11aa9991cd23e24b692fbb2eda357e08e"
+content-hash = "1687447499150f8900c0abb49da557b5cdb657a681ddb2bbca9356677643d59a"
 
 [metadata.files]
 aiohttp = [
@@ -2362,8 +2362,8 @@ pytz = [
     {file = "pytz-2022.2.1.tar.gz", hash = "sha256:cea221417204f2d1a2aa03ddae3e867921971d0d76f14d87abb4414415bbdcf5"},
 ]
 pyupgrade = [
-    {file = "pyupgrade-2.38.2-py2.py3-none-any.whl", hash = "sha256:41bb9a9fd48fe57163b0dacffff433d6d5a63a0f7c2402918917b5f1a533342b"},
-    {file = "pyupgrade-2.38.2.tar.gz", hash = "sha256:a5d778c9de0b53975c6a9eac2d0df5adfad244a9f7d7993d8a114223ebbda367"},
+    {file = "pyupgrade-3.2.2-py2.py3-none-any.whl", hash = "sha256:16c0e3a6ac2d83cd0fd30c138af5504918c59d584344f60a15d5f8009b11a0ed"},
+    {file = "pyupgrade-3.2.2.tar.gz", hash = "sha256:6bfa246fb9d94e490fad37980bcfc05b9494183ff29d9100ef4f7f22a952ce67"},
 ]
 PyYAML = [
     {file = "PyYAML-6.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d4db7c7aef085872ef65a8fd7d6d09a14ae91f691dec3e87ee5ee0539d516f53"},
