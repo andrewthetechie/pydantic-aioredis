@@ -1197,17 +1197,16 @@ testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (
 
 [[package]]
 name = "setuptools-git-versioning"
-version = "1.12.1"
+version = "1.13.1"
 description = "Use git repo data for building a version number according PEP-440"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 
 [package.dependencies]
-deprecated = "*"
 packaging = "*"
 setuptools = "*"
-toml = ">=0.10.2"
+toml = {version = ">=0.10.2", markers = "python_version < \"3.11\""}
 
 [[package]]
 name = "six"
@@ -1595,7 +1594,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8e02deaf5835ceb92e49c7881e3ac8a11aa9991cd23e24b692fbb2eda357e08e"
+content-hash = "6aa14fa02af6a6981e21dbab76e8149947803970a16e1eaac9d2358327f15807"
 
 [metadata.files]
 aiohttp = [
@@ -2489,7 +2488,8 @@ setuptools = [
     {file = "setuptools-65.3.0.tar.gz", hash = "sha256:7732871f4f7fa58fb6bdcaeadb0161b2bd046c85905dbaa066bdcbcc81953b57"},
 ]
 setuptools-git-versioning = [
-    {file = "setuptools_git_versioning-1.12.1-py3-none-any.whl", hash = "sha256:6ef4bc9764db5f37905cf3506b1a37f19fce1bf574337bcbe38c7a56962bee16"},
+    {file = "setuptools-git-versioning-1.13.1.tar.gz", hash = "sha256:fde1a7cb3b2566979e5651cfca0d33cd5a82771711cd38a056216391936cf0ff"},
+    {file = "setuptools_git_versioning-1.13.1-py3-none-any.whl", hash = "sha256:648481f7e1e9e12ccd2b069d616b909a338b4223956319649351751cbc0207f4"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
