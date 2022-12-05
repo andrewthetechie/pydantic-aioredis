@@ -63,7 +63,7 @@ jobs:
       - name: Install Nox
         run: |
           pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry toml
           nox --version
 
       - name: Compute pre-commit cache key
@@ -133,7 +133,7 @@ jobs:
       - name: Install Nox
         run: |
           pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry toml
           nox --version
 
       - name: Download coverage data
