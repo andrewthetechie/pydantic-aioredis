@@ -125,7 +125,11 @@ def safety(session: Session) -> None:
     """Scan dependencies for insecure packages."""
     requirements = session.poetry.export_requirements()
     session.install("safety")
-    session.run("safety", "check", "--full-report", f"--file={requirements}")
+    # ignore https://github.com/pytest-dev/py/issues/287
+    # its an irresposnbily filed CVE causing nose
+    session.run(
+        "safety", "check", "--full-report", f"--file={requirements}", "--ignore=51457"
+    )
 
 
 @session(python=python_versions)
