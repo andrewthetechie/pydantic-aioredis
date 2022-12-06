@@ -1581,7 +1581,7 @@ fastapi-crudrouter = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8e02deaf5835ceb92e49c7881e3ac8a11aa9991cd23e24b692fbb2eda357e08e"
+content-hash = "6aa14fa02af6a6981e21dbab76e8149947803970a16e1eaac9d2358327f15807"
 
 [metadata.files]
 aiohttp = [
