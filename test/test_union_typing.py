@@ -2,6 +2,7 @@
 from typing import Union
 
 import pytest
+from pydantic import BaseModel
 from pydantic_aioredis.model import Model
 
 
@@ -43,6 +44,25 @@ async def test_float_int_assign_inside(redis_store):
 
 @pytest.mark.asyncio
 @pytest.mark.union_test
+@pytest.mark.xfail
+async def test_float_int_assign_inside_pydantic_only():
+    class FloatIntTestPydantic(BaseModel):
+
+        key: str
+        float_int: Union[float, int]  # fails
+        # float_int: Optional[Union[float,int]] # passes
+        # float_int: Union[Optional[float],Optional[int]] # fails
+
+    key = "test_float_int"
+    instance = FloatIntTestPydantic(
+        key=key,
+        float_int=2,  # gets cast to 2.0
+    )
+    assert isinstance(instance.float_int, int)
+
+
+@pytest.mark.asyncio
+@pytest.mark.union_test
 async def test_float_int_assign_after(redis_store):
     key = "test_float_int_assign_after"
     instance = FloatIntTest(
@@ -69,6 +89,25 @@ async def test_int_float_assign_inside(redis_store):
         int_float=2.9,  # gets cast into and truncated to 2
     )
     await instance.save()  # this operation doesn't affect the test outcome
+    # Fails !
+    assert isinstance(instance.int_float, float)
+
+
+@pytest.mark.asyncio
+@pytest.mark.union_test
+@pytest.mark.xfail
+async def test_int_float_assign_inside_pydantic_only():
+    class IntFloatTestPydantic(BaseModel):
+        key: str
+        int_float: Union[int, float]  # fails
+        # int_float: Optional[Union[int,float]] # fails
+        # int_float: Union[Optional[int],Optional[float]] # fails
+
+    key = "test_int_float_assign_inside"
+    instance = IntFloatTestPydantic(
+        key=key,
+        int_float=2.9,  # gets cast into and truncated to 2
+    )
     # Fails !
     assert isinstance(instance.int_float, float)
 
