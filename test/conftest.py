@@ -10,8 +10,8 @@ from pydantic_aioredis.store import Store
 def redis_server(unused_tcp_port):
     """Sets up a fake redis server we can use for tests"""
     instance = redislite.Redis(serverconfig={"port": unused_tcp_port})
-    try:
-        yield unused_tcp_port
-    finally:
-        instance.close()
-        instance.shutdown()
+
+    yield unused_tcp_port
+
+    instance.close()
+    instance.shutdown()
