@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "Tinitto",
+      "name": "Martin Ahindura",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21363733?v=4",
+      "profile": "https://sopherapps.com",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "pydantic-aioredis",
+  "projectOwner": "andrewthetechie"
+}
