@@ -15,3 +15,20 @@ def redis_server(unused_tcp_port):
 
     instance.close()
     instance.shutdown()
+
+
+@pytest_asyncio.fixture()
+async def redis_store(redis_server):
+    """Sets up a redis store using the redis_server fixture and adds the book model to it"""
+    store = Store(
+        name="sample",
+        redis_config=RedisConfig(port=redis_server, db=1),  # nosec
+        life_span_in_seconds=3600,
+    )
+    yield store
+    await store.redis_store.flushall()
+
+
+def pytest_configure(config):
+    """Configure our markers"""
+    config.addinivalue_line("markers", "union_test: Tests for union types")
