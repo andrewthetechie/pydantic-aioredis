@@ -130,11 +130,24 @@ loop.run_until_complete(work_with_orm())
 | \_redis_separator   | No       | :            | Defaults to :, used to separate prefix, table_name, and primary_key  |
 | \_table_name        | NO       | cls.**name** | Defaults to the model's name, can set a custom name in redis         |
 
+## License
+
+Licensed under the [MIT License](./LICENSE)
+
 ## Contributing
 
 Contributions are very welcome.
 To learn more, see the [Contributor Guide](./CONTRIBUTING.rst)
 
-## License
+### Contributors
 
-Licensed under the [MIT License](./LICENSE)
+Thanks go to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
