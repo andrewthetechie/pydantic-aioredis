@@ -69,7 +69,6 @@ async def test_float_int_assign_after(redis_store):
         key=key,
         float_int=2,  # gets cast to 2.0
     )
-    print(f"{instance.float_int=}")  # is float here
     instance.float_int = 1
     # Passes !
     assert isinstance(instance.float_int, int)
@@ -120,7 +119,6 @@ async def test_int_float_assign_after(redis_store):
         key=key,
         int_float=2.9,
     )
-    print(f"{instance.int_float=}")
     instance.int_float = 1.9
     # Passes !
     assert isinstance(instance.int_float, float)
