@@ -37,7 +37,7 @@ nox.options.sessions = (
 )
 mypy_type_packages = ()
 pyproject = toml.load("pyproject.toml")
-test_requirements = pyproject["tool"]["poetry"]["dev-dependencies"].keys()
+test_requirements = pyproject["tool"]["poetry"]["group"]["dev"]["dependencies"].keys()
 
 
 def activate_virtualenv_in_precommit_hooks(session: Session) -> None:

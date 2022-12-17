@@ -2,6 +2,7 @@ from typing import List
 
 import pytest
 import pytest_asyncio
+from fakeredis.aioredis import FakeRedis
 from fastapi import FastAPI
 from httpx import AsyncClient
 from pydantic_aioredis import Model as PAModel
@@ -24,12 +25,13 @@ class ModelNoSync(PAModel):
 
 
 @pytest_asyncio.fixture()
-async def test_app(redis_server):
+async def test_app():
     store = Store(
         name="sample",
-        redis_config=RedisConfig(port=redis_server, db=1),  # nosec
+        redis_config=RedisConfig(port=1024, db=1),  # nosec
         life_span_in_seconds=3600,
     )
+    store.redis_store = FakeRedis(decode_responses=True)
     store.register_model(Model)
 
     app = FastAPI()
@@ -157,13 +159,14 @@ async def test_crudrouter_put_200(test_app, test_models):
 
 
 @pytest.mark.asyncio
-async def test_crudrouter_put_200_no_autosync(redis_server):
+async def test_crudrouter_put_200_no_autosync():
     """Tests that crudrouter put will 404 when no instance exists"""
     store = Store(
         name="sample",
-        redis_config=RedisConfig(port=redis_server, db=1),  # nosec
+        redis_config=RedisConfig(port=1024, db=1),  # nosec
         life_span_in_seconds=3600,
     )
+    store.redis_store = FakeRedis(decode_responses=True)
     store.register_model(ModelNoSync)
 
     app = FastAPI()

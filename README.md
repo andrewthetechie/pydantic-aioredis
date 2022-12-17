@@ -1,9 +1,5 @@
 # pydantic-aioredis
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
 A simple declarative ORM for Redis, using aioredis. Use your Pydantic
 models like an ORM, storing data in Redis!
 
@@ -19,7 +15,8 @@ Inspired by
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/andrewthetechie/pydantic-aioredis?label=Latest%20Release">
     <br />
     <a href="https://github.com/andrewthetechie/pydantic-aioredis/issues"><img src="https://img.shields.io/github/issues/andrewthetechie/pydantic-aioredis" /></a>
-    <img alt="GitHub Workflow Status Test and Lint (branch)" src="https://img.shields.io/github/workflow/status/andrewthetechie/pydantic-aioredis/Tests/main?label=Tests">
+    <img alt="GitHub Workflow Status Test and Lint (branch)" src="https://img.shields.io/github/actions/workflow/status/andrewthetechie/pydantic-aioredis/tests.yml?branch=main">
+    <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)">
     <br />
     <a href="https://pypi.org/project/pydantic-aioredis" target="_blank">
         <img src="https://img.shields.io/pypi/v/pydantic-aioredis" alt="Package version">
