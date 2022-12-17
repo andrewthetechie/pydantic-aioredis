@@ -43,6 +43,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "ceteri",
+      "name": "Paco Nathan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57973?v=4",
+      "profile": "https://derwen.ai/paco",
+      "contributions": [
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
