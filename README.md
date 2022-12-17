@@ -154,6 +154,7 @@ Thanks go to these wonderful people ([emoji key](https://allcontributors.org/doc
       <td align="center"><a href="https://github.com/Tinitto"><img src="https://avatars.githubusercontent.com/u/21363733??v=4?s=100" width="100px;" alt="Martin Ahindura"/><br /><sub><b>Martin Ahindura</b></sub></a><br /><a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=Tinitto" title="Code">💻</a> <a href="#ideas-Tinitto" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center"><a href="https://github.com/david-wahlstedt"><img src="https://avatars.githubusercontent.com/u/66391333?v=4?s=100" width="100px;" alt="david-wahlstedt"/><br /><sub><b>david-wahlstedt</b></sub></a><br /><a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=david-wahlstedt" title="Tests">⚠️</a></td>
       <td align="center"><a href="https://blog.gtmanfred.com"><img src="https://avatars.githubusercontent.com/u/732321?v=4?s=100" width="100px;" alt="Daniel Wallace"/><br /><sub><b>Daniel Wallace</b></sub></a><br /><a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=gtmanfred" title="Tests">⚠️</a></td>
+      <td align="center"><a href="https://derwen.ai/paco"><img src="https://avatars.githubusercontent.com/u/57973?v=4?s=100" width="100px;" alt="Paco Nathan"/><br /><sub><b>Paco Nathan</b></sub></a><br /><a href="#example-ceteri" title="Examples">💡</a></td>
     </tr>
   </tbody>
 </table>
