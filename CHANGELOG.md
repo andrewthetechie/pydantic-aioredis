@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.1.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.0.0...v1.1.0) (2022-12-17)
+
+
+### Features
+
+* py3.11 support ([#391](https://github.com/andrewthetechie/pydantic-aioredis/issues/391)) ([2a82181](https://github.com/andrewthetechie/pydantic-aioredis/commit/2a82181ffb29ed7e26c314a0b9d9f0f2f29a6abb))
+
+
+### Bug Fixes
+
+* add toml ([ea583b1](https://github.com/andrewthetechie/pydantic-aioredis/commit/ea583b152c2aecf31495cc95303ba79ec821e799))
+* update all requirements, safety ignore ([ebc1e86](https://github.com/andrewthetechie/pydantic-aioredis/commit/ebc1e863e251c9d8a7976d75335f84b29d1d2b4b))
+
+
+### Documentation
+
+* add all contributors ([#384](https://github.com/andrewthetechie/pydantic-aioredis/issues/384)) ([01dae8f](https://github.com/andrewthetechie/pydantic-aioredis/commit/01dae8fbfe706bba60e6be429ad040c4d641ecef))
+* add andrewthetechie as a contributor for code, and doc ([#386](https://github.com/andrewthetechie/pydantic-aioredis/issues/386)) ([90739f9](https://github.com/andrewthetechie/pydantic-aioredis/commit/90739f9bae9667662175811404b7ecc3d7ca76ec))
+* add david-wahlstedt as a contributor for test ([#388](https://github.com/andrewthetechie/pydantic-aioredis/issues/388)) ([ad155f7](https://github.com/andrewthetechie/pydantic-aioredis/commit/ad155f79e303d72a9717021ae89668e51d8f50d6))
+* add gtmanfred as a contributor for test ([#390](https://github.com/andrewthetechie/pydantic-aioredis/issues/390)) ([2428db4](https://github.com/andrewthetechie/pydantic-aioredis/commit/2428db486b9fcd2ce654c711f5a7fe5b25f456de))
+* add martin ([23f0e56](https://github.com/andrewthetechie/pydantic-aioredis/commit/23f0e560a65bad108b82f6e4f40384ff69156e26))
+* update development docs ([97640e8](https://github.com/andrewthetechie/pydantic-aioredis/commit/97640e843f2f201f88e6c3ed580fd5947464e00a))
+
 ## [1.0.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v0.7.0...v1.0.0) (2022-09-23)
 
 
