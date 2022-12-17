@@ -2,7 +2,6 @@ from typing import List
 
 import pytest
 import pytest_asyncio
-from fakeredis.aioredis import FakeRedis
 from fastapi import FastAPI
 from httpx import AsyncClient
 from pydantic_aioredis import Model as PAModel
@@ -25,20 +24,15 @@ class ModelNoSync(PAModel):
 
 
 @pytest_asyncio.fixture()
-async def test_app():
-    store = Store(
-        name="sample",
-        redis_config=RedisConfig(port=1024, db=1),  # nosec
-        life_span_in_seconds=3600,
-    )
-    store.redis_store = FakeRedis(decode_responses=True)
-    store.register_model(Model)
+async def test_app(redis_store):
+    redis_store.register_model(Model)
 
     app = FastAPI()
 
-    router = PydanticAioredisCRUDRouter(schema=Model, store=store)
+    router = PydanticAioredisCRUDRouter(schema=Model, store=redis_store)
     app.include_router(router)
-    yield store, app, Model
+    yield redis_store, app, Model
+    await redis_store.redis_store.close()
 
 
 @pytest_asyncio.fixture()
@@ -148,19 +142,14 @@ async def test_crudrouter_put_200(test_app, test_models):
     assert result["value"] == 100
 
 
-async def test_crudrouter_put_200_no_autosync():
+async def test_crudrouter_put_200_no_autosync(redis_store):
     """Tests that crudrouter put will 404 when no instance exists"""
-    store = Store(
-        name="sample",
-        redis_config=RedisConfig(port=1024, db=1),  # nosec
-        life_span_in_seconds=3600,
-    )
-    store.redis_store = FakeRedis(decode_responses=True)
-    store.register_model(ModelNoSync)
+
+    redis_store.register_model(ModelNoSync)
 
     app = FastAPI()
 
-    router = PydanticAioredisCRUDRouter(schema=ModelNoSync, store=store)
+    router = PydanticAioredisCRUDRouter(schema=ModelNoSync, store=redis_store)
     app.include_router(router)
     await ModelNoSync.insert(ModelNoSync(name="test", value=20))
     async with AsyncClient(app=app, base_url="http://test") as client:

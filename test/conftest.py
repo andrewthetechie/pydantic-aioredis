@@ -18,7 +18,7 @@ async def redis_store():
     )
     store.redis_store = FakeRedis(decode_responses=True)
     yield store
-    await store.redis_store.flushall()
+    await store.redis_store.close()
 
 
 def pytest_configure(config):
