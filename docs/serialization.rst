@@ -16,7 +16,10 @@ Unintentional Type Casting with Union Types
 *******************************************
 
 When using Union types, pydantic will cast the value to the first type in the Union. This can cause unintended type casting. For example, if you have a field
-of type Union[float, int], and you set the value to 1, pydantic will cast the value to a float 1.0. This is an issue with Pydantic. More info can be found in
+of type Union[float, int], and you set the value to 1, pydantic will cast the value to a float 1.0. In the other direction (i.e. `x: Union[int, float]`) will result in
+the value being casted as an int and rounded. If you used a value of x = 1.99, it would get cast as an int and rounded to 1.
+
+This is an issue with Pydantic. More info can be found in
 `this issue <https://github.com/andrewthetechie/pydantic-aioredis/issues/379>`_ reported by `david-wahlstedt <https://github.com/david-wahlstedt>`_ and `this issue in Pydantic <https://github.com/pydantic/pydantic/issues/4519>`_.
 
 There are some `test cases <https://github.com/andrewthetechie/pydantic-aioredis/blob/main/test/test_union_typing.py>`_ in pydantic_aioredis that illustrate this problem.
