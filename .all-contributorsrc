@@ -52,6 +52,15 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "AndreasPB",
+      "name": "Andreas Brodersen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43907402?v=4",
+      "profile": "https://www.linkedin.com/in/andreas-brodersen-1b955b100/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
