@@ -30,7 +30,42 @@ class Model(_AbstractModel):
     thismodel:key
     """
 
-    _auto_sync = True
+    # if _auto_sync is set to true, the model will automatically sync to redis when a field is changed
+    _auto_sync = False
+    # if _auto_save is set to true, the model will automatically save to redis when it is created
+    _auto_save = False
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if self._auto_save:
+            self.__save_from_sync()
+
+    def __setattr__(self, name: str, value: Any):
+        """
+        Overrides the default __setattr__ to allow for auto_sync
+        """
+        super().__setattr__(name, value)
+        if self._auto_sync and getattr(self, "_store", None) is not None:
+            self.__save_from_sync()
+
+    def __save_from_sync(self):
+        """
+        Calls the async save function from a sync context
+
+        """
+        if version_info.minor < 10:
+            # less than 3.10.0
+            io_loop = asyncio.get_event_loop()
+        else:
+            # equal or greater than 3.10.0
+            try:
+                io_loop = asyncio.get_running_loop()
+            except RuntimeError:
+                io_loop = asyncio.new_event_loop()
+        # https://github.com/erdewit/nest_asyncio
+        # Use nest_asyncio so we can call the async save
+        nest_asyncio.apply()
+        io_loop.run_until_complete(self.save())
 
     @classmethod
     @lru_cache(1)
@@ -124,24 +159,6 @@ class Model(_AbstractModel):
 
         return response
 
-    def __setattr__(self, name: str, value: Any):
-        super().__setattr__(name, value)
-        store = getattr(self, "_store", None)
-        if self._auto_sync and store is not None:
-            if version_info.major == 3 and version_info.minor < 10:
-                # less than 3.10.0
-                io_loop = asyncio.get_event_loop()
-            else:
-                # equal or greater than 3.10.0
-                try:
-                    io_loop = asyncio.get_running_loop()
-                except RuntimeError:
-                    io_loop = asyncio.new_event_loop()
-            # https://github.com/erdewit/nest_asyncio
-            # Use nest_asyncio so we can call the async save
-            nest_asyncio.apply()
-            io_loop.run_until_complete(self.save())
-
     async def save(self):
         await self.insert(self)
 
@@ -214,3 +231,10 @@ class Model(_AbstractModel):
                 if record != {}
             ]
         return result
+
+
+class AutoModel(Model):
+    """A model that automatically saves to redis on creation and syncs changing fields to redis"""
+
+    _auto_sync: bool = True
+    _auto_save: bool = True
