@@ -42,9 +42,10 @@ async def test_float_int_assign_inside(redis_store):
     assert isinstance(instance.float_int, int)
 
 
+@pytest.mark.asyncio
 @pytest.mark.union_test
 @pytest.mark.xfail
-def test_float_int_assign_inside_pydantic_only():
+async def test_float_int_assign_inside_pydantic_only():
     class FloatIntTestPydantic(BaseModel):
 
         key: str
@@ -60,8 +61,9 @@ def test_float_int_assign_inside_pydantic_only():
     assert isinstance(instance.float_int, int)
 
 
+@pytest.mark.asyncio
 @pytest.mark.union_test
-def test_float_int_assign_after():
+async def test_float_int_assign_after():
     key = "test_float_int_assign_after"
     instance = FloatIntTest(
         key=key,
@@ -90,9 +92,10 @@ async def test_int_float_assign_inside(redis_store):
     assert isinstance(instance.int_float, float)
 
 
+@pytest.mark.asyncio
 @pytest.mark.union_test
 @pytest.mark.xfail
-def test_int_float_assign_inside_pydantic_only():
+async def test_int_float_assign_inside_pydantic_only():
     class IntFloatTestPydantic(BaseModel):
         key: str
         int_float: Union[int, float]  # fails
@@ -108,8 +111,9 @@ def test_int_float_assign_inside_pydantic_only():
     assert isinstance(instance.int_float, float)
 
 
+@pytest.mark.asyncio
 @pytest.mark.union_test
-def test_int_float_assign_after():
+async def test_int_float_assign_after():
     key = "test_int_float_assign_after"
     instance = IntFloatTest(
         key=key,

@@ -2,6 +2,7 @@ from typing import List
 
 import pytest
 import pytest_asyncio
+from fakeredis.aioredis import FakeRedis
 from fastapi import FastAPI
 from httpx import AsyncClient
 from pydantic_aioredis.config import RedisConfig
@@ -15,12 +16,13 @@ class Model(FastAPIModel):
 
 
 @pytest_asyncio.fixture()
-async def test_app(redis_server):
+async def test_app():
     store = Store(
         name="sample",
-        redis_config=RedisConfig(port=redis_server, db=1),  # nosec
+        redis_config=RedisConfig(port=1024, db=1),  # nosec
         life_span_in_seconds=3600,
     )
+    store.redis_store = FakeRedis(decode_responses=True)
     store.register_model(Model)
 
     app = FastAPI()
