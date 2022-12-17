@@ -14,19 +14,12 @@ Environment Setup
 
 .. code-block::
 
-  git clone https://github.com/sopherapps/pydantic-redis.git && cd pydantic-redis
+  git clone https://github.com/andrewthetechie/pydantic-aioredis.git && cd pydantic-aioredis
 
 *
-  Create a python 3.9 virtual environment and activate it. We suggest
+  Create a python 3.10 virtual environment and activate it. We suggest
   using `pyenv <https://github.com/pyenv/pyenv>`_ to easily setup
   multiple python environments on multiple versions.
-
-.. code-block::
-
-  # We use the extra python version (3.6, 3.7, 3.8) for tox testing
-  pyenv install 3.9.7 3.6.15 3.7.12 3.8.12
-  pyenv virtualenv 3.9.7 python-aioredis
-  pyenv local python-aioredis 3.6.15 3.7.12 3.8.12
 
 *
   Install the dependencies
