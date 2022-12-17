@@ -34,6 +34,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "gtmanfred",
+      "name": "Daniel Wallace",
+      "avatar_url": "https://avatars.githubusercontent.com/u/732321?v=4",
+      "profile": "https://blog.gtmanfred.com",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
