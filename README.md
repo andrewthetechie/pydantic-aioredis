@@ -15,7 +15,8 @@ Inspired by
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/andrewthetechie/pydantic-aioredis?label=Latest%20Release">
     <br />
     <a href="https://github.com/andrewthetechie/pydantic-aioredis/issues"><img src="https://img.shields.io/github/issues/andrewthetechie/pydantic-aioredis" /></a>
-    <img alt="GitHub Workflow Status Test and Lint (branch)" src="https://img.shields.io/github/workflow/status/andrewthetechie/pydantic-aioredis/Tests/main?label=Tests">
+    <img alt="GitHub Workflow Status Test and Lint (branch)" src="https://img.shields.io/github/actions/workflow/status/andrewthetechie/pydantic-aioredis/tests.yml?branch=main">
+    <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)">
     <br />
     <a href="https://pypi.org/project/pydantic-aioredis" target="_blank">
         <img src="https://img.shields.io/pypi/v/pydantic-aioredis" alt="Package version">
@@ -130,11 +131,34 @@ loop.run_until_complete(work_with_orm())
 | \_redis_separator   | No       | :            | Defaults to :, used to separate prefix, table_name, and primary_key  |
 | \_table_name        | NO       | cls.**name** | Defaults to the model's name, can set a custom name in redis         |
 
+## License
+
+Licensed under the [MIT License](./LICENSE)
+
 ## Contributing
 
 Contributions are very welcome.
 To learn more, see the [Contributor Guide](./CONTRIBUTING.rst)
 
-## License
+### Contributors
 
-Licensed under the [MIT License](./LICENSE)
+Thanks go to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/andrewthetechie"><img src="https://avatars.githubusercontent.com/u/1377314?v=4?s=100" width="100px;" alt="Andrew"/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=andrewthetechie" title="Code">💻</a> <a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=andrewthetechie" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://github.com/Tinitto"><img src="https://avatars.githubusercontent.com/u/21363733??v=4?s=100" width="100px;" alt="Martin Ahindura"/><br /><sub><b>Martin Ahindura</b></sub></a><br /><a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=Tinitto" title="Code">💻</a> <a href="#ideas-Tinitto" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center"><a href="https://github.com/david-wahlstedt"><img src="https://avatars.githubusercontent.com/u/66391333?v=4?s=100" width="100px;" alt="david-wahlstedt"/><br /><sub><b>david-wahlstedt</b></sub></a><br /><a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=david-wahlstedt" title="Tests">⚠️</a></td>
+      <td align="center"><a href="https://blog.gtmanfred.com"><img src="https://avatars.githubusercontent.com/u/732321?v=4?s=100" width="100px;" alt="Daniel Wallace"/><br /><sub><b>Daniel Wallace</b></sub></a><br /><a href="https://github.com/andrewthetechie/pydantic-aioredis/commits?author=gtmanfred" title="Tests">⚠️</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->

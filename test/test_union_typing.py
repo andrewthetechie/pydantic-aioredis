@@ -63,14 +63,12 @@ async def test_float_int_assign_inside_pydantic_only():
 
 @pytest.mark.asyncio
 @pytest.mark.union_test
-async def test_float_int_assign_after(redis_store):
+async def test_float_int_assign_after():
     key = "test_float_int_assign_after"
-    redis_store.register_model(FloatIntTest)
     instance = FloatIntTest(
         key=key,
         float_int=2,  # gets cast to 2.0
     )
-    await instance.save()
     instance.float_int = 1
     # Passes !
     assert isinstance(instance.float_int, int)
@@ -115,7 +113,7 @@ async def test_int_float_assign_inside_pydantic_only():
 
 @pytest.mark.asyncio
 @pytest.mark.union_test
-async def test_int_float_assign_after(redis_store):
+async def test_int_float_assign_after():
     key = "test_int_float_assign_after"
     instance = IntFloatTest(
         key=key,
