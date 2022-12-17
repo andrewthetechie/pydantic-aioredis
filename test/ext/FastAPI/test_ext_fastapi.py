@@ -34,7 +34,6 @@ async def test_app():
     yield store, app
 
 
-@pytest.mark.asyncio
 async def test_select_or_404_404(test_app):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
@@ -43,7 +42,6 @@ async def test_select_or_404_404(test_app):
     assert response.status_code == 404
 
 
-@pytest.mark.asyncio
 async def test_select_or_404_200(test_app):
     """Tests that select_or_404 will return a model when that model exists"""
     await Model.insert(Model(name="test"))

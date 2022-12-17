@@ -1,3 +1,5 @@
+import inspect
+
 import pytest
 import pytest_asyncio
 from fakeredis.aioredis import FakeRedis
@@ -22,3 +24,11 @@ async def redis_store():
 def pytest_configure(config):
     """Configure our markers"""
     config.addinivalue_line("markers", "union_test: Tests for union types")
+
+
+@pytest.hookimpl(trylast=True)
+def pytest_collection_modifyitems(config, items):
+    """Tags all async tests with the asyncio marker"""
+    for item in items:
+        if inspect.iscoroutinefunction(item.function):
+            item.add_marker(pytest.mark.asyncio)

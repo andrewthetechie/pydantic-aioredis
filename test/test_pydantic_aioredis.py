@@ -223,7 +223,6 @@ parameters = [
 ]
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_bulk_insert(store, models, model_class, key_prefix: str):
     """Providing a list of Model instances to the insert method inserts the records in redis"""
@@ -252,7 +251,6 @@ async def test_bulk_insert(store, models, model_class, key_prefix: str):
     assert models == models_deserialized
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_insert_single(store, models, model_class, key_prefix: str):
     """
@@ -269,7 +267,6 @@ async def test_insert_single(store, models, model_class, key_prefix: str):
     assert models[0] == model_deser
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_insert_single_lifespan(store, models, model_class, key_prefix: str):
     """
@@ -286,7 +283,6 @@ async def test_insert_single_lifespan(store, models, model_class, key_prefix: st
     assert models[0] == model_deser
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_select_default(store, models, model_class, key_prefix):
     """Selecting without arguments returns all the book models"""
@@ -296,7 +292,6 @@ async def test_select_default(store, models, model_class, key_prefix):
         assert model in models
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 @pytest.mark.parametrize("execution_count", range(5))
 async def test_select_pagination(
@@ -312,7 +307,6 @@ async def test_select_pagination(
         assert model in models
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_select_no_contents(store, models, model_class, key_prefix):
     """Test that we get None when there are no models"""
@@ -322,7 +316,6 @@ async def test_select_no_contents(store, models, model_class, key_prefix):
     assert response is None
 
 
-@pytest.mark.asyncio
 async def test_select_single_content(redis_store):
     """Check returns for a single instance"""
     # await redis_store.redis_store.flushall()
@@ -341,7 +334,6 @@ async def test_select_single_content(redis_store):
         response[0]["published_on"]
 
 
-@pytest.mark.asyncio
 async def test_select_some_columns(redis_store):
     """
     Selecting some columns returns a list of dictionaries of all books models with only those columns
@@ -360,7 +352,6 @@ async def test_select_some_columns(redis_store):
             assert f"{book_in_response[column]}" == f"{getattr(book, column)}"
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 @pytest.mark.parametrize("execution_count", range(5))
 async def test_select_some_ids(store, models, model_class, key_prefix, execution_count):
@@ -380,7 +371,6 @@ async def test_select_some_ids(store, models, model_class, key_prefix, execution
         assert model in to_select
 
 
-@pytest.mark.asyncio
 async def test_select_bad_id(redis_store):
     """
     Selecting some ids returns only those elements with the given ids
@@ -390,7 +380,6 @@ async def test_select_bad_id(redis_store):
     assert response is None
 
 
-@pytest.mark.asyncio
 async def test_update(redis_store):
     """
     Updating an item of a given primary key updates it in redis
@@ -414,7 +403,6 @@ async def test_update(redis_store):
     assert book.published_on == old_book.published_on
 
 
-@pytest.mark.asyncio
 async def test_delete_single(redis_store):
     """Test deleting a single record"""
     await Book.insert(books)
@@ -424,7 +412,6 @@ async def test_delete_single(redis_store):
     assert check_for_book == {}
 
 
-@pytest.mark.asyncio
 async def test_delete_multiple(redis_store):
     """
     Providing a list of ids to the delete function will remove the items from redis
@@ -455,7 +442,6 @@ async def test_delete_multiple(redis_store):
     assert books_left_in_db == books_in_redis_as_models
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_delete_all(store, models, model_class, key_prefix):
     """
@@ -469,7 +455,6 @@ async def test_delete_all(store, models, model_class, key_prefix):
     assert post_del_result is None
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_delete_none(store, models, model_class, key_prefix):
     """
@@ -478,7 +463,6 @@ async def test_delete_none(store, models, model_class, key_prefix):
     assert await model_class.delete() is None
 
 
-@pytest.mark.asyncio
 async def test_unserializable_object(redis_store):
     class MyClass:
         ...
@@ -494,7 +478,6 @@ async def test_unserializable_object(redis_store):
         await TestModel.insert(this_model)
 
 
-@pytest.mark.asyncio
 async def test_enum_support(redis_store):
     """Test case for enum support"""
 
@@ -516,7 +499,6 @@ async def test_enum_support(redis_store):
     assert from_redis[0] == this_model
 
 
-@pytest.mark.asyncio
 async def test_uuid_support(redis_store):
     """Test case for uuid support"""
 

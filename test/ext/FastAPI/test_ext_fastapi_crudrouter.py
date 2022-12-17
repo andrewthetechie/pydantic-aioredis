@@ -46,7 +46,6 @@ def test_models():
     return [Model(name=f"test{i}", value=i) for i in range(1, 10)]
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_get_many_200_empty(test_app):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
@@ -56,7 +55,6 @@ async def test_crudrouter_get_many_200_empty(test_app):
     assert response.json() == []
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_get_one_404(test_app):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
@@ -65,7 +63,6 @@ async def test_crudrouter_get_one_404(test_app):
     assert response.status_code == 404
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_get_many_200(test_app, test_models):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     await test_app[2].insert(test_models)
@@ -77,7 +74,6 @@ async def test_crudrouter_get_many_200(test_app, test_models):
     assert len(result) == len(test_models)
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_get_many_200_pagination(test_app, test_models):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     await test_app[2].insert(test_models)
@@ -89,7 +85,6 @@ async def test_crudrouter_get_many_200_pagination(test_app, test_models):
     assert len(result) == 5
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_get_many_200(test_app, test_models):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     await test_app[2].insert(test_models)
@@ -101,7 +96,6 @@ async def test_crudrouter_get_many_200(test_app, test_models):
     assert len(result) == len(test_models)
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_get_one_200(test_app, test_models):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     await test_app[2].insert(test_models)
@@ -113,7 +107,6 @@ async def test_crudrouter_get_one_200(test_app, test_models):
     assert result["name"] == test_models[0].name
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_post_200(test_app, test_models):
     """Tests that crudrouter will post properly"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
@@ -124,7 +117,6 @@ async def test_crudrouter_post_200(test_app, test_models):
     assert result["name"] == test_models[0].name
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_post_422(test_app, test_models):
     """Tests that crudrouter post will 422 with invalid data"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
@@ -133,7 +125,6 @@ async def test_crudrouter_post_422(test_app, test_models):
     assert response.status_code == 422
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_put_404(test_app, test_models):
     """Tests that crudrouter put will 404 when no instance exists"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
@@ -142,7 +133,6 @@ async def test_crudrouter_put_404(test_app, test_models):
     assert response.status_code == 404
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_put_200(test_app, test_models):
     """Tests that crudrouter put will 200 on a successful update"""
     await test_app[2].insert(test_models)
@@ -158,7 +148,6 @@ async def test_crudrouter_put_200(test_app, test_models):
     assert result["value"] == 100
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_put_200_no_autosync():
     """Tests that crudrouter put will 404 when no instance exists"""
     store = Store(
@@ -186,7 +175,6 @@ async def test_crudrouter_put_200_no_autosync():
     assert result["value"] == 100
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_put_404(test_app, test_models):
     """Tests that crudrouter put will 404 when no instance exists"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
@@ -197,7 +185,6 @@ async def test_crudrouter_put_404(test_app, test_models):
     assert response.status_code == 404
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_delete_200(test_app, test_models):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     await test_app[2].insert(test_models)
@@ -214,7 +201,6 @@ async def test_crudrouter_delete_200(test_app, test_models):
     assert response.status_code == 200
 
 
-@pytest.mark.asyncio
 async def test_crudrouter_delete_404(test_app, test_models):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:

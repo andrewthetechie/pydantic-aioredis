@@ -27,7 +27,6 @@ class IntFloatTest(Model):
 """Integers gets cast into floats unintentionally"""
 
 
-@pytest.mark.asyncio
 @pytest.mark.union_test
 @pytest.mark.xfail
 async def test_float_int_assign_inside(redis_store):
@@ -42,7 +41,6 @@ async def test_float_int_assign_inside(redis_store):
     assert isinstance(instance.float_int, int)
 
 
-@pytest.mark.asyncio
 @pytest.mark.union_test
 @pytest.mark.xfail
 async def test_float_int_assign_inside_pydantic_only():
@@ -61,7 +59,6 @@ async def test_float_int_assign_inside_pydantic_only():
     assert isinstance(instance.float_int, int)
 
 
-@pytest.mark.asyncio
 @pytest.mark.union_test
 async def test_float_int_assign_after():
     key = "test_float_int_assign_after"
@@ -77,7 +74,6 @@ async def test_float_int_assign_after():
 """Floats gets cast (and truncated) into integers unintentionally"""
 
 
-@pytest.mark.asyncio
 @pytest.mark.union_test
 @pytest.mark.xfail
 async def test_int_float_assign_inside(redis_store):
@@ -92,7 +88,6 @@ async def test_int_float_assign_inside(redis_store):
     assert isinstance(instance.int_float, float)
 
 
-@pytest.mark.asyncio
 @pytest.mark.union_test
 @pytest.mark.xfail
 async def test_int_float_assign_inside_pydantic_only():
@@ -111,7 +106,6 @@ async def test_int_float_assign_inside_pydantic_only():
     assert isinstance(instance.int_float, float)
 
 
-@pytest.mark.asyncio
 @pytest.mark.union_test
 async def test_int_float_assign_after():
     key = "test_int_float_assign_after"
