@@ -60,7 +60,7 @@ async def test_float_int_assign_inside_pydantic_only():
 
 
 @pytest.mark.union_test
-async def test_float_int_assign_after():
+def test_float_int_assign_after():
     key = "test_float_int_assign_after"
     instance = FloatIntTest(
         key=key,
@@ -107,7 +107,7 @@ async def test_int_float_assign_inside_pydantic_only():
 
 
 @pytest.mark.union_test
-async def test_int_float_assign_after():
+def test_int_float_assign_after():
     key = "test_int_float_assign_after"
     instance = IntFloatTest(
         key=key,
