@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.1](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.1.0...v1.1.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* cleanup serializer ([#399](https://github.com/andrewthetechie/pydantic-aioredis/issues/399)) ([ec1421c](https://github.com/andrewthetechie/pydantic-aioredis/commit/ec1421c55608d87400eeb3e49332c61dddc0c5f6))
+
+
+### Documentation
+
+* add david-wahlstedt as a contributor for doc, and review ([#394](https://github.com/andrewthetechie/pydantic-aioredis/issues/394)) ([c9beb1a](https://github.com/andrewthetechie/pydantic-aioredis/commit/c9beb1aa85a7c394aceb0ab5cde10f6dfb32bf1a))
+* add docs about Union types and casting ([#383](https://github.com/andrewthetechie/pydantic-aioredis/issues/383)) ([2af6167](https://github.com/andrewthetechie/pydantic-aioredis/commit/2af61672e3fb02db60f5faea0a6bf1fd528dcb6a))
+* update contributors shield ([84cc727](https://github.com/andrewthetechie/pydantic-aioredis/commit/84cc727763f7757ead8ecaf870885e4dd71636b0))
+
 ## [1.1.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.0.0...v1.1.0) (2022-12-17)
 
 
