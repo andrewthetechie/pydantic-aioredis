@@ -16,7 +16,7 @@ Inspired by
     <br />
     <a href="https://github.com/andrewthetechie/pydantic-aioredis/issues"><img src="https://img.shields.io/github/issues/andrewthetechie/pydantic-aioredis" /></a>
     <img alt="GitHub Workflow Status Test and Lint (branch)" src="https://img.shields.io/github/actions/workflow/status/andrewthetechie/pydantic-aioredis/tests.yml?branch=main">
-    <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)">
+    <img alt="Contributors" src="https://img.shields.io/github/contributors/andrewthetechie/pydantic-aioredis">
     <br />
     <a href="https://pypi.org/project/pydantic-aioredis" target="_blank">
         <img src="https://img.shields.io/pypi/v/pydantic-aioredis" alt="Package version">
