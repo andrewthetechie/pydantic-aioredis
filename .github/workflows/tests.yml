@@ -92,6 +92,8 @@ jobs:
             ${{ steps.pre-commit-cache.outputs.result }}-
 
       - name: Run Nox
+        env:
+          HYPOTHESIS_PROFILE: ci
         run: |
           nox --force-color --python=${{ matrix.python }}
 

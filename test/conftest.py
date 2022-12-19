@@ -24,6 +24,7 @@ async def redis_store():
 def pytest_configure(config):
     """Configure our markers"""
     config.addinivalue_line("markers", "union_test: Tests for union types")
+    config.addinivalue_line("markers", "hypothesis: Tests that use hypothesis")
 
 
 @pytest.hookimpl(trylast=True)
@@ -32,3 +33,12 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if inspect.iscoroutinefunction(item.function):
             item.add_marker(pytest.mark.asyncio)
+
+
+import os
+from hypothesis import settings, Verbosity
+
+settings.register_profile("ci", max_examples=5000)
+settings.register_profile("dev", max_examples=100)
+settings.register_profile("debug", max_examples=10, verbosity=Verbosity.verbose)
+settings.load_profile(os.getenv("HYPOTHESIS_PROFILE", "dev"))
