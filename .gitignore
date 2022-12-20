@@ -11,3 +11,4 @@ coverage.xml
 __pycache__/
 examples/benchmarks/.benchmarks
 examples/benchmarks/.coverage
+.hypothesis/
