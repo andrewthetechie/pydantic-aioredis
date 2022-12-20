@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydantic-aioredis"
-version = "1.1.0"
+version = "1.1.1"
 description = "Use your pydantic models as an ORM, storing data in Redis."
 authors = ["Andrew Herrington <andrew.the.techie@gmail.com>"]
 license = "MIT"
@@ -75,6 +75,7 @@ pylint = "^2.13.9"
 setuptools-git-versioning = "^1.13.1"
 bandit = "^1.7.4"
 fakeredis = {extras = ["json"], version = "2.2.0"}
+hypothesis = "^6.61.0"
 
 [tool.coverage.paths]
 source = ["pydantic_aioredis", "*/site-packages"]

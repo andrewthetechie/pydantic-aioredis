@@ -2,7 +2,6 @@
 import json
 from datetime import date
 from datetime import datetime
-from enum import Enum
 from ipaddress import IPv4Address
 from ipaddress import IPv4Network
 from ipaddress import IPv6Address
@@ -15,31 +14,8 @@ from typing import Union
 from uuid import UUID
 
 from pydantic import BaseModel
-from pydantic.fields import SHAPE_DEFAULTDICT
-from pydantic.fields import SHAPE_DICT
-from pydantic.fields import SHAPE_FROZENSET
-from pydantic.fields import SHAPE_LIST
-from pydantic.fields import SHAPE_MAPPING
-from pydantic.fields import SHAPE_SEQUENCE
-from pydantic.fields import SHAPE_SET
-from pydantic.fields import SHAPE_TUPLE
-from pydantic.fields import SHAPE_TUPLE_ELLIPSIS
 from pydantic_aioredis.config import RedisConfig
 from redis import asyncio as aioredis
-
-# JSON_DUMP_SHAPES are object types that are serialized to JSON using json.dumps
-JSON_DUMP_SHAPES = (
-    SHAPE_LIST,
-    SHAPE_SET,
-    SHAPE_MAPPING,
-    SHAPE_TUPLE,
-    SHAPE_TUPLE_ELLIPSIS,
-    SHAPE_SEQUENCE,
-    SHAPE_FROZENSET,
-    SHAPE_DICT,
-    SHAPE_DEFAULTDICT,
-    Enum,
-)
 
 # STR_DUMP_SHAPES are object types that are serialized to strings using str(obj)
 # They are stored in redis as strings and rely on pydantic to deserialize them
@@ -113,8 +89,6 @@ class _AbstractModel(BaseModel):
                 continue
             if cls.__fields__[field].type_ not in [str, float, int]:
                 data[field] = json.dumps(data[field], default=cls.json_default)
-            if getattr(cls.__fields__[field], "shape", None) in JSON_DUMP_SHAPES:
-                data[field] = json.dumps(data[field], default=cls.json_default)
             if getattr(cls.__fields__[field], "allow_none", False):
                 if data[field] is None:
                     data[field] = "None"
@@ -132,8 +106,6 @@ class _AbstractModel(BaseModel):
             if field not in columns:
                 continue
             if cls.__fields__[field].type_ not in [str, float, int]:
-                data[field] = json.loads(data[field], object_hook=cls.json_object_hook)
-            if getattr(cls.__fields__[field], "shape", None) in JSON_DUMP_SHAPES:
                 data[field] = json.loads(data[field], object_hook=cls.json_object_hook)
             if getattr(cls.__fields__[field], "allow_none", False):
                 if data[field] == "None":

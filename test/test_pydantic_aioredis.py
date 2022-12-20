@@ -13,6 +13,7 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 from fakeredis.aioredis import FakeRedis
+from pydantic_aioredis.abstract import _AbstractModel
 from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.model import Model
 from pydantic_aioredis.store import Store
@@ -189,6 +190,15 @@ def test_store_model(redis_store):
 
     with pytest.raises(KeyError):
         redis_store.model("Notabook")
+
+
+def test_json_object_hook():
+    class TestObj:
+        def __init__(self, value: str):
+            self.value = value
+
+    test_obj = TestObj("test")
+    assert test_obj.value == _AbstractModel.json_object_hook(test_obj).value
 
 
 parameters = [
