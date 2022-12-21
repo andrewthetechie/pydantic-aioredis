@@ -1,6 +1,6 @@
 pydantic-aioredis
 =============================================
-A declarative ORM for Redis, using aioredis. Use your Pydantic
+A declarative ORM for Redis, using redis-py in async mode. Use your Pydantic
 models like an ORM, storing data in Redis.
 
 Inspired by
@@ -10,8 +10,8 @@ Inspired by
 Dependencies
 -----------------
 
-* `Python +3.6 <https://www.python.org>`_
-* `aioredis 2.0 <https://aioredis.readthedocs.io/en/latest/>`_
+* `Python +3.7 <https://www.python.org>`_
+* `redis-py <4.2 <https://aioredis.readthedocs.io/en/latest/>`_
 * `pydantic <https://github.com/samuelcolvin/pydantic/>`_
 
 
@@ -20,6 +20,7 @@ Dependencies
 
    quickstart
    serialization
+   automatic_saving
    extras
    development
    module
