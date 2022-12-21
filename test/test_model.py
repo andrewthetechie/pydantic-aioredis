@@ -69,6 +69,7 @@ def test_auto_save_in_init():
 @pytest.mark.asyncio  # Even though we have pytest_collection_modifyitems, hypothesis needs this mark
 async def test_update_cm(test_str, test_int, update_int):
     """ """
+    update_int = test_int + update_int
 
     class UpdateModel(Model):
         _primary_key_field: str = "test_str"
