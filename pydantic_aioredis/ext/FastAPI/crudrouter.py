@@ -92,21 +92,10 @@ class PydanticAioredisCRUDRouter(CRUDGenerator[SCHEMA]):
                 raise NOT_FOUND
             item = item[0]
 
-            # if autosync is on, updating one key at a time would update redis a bunch of times and be slow
-            # instead, let's update the dict, and insert a new object
-            if item._auto_sync:
-                this_dict = item.dict()
-                for key, value in model.dict().items():
-                    this_dict[key] = value
-                item = self.schema(**this_dict)
-
-                await self.schema.insert([item])
-
-            else:
+            async with item.update() as item:
                 for key, value in model.dict().items():
                     setattr(item, key, value)
 
-                await item.save()
             return item
 
         return route

@@ -27,7 +27,7 @@ Inspired by
 ## Main Dependencies
 
 - [Python +3.7](https://www.python.org)
-- [redis-py <4.3.0](https://github.com/redis/redis-py)
+- [redis-py <4.2.0](https://github.com/redis/redis-py)
 - [pydantic](https://github.com/samuelcolvin/pydantic/)
 
 ## Getting Started
@@ -103,16 +103,17 @@ async def work_with_orm():
   books_with_few_fields = await Book.select(columns=["author", "in_stock"])
   print(books_with_few_fields) # Will print [{"author": "'Charles Dickens", "in_stock": "True"},...]
 
-  # When _auto_sync = True (default), updating any attribute will update that field in Redis too
-  this_book = Book(title="Moby Dick", author='Herman Melvill', published_on=date(year=1851, month=10, day=18))
+
+  this_book = Book(title="Moby Dick", author='Herman Melvill', published_on=date(year=1851, month=10, day=17))
   await Book.insert(this_book)
   # oops, there was a typo. Fix it
-  this_book.author = "Herman Melville"
+  # Update is an async context manager and will update redis with all changes in one operations
+  async with this_book.update():
+    this_book.author = "Herman Melville"
+    this_book.published_on=date(year=1851, month=10, day=18)
   this_book_from_redis = await Book.select(ids=["Moby Dick"])
   assert this_book_from_redis[0].author == "Herman Melville"
-
-  # If you have _auto_save set to false on a model, you have to await .save() to update a model in tedis
-  await this_book.save()
+  assert this_book_from_redis[0].author == date(year=1851, month=10, day=18)
 
   # Delete any number of items
   await Library.delete(ids=["The Grand Library"])
@@ -122,14 +123,16 @@ loop = asyncio.get_event_loop()
 loop.run_until_complete(work_with_orm())
 ```
 
-#### Custom Fields in Model
+### Custom Fields in Model
 
 | Field Name          | Required | Default      | Description                                                          |
 | ------------------- | -------- | ------------ | -------------------------------------------------------------------- |
 | \_primary_key_field | Yes      | None         | The field of your model that is the primary key                      |
 | \_redis_prefix      | No       | None         | If set, will be added to the beginning of the keys we store in redis |
 | \_redis_separator   | No       | :            | Defaults to :, used to separate prefix, table_name, and primary_key  |
-| \_table_name        | NO       | cls.**name** | Defaults to the model's name, can set a custom name in redis         |
+| \_table_name        | No       | cls.**name** | Defaults to the model's name, can set a custom name in redis         |
+| \_auto_save         | No       | False        | Defaults to false. If true, will save to redis on instantiation      |
+| \_auto_sync         | No       | False        | Defaults to false. If true, will save to redis on attr update        |
 
 ## License
 

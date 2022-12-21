@@ -1,5 +1,6 @@
 """Module containing the model classes"""
 import asyncio
+from contextlib import asynccontextmanager
 from functools import lru_cache
 from sys import version_info
 from typing import Any
@@ -30,7 +31,83 @@ class Model(_AbstractModel):
     thismodel:key
     """
 
-    _auto_sync = True
+    _auto_sync = False
+    _auto_save = False
+
+    def __init__(self, **data: Any) -> None:
+        auto_save = (
+            data.pop("auto_save")
+            if "auto_save" in data.keys()
+            else getattr(self, "_auto_save", False)
+        )
+        auto_sync = (
+            data.pop("auto_sync")
+            if "auto_sync" in data.keys()
+            else getattr(self, "_auto_sync", False)
+        )
+        super().__init__(**data)
+        # set _auto_save and _auto_sync to the class defaults in the Config
+        self.Config.auto_sync = auto_sync
+        self.Config.auto_save = auto_save
+        # If this instance is _auto_save, save it
+        if self.auto_save and getattr(self, "_store", None) is not None:
+            self.__save_from_sync()
+
+    def __setattr__(self, name: str, value: Any):
+        """
+        This overrides __setattr__ to allow for auto_sync
+        because __setattr__ has be to sync, this uses a hack to call the async save method
+
+        """
+        super().__setattr__(name, value)
+        if self._auto_sync and getattr(self, "_store", None) is not None:
+            self.__save_from_sync()
+
+    def __save_from_sync(self):
+        """Calls the async save coroutine from a sync context, used with _auto_save and _auto_sync"""
+        if version_info.minor < 10:  # pragma: no cover
+            # less than 3.10.0
+            io_loop = asyncio.get_event_loop()
+        else:  # pragma: no cover
+            # equal or greater than 3.10.0
+            try:
+                io_loop = asyncio.get_running_loop()
+                # https://github.com/erdewit/nest_asyncio
+                # Use nest_asyncio so we can call the async save
+            except RuntimeError:
+                io_loop = asyncio.new_event_loop()
+        nest_asyncio.apply()
+        io_loop.run_until_complete(self.save())
+
+    @asynccontextmanager
+    async def update(self):
+        """
+        Async Context manager to allow for updating multiple fields without syncing to redis until the end
+        """
+        auto_sync = self.auto_sync
+        if auto_sync:
+            self.set_auto_sync(False)
+        yield self
+        if getattr(self, "_store", None) is not None:
+            await self.save()
+        if auto_sync != self.auto_sync:
+            self.set_auto_sync(auto_sync)
+
+    @property
+    def auto_sync(self) -> bool:
+        return getattr(self.Config, "auto_sync", False)
+
+    def set_auto_sync(self, auto_sync: bool = True) -> None:
+        """Change this instance of a model's _auto_sync setting"""
+        self.Config.auto_sync = auto_sync
+
+    @property
+    def auto_save(self) -> bool:
+        return getattr(self.Config, "auto_save", False)
+
+    def set_auto_save(self, auto_save: bool = True) -> None:
+        """Change this instance of a model's _auto_save setting"""
+        self.Config.auto_save = auto_save
 
     @classmethod
     @lru_cache(1)
@@ -124,24 +201,6 @@ class Model(_AbstractModel):
 
         return response
 
-    def __setattr__(self, name: str, value: Any):
-        super().__setattr__(name, value)
-        store = getattr(self, "_store", None)
-        if self._auto_sync and store is not None:
-            if version_info.major == 3 and version_info.minor < 10:
-                # less than 3.10.0
-                io_loop = asyncio.get_event_loop()
-            else:
-                # equal or greater than 3.10.0
-                try:
-                    io_loop = asyncio.get_running_loop()
-                except RuntimeError:
-                    io_loop = asyncio.new_event_loop()
-            # https://github.com/erdewit/nest_asyncio
-            # Use nest_asyncio so we can call the async save
-            nest_asyncio.apply()
-            io_loop.run_until_complete(self.save())
-
     async def save(self):
         await self.insert(self)
 
@@ -214,3 +273,10 @@ class Model(_AbstractModel):
                 if record != {}
             ]
         return result
+
+
+class AutoModel(Model):
+    """A model that automatically saves to redis on creation and syncs changing fields to redis"""
+
+    _auto_sync: bool = True
+    _auto_save: bool = True
