@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.1.1...v1.2.0) (2022-12-21)
+
+
+### Features
+
+* auto_sync and auto_save ([#401](https://github.com/andrewthetechie/pydantic-aioredis/issues/401)) ([0e11e9d](https://github.com/andrewthetechie/pydantic-aioredis/commit/0e11e9dedef38c8d7b6226a143e7a3ae7ad2a340))
+
 ## [1.1.1](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.1.0...v1.1.1) (2022-12-19)
 
 
