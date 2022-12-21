@@ -61,7 +61,11 @@ def test_auto_save_in_init():
     assert false_model.auto_save is False
 
 
-@given(st.text(min_size=2), st.integers(min_value=0), st.integers(min_value=0))
+@given(
+    st.text(min_size=2, alphabet=st.characters(whitelist_categories=("L", "P", "Nd"))),
+    st.integers(min_value=0),
+    st.integers(min_value=0),
+)
 @pytest.mark.asyncio  # Even though we have pytest_collection_modifyitems, hypothesis needs this mark
 async def test_update_cm(test_str, test_int, update_int):
     """ """
