@@ -14,6 +14,7 @@ from typing import Union
 from uuid import UUID
 
 from pydantic import BaseModel
+from pydantic import PrivateAttr
 from pydantic_aioredis.config import RedisConfig
 from redis import asyncio as aioredis
 
@@ -47,7 +48,10 @@ class _AbstractModel(BaseModel):
     _store: _AbstractStore
     _primary_key_field: str
     _table_name: Optional[str] = None
-    _auto_sync: bool = True
+    # if _auto_sync is set to true, the model will automatically sync to redis when a field is changed
+    _auto_sync: bool = False
+    # if _auto_save is set to true, the model will automatically save to redis when it is created
+    _auto_save: bool = False
 
     @classmethod
     def json_object_hook(cls, obj: dict):

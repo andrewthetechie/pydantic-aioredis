@@ -4,6 +4,7 @@ import pytest
 import pytest_asyncio
 from fastapi import FastAPI
 from httpx import AsyncClient
+from pydantic import PrivateAttr
 from pydantic_aioredis import Model as PAModel
 from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.ext.FastAPI import PydanticAioredisCRUDRouter

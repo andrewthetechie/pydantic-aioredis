@@ -48,11 +48,8 @@ async def test_auto_save(redis_store):
         published_on=date(year=1215, month=4, day=4),
         in_stock=False,
     )
-    key = f"book:{getattr(book, type(book)._primary_key_field)}"
-
-    book_in_redis = await redis_store.redis_store.hgetall(name=key)
-    book_deser = Book(**Book.deserialize_partially(book_in_redis))
-    assert book == book_deser
+    book_in_redis = await Book.select(ids=["Oliver Twist"])
+    assert book == book_in_redis[0]
 
 
 async def test_auto_sync(redis_store):

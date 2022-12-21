@@ -45,7 +45,6 @@ async def test_float_int_assign_inside(redis_store):
 @pytest.mark.xfail
 async def test_float_int_assign_inside_pydantic_only():
     class FloatIntTestPydantic(BaseModel):
-
         key: str
         float_int: Union[float, int]  # fails
         # float_int: Optional[Union[float,int]] # passes

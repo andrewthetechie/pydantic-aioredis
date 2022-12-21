@@ -1,5 +1,6 @@
 """Module containing the model classes"""
 import asyncio
+from contextlib import asynccontextmanager
 from functools import lru_cache
 from sys import version_info
 from typing import Any
@@ -9,8 +10,11 @@ from typing import Tuple
 from typing import Union
 
 import nest_asyncio
+from pydantic import PrivateAttr
 from pydantic_aioredis.abstract import _AbstractModel
 from pydantic_aioredis.utils import bytes_to_string
+
+from .abstract import _AbstractStore
 
 
 class Model(_AbstractModel):
@@ -30,14 +34,14 @@ class Model(_AbstractModel):
     thismodel:key
     """
 
-    # if _auto_sync is set to true, the model will automatically sync to redis when a field is changed
-    _auto_sync = False
-    # if _auto_save is set to true, the model will automatically save to redis when it is created
-    _auto_save = False
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if self._auto_save:
+        for field in ["_auto_sync", "_auto_save"]:
+            current_val = getattr(self, field, None)
+            if current_val is not None:
+                if isinstance(current_val, bool):
+                    setattr(self, field, PrivateAttr(current_val))
+        if self.is_auto_save:
             self.__save_from_sync()
 
     def __setattr__(self, name: str, value: Any):
@@ -45,8 +49,9 @@ class Model(_AbstractModel):
         Overrides the default __setattr__ to allow for auto_sync
         """
         super().__setattr__(name, value)
-        if self._auto_sync and getattr(self, "_store", None) is not None:
-            self.__save_from_sync()
+        if name != "_auto_sync" and name != "_auto_save":
+            if self.is_auto_sync and getattr(self, "_store", None) is not None:
+                self.__save_from_sync()
 
     def __save_from_sync(self):
         """
@@ -66,6 +71,29 @@ class Model(_AbstractModel):
         # Use nest_asyncio so we can call the async save
         nest_asyncio.apply()
         io_loop.run_until_complete(self.save())
+
+    @asynccontextmanager
+    async def update(self):
+        """
+        Async Context manager to allow for updating multiple fields without syncing to redis until the end
+        """
+        # auto_save = self._auto_save
+        # auto_sync = self._auto_sync
+        # self._auto_save = False
+        self._auto_sync = False
+        yield self
+        if getattr(self, "_store", None) is not None:
+            await self.save()
+        # self._auto_save = auto_save
+        # self._auto_sync = auto_sync
+
+    @property
+    def is_auto_sync(self) -> bool:
+        return self._auto_sync
+
+    @property
+    def is_auto_save(self) -> bool:
+        return self._auto_save
 
     @classmethod
     @lru_cache(1)
@@ -236,5 +264,5 @@ class Model(_AbstractModel):
 class AutoModel(Model):
     """A model that automatically saves to redis on creation and syncs changing fields to redis"""
 
-    _auto_sync: bool = True
-    _auto_save: bool = True
+    _auto_sync: bool = PrivateAttr(True)
+    _auto_save: bool = PrivateAttr(True)
