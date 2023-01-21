@@ -115,3 +115,5 @@ async def test_storing_list(redis_store):
     instance_in_redis = await DataTypeTest.select()
     assert instance_in_redis[0].key == instance.key
     assert len(instance_in_redis[0].value) == len(instance.value)
+    for value in instance_in_redis[0].value:
+        assert value in instance.value
