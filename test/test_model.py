@@ -115,3 +115,49 @@ async def test_storing_list(redis_store):
     instance_in_redis = await DataTypeTest.select()
     assert instance_in_redis[0].key == instance.key
     assert len(instance_in_redis[0].value) == len(instance.value)
+    for value in instance_in_redis[0].value:
+        assert value in instance.value
+
+
+async def test_storing_dict(redis_store):
+    class DataTypeTest(Model):
+        _primary_key_field: str = "key"
+
+        key: str
+        value: Dict[str, int]
+
+    redis_store.register_model(DataTypeTest)
+    key = "test_list_storage"
+    instance = DataTypeTest(
+        key=key,
+        value={"a": 1, "b": 2, "c": 3},
+    )
+    await instance.save()
+
+    instance_in_redis = await DataTypeTest.select()
+    assert instance_in_redis[0].key == instance.key
+    assert len(instance_in_redis[0].value.keys()) == len(instance.value.keys())
+    for key in instance_in_redis[0].value.keys():
+        assert instance.value[key] == instance_in_redis[0].value[key]
+
+
+async def test_storing_complex_dict(redis_store):
+    class DataTypeTest(Model):
+        _primary_key_field: str = "key"
+
+        key: str
+        value: Dict[str, List[int]]
+
+    redis_store.register_model(DataTypeTest)
+    key = "test_list_storage"
+    instance = DataTypeTest(
+        key=key,
+        value={"a": [1], "b": [2, 3], "c": [4, 5, 6]},
+    )
+    await instance.save()
+
+    instance_in_redis = await DataTypeTest.select()
+    assert instance_in_redis[0].key == instance.key
+    assert len(instance_in_redis[0].value.keys()) == len(instance.value.keys())
+    for key in instance_in_redis[0].value.keys():
+        assert instance.value[key] == instance_in_redis[0].value[key]
