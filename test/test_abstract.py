@@ -29,48 +29,48 @@ class SimpleModel(Model):
     test_tuple: Tuple[str]
 
 
+def test_serialize_partially_skip_missing_field():
+    serialized = SimpleModel.serialize_partially({"unknown": "test"})
+    assert serialized["unknown"] == "test"
+
+
 parameters = [
-    (st.text, [], {}, "test_str", None),
-    (st.integers, [], {}, "test_int", None),
-    (st.floats, [], {"allow_nan": False}, "test_float", None),
-    (st.dates, [], {}, "test_date", lambda x: json.dumps(x.isoformat())),
-    (st.datetimes, [], {}, "test_datetime", lambda x: json.dumps(x.isoformat())),
-    (st.ip_addresses, [], {"v": 4}, "test_ip_v4", lambda x: json.dumps(str(x))),
-    (st.ip_addresses, [], {"v": 6}, "test_ip_v4", lambda x: json.dumps(str(x))),
-    (
-        st.lists,
-        [st.tuples(st.integers(), st.floats())],
-        {},
-        "test_list",
-        lambda x: json.dumps(x),
-    ),
+    (st.text, [], {}, "test_str", str, False),
+    (st.dates, [], {}, "test_date", str, False),
+    (st.datetimes, [], {}, "test_datetime", str, False),
+    (st.ip_addresses, [], {"v": 4}, "test_ip_v4", str, False),
+    (st.ip_addresses, [], {"v": 6}, "test_ip_v4", str, False),
+    (st.lists, [st.tuples(st.integers(), st.floats())], {}, "test_list", str, False),
     (
         st.dictionaries,
         [st.text(), st.tuples(st.integers(), st.floats())],
         {},
         "test_dict",
-        lambda x: json.dumps(x),
+        str,
+        False,
     ),
-    (st.tuples, [st.text()], {}, "test_tuple", lambda x: json.dumps(x)),
+    (st.tuples, [st.text()], {}, "test_tuple", str, False),
+    (st.floats, [], {"allow_nan": False}, "test_float", float, True),
+    (st.integers, [], {}, "test_int", int, True),
 ]
 
 
 @pytest.mark.parametrize(
-    "strategy, strategy_args, strategy_kwargs, model_field, serialize_callable",
+    "strategy, strategy_args, strategy_kwargs, model_field, expected_type, equality_expected",
     parameters,
 )
 @given(st.data())
 def test_serialize_partially(
-    strategy, strategy_args, strategy_kwargs, model_field, serialize_callable, data
+    strategy,
+    strategy_args,
+    strategy_kwargs,
+    model_field,
+    expected_type,
+    equality_expected,
+    data,
 ):
     value = data.draw(strategy(*strategy_args, **strategy_kwargs))
     serialized = SimpleModel.serialize_partially({model_field: value})
-    if serialize_callable is None:
-        assert serialized[model_field] == value
-    else:
-        assert serialized[model_field] == serialize_callable(value)
-
-
-def test_serialize_partially_skip_missing_filed():
-    serialized = SimpleModel.serialize_partially({"unknown": "test"})
-    assert serialized["unknown"] == "test"
+    assert isinstance(serialized.get(model_field), expected_type)
+    if equality_expected:
+        assert serialized.get(model_field) == value

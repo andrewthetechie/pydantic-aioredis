@@ -2,24 +2,18 @@
 import json
 from datetime import date
 from datetime import datetime
-from ipaddress import IPv4Address
-from ipaddress import IPv4Network
-from ipaddress import IPv6Address
-from ipaddress import IPv6Network
 from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Union
-from uuid import UUID
 
 from pydantic import BaseModel
 from pydantic_aioredis.config import RedisConfig
 from redis import asyncio as aioredis
 
-# STR_DUMP_SHAPES are object types that are serialized to strings using str(obj)
-# They are stored in redis as strings and rely on pydantic to deserialize them
-STR_DUMP_SHAPES = (IPv4Address, IPv4Network, IPv6Address, IPv6Network, UUID)
+from .types import JSON_DUMP_SHAPES
+from .types import STR_DUMP_SHAPES
 
 
 class _AbstractStore(BaseModel):
@@ -89,6 +83,8 @@ class _AbstractModel(BaseModel):
                 continue
             if cls.__fields__[field].type_ not in [str, float, int]:
                 data[field] = json.dumps(data[field], default=cls.json_default)
+            if getattr(cls.__fields__[field], "shape", None) in JSON_DUMP_SHAPES:
+                data[field] = json.dumps(data[field], default=cls.json_default)
             if getattr(cls.__fields__[field], "allow_none", False):
                 if data[field] is None:
                     data[field] = "None"
@@ -106,6 +102,8 @@ class _AbstractModel(BaseModel):
             if field not in columns:
                 continue
             if cls.__fields__[field].type_ not in [str, float, int]:
+                data[field] = json.loads(data[field], object_hook=cls.json_object_hook)
+            if getattr(cls.__fields__[field], "shape", None) in JSON_DUMP_SHAPES:
                 data[field] = json.loads(data[field], object_hook=cls.json_object_hook)
             if getattr(cls.__fields__[field], "allow_none", False):
                 if data[field] == "None":

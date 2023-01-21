@@ -6,6 +6,7 @@ from ipaddress import IPv4Address
 from ipaddress import IPv6Address
 from typing import Dict
 from typing import List
+from typing import Optional
 from typing import Tuple
 from typing import Union
 
@@ -93,3 +94,24 @@ async def test_update_cm():
 
     redis_model = await UpdateModel.select(ids=[test_str])
     assert redis_model[0].test_int == update_int
+
+
+async def test_storing_list(redis_store):
+    # https://github.com/andrewthetechie/pydantic-aioredis/issues/403
+    class DataTypeTest(Model):
+        _primary_key_field: str = "key"
+
+        key: str
+        value: List[int]
+
+    redis_store.register_model(DataTypeTest)
+    key = "test_list_storage"
+    instance = DataTypeTest(
+        key=key,
+        value=[1, 2, 3],
+    )
+    await instance.save()
+
+    instance_in_redis = await DataTypeTest.select()
+    assert instance_in_redis[0].key == instance.key
+    assert len(instance_in_redis[0].value) == len(instance.value)
