@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.0...v1.2.1) (2023-01-21)
+
+
+### Bug Fixes
+
+* fix json types ([38a2608](https://github.com/andrewthetechie/pydantic-aioredis/commit/38a26084c65c9f01319318fecc3bfcf43d03474d))
+* poetry update ([#431](https://github.com/andrewthetechie/pydantic-aioredis/issues/431)) ([968282e](https://github.com/andrewthetechie/pydantic-aioredis/commit/968282e4c87ac324e2380853508a189d0fcfe39d))
+
 ## [1.2.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.1.1...v1.2.0) (2022-12-21)
 
 
