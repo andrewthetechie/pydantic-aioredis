@@ -622,14 +622,14 @@ test = ["anyio[trio] (>=3.2.1,<4.0.0)", "black (==22.10.0)", "coverage[toml] (>=
 
 [[package]]
 name = "fastapi-crudrouter"
-version = "0.8.5"
+version = "0.8.6"
 description = "A dynamic FastAPI router that automatically creates CRUD routes for your models"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "fastapi-crudrouter-0.8.5.tar.gz", hash = "sha256:ba73c6e39819159a4e6a879797b787b2057f0e6be3005cb956e2081243491942"},
-    {file = "fastapi_crudrouter-0.8.5-py3-none-any.whl", hash = "sha256:798a2183a630ab36a5fc08f00fe5215cead6b5eee1f87e3a3c38bf9c73c0c17d"},
+    {file = "fastapi-crudrouter-0.8.6.tar.gz", hash = "sha256:32704a7aa1d0b23bb6437f717599e9c4c01d8e5a91370a0359837a899a809ceb"},
+    {file = "fastapi_crudrouter-0.8.6-py3-none-any.whl", hash = "sha256:4ceb0289cd7b7c687f88581838c032cdb21f24d36971e54b0e594ddcfaf9634e"},
 ]
 
 [package.dependencies]
