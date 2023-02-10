@@ -30,10 +30,12 @@ pydantic = "^1.10.2"
 redis = "^4.4.0"
 anyio = "^3.6.2"
 nest-asyncio = "^1.5.6"
+fastapi = {version = "^0.91.0", optional = true}
+fastapi-crudrouter = {version = "^0.8.6", optional = true}
 
 [tool.poetry.extras]
-FastAPI= ['fastapi>=0.88.0']
-fastapi-crudrouter=['fastapi-crudrouter>=0.8.5']
+FastAPI= ['fastapi']
+fastapi-crudrouter=['fastapi-crudrouter']
 
 
 [tool.poetry.group.dev.dependencies]
