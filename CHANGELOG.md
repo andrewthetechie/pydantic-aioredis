@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.1...v1.2.2) (2023-02-10)
+
+
+### Documentation
+
+* fix read the docs ([#457](https://github.com/andrewthetechie/pydantic-aioredis/issues/457)) ([1bb8ff8](https://github.com/andrewthetechie/pydantic-aioredis/commit/1bb8ff8a7f63b0d742a798fc902db8b6fd499561))
+
 ## [1.2.1](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.0...v1.2.1) (2023-01-21)
 
 
