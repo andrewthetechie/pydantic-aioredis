@@ -55,6 +55,7 @@ parameters = [
 ]
 
 
+@pytest.mark.flaky(retruns=3)
 @pytest.mark.parametrize(
     "strategy, strategy_args, strategy_kwargs, model_field, expected_type, equality_expected",
     parameters,

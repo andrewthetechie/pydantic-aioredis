@@ -1845,6 +1845,23 @@ pytest = ">=4.3.0"
 pytest-asyncio = ">=0.10.0"
 
 [[package]]
+name = "pytest-rerunfailures"
+version = "11.1"
+description = "pytest plugin to re-run tests to eliminate flaky failures"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pytest-rerunfailures-11.1.tar.gz", hash = "sha256:bc6ad13614c976b04558c3a7bcc393a7e09686fb86b6ae73f827b78326c09f75"},
+    {file = "pytest_rerunfailures-11.1-py3-none-any.whl", hash = "sha256:9acd6cb19e3ba2f9191ecaaa15428348c2dead2e99a56f7e63479c0a3aabfeb8"},
+]
+
+[package.dependencies]
+importlib-metadata = {version = ">=1", markers = "python_version < \"3.8\""}
+packaging = ">=17.1"
+pytest = ">=5.3"
+
+[[package]]
 name = "pytest-xdist"
 version = "3.2.0"
 description = "pytest xdist plugin for distributed testing, most importantly across multiple CPUs"
@@ -2842,4 +2859,4 @@ fastapi-crudrouter = ["fastapi-crudrouter"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "a0302d16551278e728e4d9aa32654fc520fb76138fd1aa358dbfa5f808cc0981"
+content-hash = "e68e8214ec8454450303c2f2d901b4b12592c15b5a709d08afc9dc186215ef0f"
