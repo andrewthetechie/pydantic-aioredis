@@ -2566,14 +2566,14 @@ test = ["mypy", "pytest", "typing-extensions"]
 
 [[package]]
 name = "types-croniter"
-version = "1.3.2.3"
+version = "1.3.2.4"
 description = "Typing stubs for croniter"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-croniter-1.3.2.3.tar.gz", hash = "sha256:60fb02c85514050d9773e1b467213d0ab37c9fc3c9fc39081cd8b33346fc502a"},
-    {file = "types_croniter-1.3.2.3-py3-none-any.whl", hash = "sha256:e62375bfc31f816fad580cd17e462a0cd485470c9a61e3d4a46bad4a7b02d04d"},
+    {file = "types-croniter-1.3.2.4.tar.gz", hash = "sha256:8e73950d88601fb1fcb0ab5603560c2ab60597a7934c4877db541e53873db051"},
+    {file = "types_croniter-1.3.2.4-py3-none-any.whl", hash = "sha256:78d3225f3c48c361156bc802eb8e071da990eec8f46b356c00abfef7aa067ebb"},
 ]
 
 [[package]]
