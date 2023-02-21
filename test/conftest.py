@@ -1,10 +1,12 @@
 import inspect
+import os
 
 import pytest
 import pytest_asyncio
 from fakeredis.aioredis import FakeRedis
+from hypothesis import settings
+from hypothesis import Verbosity
 from pydantic_aioredis.config import RedisConfig
-from pydantic_aioredis.model import Model
 from pydantic_aioredis.store import Store
 
 
@@ -34,9 +36,6 @@ def pytest_collection_modifyitems(config, items):
         if inspect.iscoroutinefunction(item.function):
             item.add_marker(pytest.mark.asyncio)
 
-
-import os
-from hypothesis import settings, Verbosity
 
 settings.register_profile("ci", max_examples=5000)
 settings.register_profile("dev", max_examples=100)

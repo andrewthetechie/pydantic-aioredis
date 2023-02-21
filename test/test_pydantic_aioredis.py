@@ -334,7 +334,7 @@ async def test_select_single_content(redis_store):
     assert len(response) == 1
     assert response[0] == books[1]
 
-    books_dict = {book.title: book for book in books}
+    {book.title: book for book in books}
     response = await Book.select(columns=["title", "author", "in_stock"])
 
     assert response[0]["title"] == books[1].title

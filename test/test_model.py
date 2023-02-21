@@ -1,21 +1,9 @@
 """Test methods in model.py. Uses hypothesis"""
-import json
-from datetime import date
-from datetime import datetime
-from ipaddress import IPv4Address
-from ipaddress import IPv6Address
 from typing import Dict
 from typing import List
-from typing import Optional
-from typing import Tuple
-from typing import Union
 
-import pytest
 from fakeredis.aioredis import FakeRedis
-from hypothesis import given
-from hypothesis import strategies as st
 from pydantic_aioredis.config import RedisConfig
-from pydantic_aioredis.model import AutoModel
 from pydantic_aioredis.model import Model
 from pydantic_aioredis.store import Store
 

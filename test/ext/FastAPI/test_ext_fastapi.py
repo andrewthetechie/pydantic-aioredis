@@ -1,12 +1,9 @@
 from typing import List
 
-import pytest
 import pytest_asyncio
 from fastapi import FastAPI
 from httpx import AsyncClient
-from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.ext.FastAPI import FastAPIModel
-from pydantic_aioredis.store import Store
 
 
 class Model(FastAPIModel):

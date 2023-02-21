@@ -1,15 +1,12 @@
 """Tests for the redis orm"""
 import asyncio
 from datetime import date
-from enum import Enum
 from ipaddress import ip_network
 from ipaddress import IPv4Network
 from random import randint
 from random import sample
 from typing import List
 from typing import Optional
-from uuid import UUID
-from uuid import uuid4
 
 import pytest
 import pytest_asyncio

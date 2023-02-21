@@ -22,9 +22,8 @@ jobs:
           - { python: "3.9", os: "ubuntu-latest", session: "tests" }
           - { python: "3.8", os: "ubuntu-latest", session: "tests" }
           - { python: "3.7", os: "ubuntu-latest", session: "tests" }
-          # - { python: "3.10", os: "windows-latest", session: "tests" }
-          # - { python: "3.10", os: "macos-latest", session: "tests" }
-          # - { python: "3.10", os: "ubuntu-latest", session: "typeguard" }
+          - { python: "3.10", os: "windows-latest", session: "tests" }
+          - { python: "3.10", os: "macos-latest", session: "tests" }
           - { python: "3.10", os: "ubuntu-latest", session: "xdoctest" }
           - { python: "3.10", os: "ubuntu-latest", session: "docs-build" }
 
@@ -74,13 +73,15 @@ jobs:
         run: |
           import hashlib
           import sys
+          import os
 
           python = "py{}.{}".format(*sys.version_info[:2])
           payload = sys.version.encode() + sys.executable.encode()
           digest = hashlib.sha256(payload).hexdigest()
           result = "${{ runner.os }}-{}-{}-pre-commit".format(python, digest[:8])
 
-          print("::set-output name=result::{}".format(result))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+            fh.write(f"result={result}\n")
 
       - name: Restore pre-commit cache
         uses: actions/cache@v3.2.5
@@ -97,12 +98,12 @@ jobs:
         run: |
           nox --force-color --python=${{ matrix.python }}
 
-      # - name: Upload coverage data
-      #   if: always() && matrix.session == 'tests'
-      #   uses: "actions/upload-artifact@v3.1.2"
-      #   with:
-      #     name: coverage-data
-      #     path: ".coverage.*"
+      - name: Upload coverage data
+        if: always() && matrix.session == 'tests'
+        uses: "actions/upload-artifact@v3.1.2"
+        with:
+          name: coverage-data
+          path: ".coverage.*"
 
       - name: Upload documentation
         if: matrix.session == 'docs-build'
@@ -139,10 +140,10 @@ jobs:
           pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry toml
           nox --version
 
-      # - name: Download coverage data
-      #   uses: actions/download-artifact@v3.0.1
-      #   with:
-      #     name: coverage-data
+      - name: Download coverage data
+        uses: actions/download-artifact@v3.0.1
+        with:
+          name: coverage-data
 
-      # - name: Upload coverage report
-      #   uses: codecov/codecov-action@v3.1.0
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v3.1.0

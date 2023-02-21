@@ -1,16 +1,10 @@
 import asyncio
-import json
 from datetime import date
-from datetime import datetime
 from typing import Any
-from typing import Dict
-from typing import List
-from typing import Optional
 
 from pydantic_aioredis import Model
 from pydantic_aioredis import RedisConfig
 from pydantic_aioredis import Store
-from pydantic_aioredis.abstract import STR_DUMP_SHAPES
 
 
 class BookCover:
@@ -34,7 +28,8 @@ class Book(Model):
 
     @classmethod
     def json_default(cls, obj: Any) -> str:
-        """Since BookCover can't be directly json serialized, we have to write our own json_default to serialize it methods to handle it."""
+        """Since BookCover can't be directly json serialized, we have to write our own
+        json_default to serialize it methods to handle it."""
         if isinstance(obj, BookCover):
             return {
                 "__BookCover__": True,
@@ -47,7 +42,8 @@ class Book(Model):
 
     @classmethod
     def json_object_hook(cls, obj: dict):
-        """Since we're serializing BookCovers above, we need to write an object hook to turn them back into an Object"""
+        """Since we're serializing BookCovers above, we need to write an
+        object hook to turn them back into an Object"""
         if obj.get("__BookCover__", False):
             return BookCover(
                 cover_url=obj["cover_url"],
