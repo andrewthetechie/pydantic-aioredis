@@ -26,8 +26,8 @@ class Model(_AbstractModel):
     _table_name -- Defaults to the model's name, can set a custom name in redis
 
 
-    If your model was named ThisModel, the primary key was "key", and prefix and separator were left at default (not set), the
-    keys stored in redis would be
+    If your model was named ThisModel, the primary key was "key", and prefix and
+    separator were left at default (not set), the keys stored in redis would be
     thismodel:key
     """
 
@@ -35,16 +35,8 @@ class Model(_AbstractModel):
     _auto_save = False
 
     def __init__(self, **data: Any) -> None:
-        auto_save = (
-            data.pop("auto_save")
-            if "auto_save" in data.keys()
-            else getattr(self, "_auto_save", False)
-        )
-        auto_sync = (
-            data.pop("auto_sync")
-            if "auto_sync" in data.keys()
-            else getattr(self, "_auto_sync", False)
-        )
+        auto_save = data.pop("auto_save") if "auto_save" in data.keys() else getattr(self, "_auto_save", False)
+        auto_sync = data.pop("auto_sync") if "auto_sync" in data.keys() else getattr(self, "_auto_sync", False)
         super().__init__(**data)
         # set _auto_save and _auto_sync to the class defaults in the Config
         self.Config.auto_sync = auto_sync
@@ -158,10 +150,7 @@ class Model(_AbstractModel):
         else:
             if not isinstance(ids, list):
                 ids = [ids]
-            keys = [
-                cls.__get_primary_key(primary_key_value=primary_key_value)
-                for primary_key_value in ids
-            ]
+            keys = [cls.__get_primary_key(primary_key_value=primary_key_value) for primary_key_value in ids]
         keys.sort()
         return keys, table_index_key
 
@@ -174,11 +163,7 @@ class Model(_AbstractModel):
         """
         Inserts a given row or sets of rows into the table
         """
-        life_span = (
-            life_span_seconds
-            if life_span_seconds is not None
-            else cls._store.life_span_in_seconds
-        )
+        life_span = life_span_seconds if life_span_seconds is not None else cls._store.life_span_in_seconds
         async with cls._store.redis_store.pipeline(transaction=True) as pipeline:
             data_list = []
 
@@ -205,9 +190,7 @@ class Model(_AbstractModel):
         await self.insert(self)
 
     @classmethod
-    async def delete(
-        cls, ids: Optional[Union[Any, List[Any]]] = None
-    ) -> Optional[List[int]]:
+    async def delete(cls, ids: Optional[Union[Any, List[Any]]] = None) -> Optional[List[int]]:
         """
         deletes a given row or sets of rows in the table
         """
@@ -256,18 +239,11 @@ class Model(_AbstractModel):
             return None
 
         if isinstance(response, list) and columns is None:
-            result = [
-                cls(**cls.deserialize_partially(record))
-                for record in response
-                if record != {}
-            ]
+            result = [cls(**cls.deserialize_partially(record)) for record in response if record != {}]
         else:
             result = [
                 cls.deserialize_partially(
-                    {
-                        field: bytes_to_string(record[index])
-                        for index, field in enumerate(columns)
-                    }
+                    {field: bytes_to_string(record[index]) for index, field in enumerate(columns)}
                 )
                 for record in response
                 if record != {}

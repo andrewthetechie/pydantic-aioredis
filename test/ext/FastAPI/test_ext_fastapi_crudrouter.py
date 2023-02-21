@@ -1,13 +1,8 @@
-from typing import List
-
-import pytest
 import pytest_asyncio
 from fastapi import FastAPI
 from httpx import AsyncClient
 from pydantic_aioredis import Model as PAModel
-from pydantic_aioredis.config import RedisConfig
 from pydantic_aioredis.ext.FastAPI import PydanticAioredisCRUDRouter
-from pydantic_aioredis.store import Store
 
 
 class Model(PAModel):
@@ -79,17 +74,6 @@ async def test_crudrouter_get_many_200_pagination(test_app, test_models):
     assert len(result) == 5
 
 
-async def test_crudrouter_get_many_200(test_app, test_models):
-    """Tests that select_or_404 will raise a 404 error on an empty return"""
-    await test_app[2].insert(test_models)
-    async with AsyncClient(app=test_app[1], base_url="http://test") as client:
-        response = await client.get("/model")
-
-    assert response.status_code == 200
-    result = response.json()
-    assert len(result) == len(test_models)
-
-
 async def test_crudrouter_get_one_200(test_app, test_models):
     """Tests that select_or_404 will raise a 404 error on an empty return"""
     await test_app[2].insert(test_models)
@@ -104,7 +88,7 @@ async def test_crudrouter_get_one_200(test_app, test_models):
 async def test_crudrouter_post_200(test_app, test_models):
     """Tests that crudrouter will post properly"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
-        response = await client.post(f"/model", json=test_models[0].dict())
+        response = await client.post("/model", json=test_models[0].dict())
 
     assert response.status_code == 200
     result = response.json()
@@ -114,17 +98,9 @@ async def test_crudrouter_post_200(test_app, test_models):
 async def test_crudrouter_post_422(test_app, test_models):
     """Tests that crudrouter post will 422 with invalid data"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
-        response = await client.post(f"/model", json={"invalid": "stuff"})
+        response = await client.post("/model", json={"invalid": "stuff"})
 
     assert response.status_code == 422
-
-
-async def test_crudrouter_put_404(test_app, test_models):
-    """Tests that crudrouter put will 404 when no instance exists"""
-    async with AsyncClient(app=test_app[1], base_url="http://test") as client:
-        response = await client.put(f"/model/test", json=test_models[0].dict())
-
-    assert response.status_code == 404
 
 
 async def test_crudrouter_put_200(test_app, test_models):
@@ -154,7 +130,7 @@ async def test_crudrouter_put_200_no_autosync(redis_store):
     await ModelNoSync.insert(ModelNoSync(name="test", value=20))
     async with AsyncClient(app=app, base_url="http://test") as client:
         response = await client.put(
-            f"/modelnosync/test",
+            "/modelnosync/test",
             json={"name": "test", "value": 100},
         )
 
@@ -167,9 +143,7 @@ async def test_crudrouter_put_200_no_autosync(redis_store):
 async def test_crudrouter_put_404(test_app, test_models):
     """Tests that crudrouter put will 404 when no instance exists"""
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
-        response = await client.put(
-            f"/model/{test_models[0].name}", json=test_models[0].dict()
-        )
+        response = await client.put(f"/model/{test_models[0].name}", json=test_models[0].dict())
 
     assert response.status_code == 404
 
@@ -185,7 +159,7 @@ async def test_crudrouter_delete_200(test_app, test_models):
     assert result["name"] == test_models[0].name
 
     async with AsyncClient(app=test_app[1], base_url="http://test") as client:
-        response = await client.delete(f"/model")
+        response = await client.delete("/model")
 
     assert response.status_code == 200
 
