@@ -45,7 +45,7 @@ class Model(_AbstractModel):
         if self.auto_save and getattr(self, "_store", None) is not None:
             self.__save_from_sync()
 
-    def __setattr__(self, name: str, value: Any):
+    def __setattr__(self, name: str, value: Any) -> None:
         """
         This overrides __setattr__ to allow for auto_sync
         because __setattr__ has be to sync, this uses a hack to call the async save method
@@ -55,7 +55,7 @@ class Model(_AbstractModel):
         if self._auto_sync and getattr(self, "_store", None) is not None:
             self.__save_from_sync()
 
-    def __save_from_sync(self):
+    def __save_from_sync(self) -> None:
         """Calls the async save coroutine from a sync context, used with _auto_save and _auto_sync"""
         if version_info.minor < 10:  # pragma: no cover
             # less than 3.10.0
@@ -109,17 +109,17 @@ class Model(_AbstractModel):
 
     @classmethod
     @lru_cache(1)
-    def _get_separator(cls):
+    def _get_separator(cls) -> str:
         return getattr(cls, "_redis_separator", ":").lower()
 
     @classmethod
     @lru_cache(1)
-    def _get_tablename(cls):
+    def _get_tablename(cls) -> str:
         return cls.__name__.lower() if cls._table_name is None else cls._table_name
 
     @classmethod
     @lru_cache(1)
-    def __get_primary_key(cls, primary_key_value: Any):
+    def __get_primary_key(cls, primary_key_value: Any) -> str:
         """
         Uses _table_name, _table_refix, and _redis_separator from the model to build our primary key.
 
@@ -134,7 +134,7 @@ class Model(_AbstractModel):
         return f"{cls._get_prefix()}{cls._get_tablename()}{cls._get_separator()}{primary_key_value}"
 
     @classmethod
-    def get_table_index_key(cls):
+    def get_table_index_key(cls) -> str:
         """Returns the key in which the primary keys of the given table have been saved"""
         return f"{cls._get_prefix()}{cls._get_tablename()}{cls._get_separator()}__index"
 
@@ -186,7 +186,7 @@ class Model(_AbstractModel):
 
         return response
 
-    async def save(self):
+    async def save(self) -> None:
         await self.insert(self)
 
     @classmethod

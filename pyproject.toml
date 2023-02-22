@@ -70,6 +70,7 @@ fakeredis = {extras = ["json"], version = "2.2.0"}
 hypothesis = "^6.61.0"
 pytest-rerunfailures = "^11.1"
 ruff = "^0.0.249"
+types-redis = "^4.5.1.2"
 
 [tool.mypy]
 strict = true

@@ -23,8 +23,8 @@ class _AbstractStore(BaseModel):
 
     name: str
     redis_config: RedisConfig
-    redis_store: aioredis.Redis = None
-    life_span_in_seconds: int = None
+    redis_store: Union[aioredis.Redis, None] = None
+    life_span_in_seconds: Union[int, None] = None
 
     class Config:
         """Pydantic schema config for _AbstractStore"""
@@ -44,7 +44,7 @@ class _AbstractModel(BaseModel):
     _auto_sync: bool = True
 
     @classmethod
-    def json_object_hook(cls, obj: dict):
+    def json_object_hook(cls, obj: Dict[str, Any]) -> Dict[str, Any]:
         """Can be overridden to handle custom json -> object"""
         return obj
 
@@ -64,7 +64,7 @@ class _AbstractModel(BaseModel):
         raise TypeError("Type %s not serializable" % type(obj))
 
     @classmethod
-    def serialize_partially(cls, data: Dict[str, Any]):
+    def serialize_partially(cls, data: Dict[str, Any]) -> Dict[str, str]:
         """Converts data types that are not compatible with Redis into json strings
         by looping through the models fields and inspecting its types.
 
@@ -130,9 +130,7 @@ class _AbstractModel(BaseModel):
         raise NotImplementedError("delete should be implemented")
 
     @classmethod
-    async def select(
-        cls, columns: Optional[List[str]] = None, ids: Optional[List[Any]] = None
-    ):  # pragma: no cover
+    async def select(cls, columns: Optional[List[str]] = None, ids: Optional[List[Any]] = None):  # pragma: no cover
         """Select one or more object from the redis store"""
         raise NotImplementedError("select should be implemented")
 
