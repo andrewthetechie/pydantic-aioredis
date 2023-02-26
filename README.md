@@ -1,6 +1,6 @@
 # pydantic-aioredis
 
-Pydantic-aioredis is designed to provide an efficient way of integrating Redis databases with Python-based applications. Built on top of [Pydantic](https://docs.pydantic.dev/), pydantic-aioredis allows you to define data models and validate input data before it is stored in Redis. Data is validated before storing and after retrieval from Redis. The library also provides an easy-to-use API for querying, updating, and deleting data stored in Redis. 
+Pydantic-aioredis is designed to provide an efficient way of integrating Redis databases with Python-based applications. Built on top of [Pydantic](https://docs.pydantic.dev/), pydantic-aioredis allows you to define data models and validate input data before it is stored in Redis. Data is validated before storing and after retrieval from Redis. The library also provides an easy-to-use API for querying, updating, and deleting data stored in Redis.
 
 Inspired by
 [pydantic-redis](https://github.com/sopherapps/pydantic-redis) by
