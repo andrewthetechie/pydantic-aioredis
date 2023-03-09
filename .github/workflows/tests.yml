@@ -85,7 +85,7 @@ jobs:
             fh.write(f"result={result}\n")
 
       - name: Restore pre-commit cache
-        uses: actions/cache@v3.2.6
+        uses: actions/cache@v3.3.0
         if: matrix.session == 'pre-commit'
         with:
           path: ~/.cache/pre-commit
