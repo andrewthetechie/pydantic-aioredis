@@ -1,6 +1,6 @@
 """Entry point for pydantic-aioredis"""
 # set by poetry-dynamic-versioning
-__version__ = "1.2.2"  # noqa: E402
+__version__ = "1.2.3"  # noqa: E402
 
 from .config import RedisConfig  # noqa: F401
 from .model import Model  # noqa: F401

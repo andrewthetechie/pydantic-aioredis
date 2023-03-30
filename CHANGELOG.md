@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.3](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.2...v1.2.3) (2023-03-30)
+
+
+### Documentation
+
+* remove unneccesary fields from bug report ([d1454f9](https://github.com/andrewthetechie/pydantic-aioredis/commit/d1454f91ec394a6f6c0d043ad2511d156808e5df))
+
+
+### Dependencies
+
+* update redis-py for CVE ([#542](https://github.com/andrewthetechie/pydantic-aioredis/issues/542)) ([ea3c9bf](https://github.com/andrewthetechie/pydantic-aioredis/commit/ea3c9bf177ada446e97f91c55e982c86c4f4b856))
+
 ## [1.2.2](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.1...v1.2.2) (2023-02-10)
 
 
