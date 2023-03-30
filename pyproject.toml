@@ -27,7 +27,7 @@ Changelog = "https://github.com/andrewthetechie/pydantic-aioredis/releases"
 [tool.poetry.dependencies]
 python = "^3.7"
 pydantic = "^1.10.2"
-redis = "^4.4.0"
+redis = "^4.4.4"
 anyio = "^3.6.2"
 nest-asyncio = "^1.5.6"
 fastapi = {version = ">=0.91,<0.96", optional = true}
