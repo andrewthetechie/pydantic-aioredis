@@ -112,7 +112,7 @@ async def work_with_orm():
     this_book.published_on=date(year=1851, month=10, day=18)
   this_book_from_redis = await Book.select(ids=["Moby Dick"])
   assert this_book_from_redis[0].author == "Herman Melville"
-  assert this_book_from_redis[0].author == date(year=1851, month=10, day=18)
+  assert this_book_from_redis[0].published_on == date(year=1851, month=10, day=18)
 
   # Delete any number of items
   await Library.delete(ids=["The Grand Library"])
