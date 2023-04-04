@@ -66,7 +66,7 @@ pytest-env = "^0.8.1"
 pytest-mockservers = "^0.6.0"
 pytest-xdist = "^3.1.0"
 bandit = "^1.7.4"
-fakeredis = {extras = ["json"], version = "2.2.0"}
+fakeredis = {extras = ["json"], version = "2.10.3"}
 hypothesis = "^6.61.0"
 pytest-rerunfailures = "^11.1"
 ruff = ">=0.0.249,<0.0.261"
