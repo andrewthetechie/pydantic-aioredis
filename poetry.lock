@@ -575,13 +575,13 @@ lua = ["lupa (>=1.14,<2.0)"]
 
 [[package]]
 name = "fastapi"
-version = "0.97.0"
+version = "0.98.0"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "fastapi-0.97.0-py3-none-any.whl", hash = "sha256:95d757511c596409930bd20673358d4a4d709004edb85c5d24d6ffc48fabcbf2"},
-    {file = "fastapi-0.97.0.tar.gz", hash = "sha256:b53248ee45f64f19bb7600953696e3edf94b0f7de94df1e5433fc5c6136fa986"},
+    {file = "fastapi-0.98.0-py3-none-any.whl", hash = "sha256:f4165fb1fe3610c52cb1b8282c1480de9c34bc270f56a965aa93a884c350d605"},
+    {file = "fastapi-0.98.0.tar.gz", hash = "sha256:0d3c18886f652038262b5898fec6b09f4ca92ee23e9d9b1d1d24e429f84bf27b"},
 ]
 
 [package.dependencies]
@@ -2456,4 +2456,4 @@ fastapi-crudrouter = ["fastapi-crudrouter"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "068a6bbc1ef9faf170b7f6fe3fc5176f67b1c8635aec1563892d0ce63d21fa8c"
+content-hash = "8479472064e14a0cfa8bfe0c120ef6bf923427ba3f4a8fa6c234d221fc22125c"
