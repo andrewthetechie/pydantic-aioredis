@@ -555,19 +555,19 @@ testing = ["pre-commit"]
 
 [[package]]
 name = "fakeredis"
-version = "2.15.0"
+version = "2.16.0"
 description = "Python implementation of redis API, can be used for testing purposes."
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fakeredis-2.15.0-py3-none-any.whl", hash = "sha256:221edb25c0a38d0fb7c7b91f52c4e2beb6fbd3369899a8ab59328c3e432b062a"},
-    {file = "fakeredis-2.15.0.tar.gz", hash = "sha256:519ab3585ac0c652f04836209b9d835f33879560c7451c2abfc59a663cfaffbc"},
+    {file = "fakeredis-2.16.0-py3-none-any.whl", hash = "sha256:188514cbd7120ff28c88f2a31e2fddd18fb1b28504478dfa3669c683134c4d82"},
+    {file = "fakeredis-2.16.0.tar.gz", hash = "sha256:5abdd734de4ead9d6c7acbd3add1c4aa9b3ab35219339530472d9dd2bdf13057"},
 ]
 
 [package.dependencies]
 jsonpath-ng = {version = ">=1.5,<2.0", optional = true, markers = "extra == \"json\""}
 redis = ">=4"
-sortedcontainers = ">=2.4,<3.0"
+sortedcontainers = ">=2,<3"
 
 [package.extras]
 json = ["jsonpath-ng (>=1.5,<2.0)"]
@@ -2457,4 +2457,4 @@ fastapi-crudrouter = ["fastapi-crudrouter"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "c665cc47374b6758901ed469f5e54f3c15d421c14f97e79ae360ce3fa281567a"
+content-hash = "39b1f0998deb2ea38a56ed4dc11e944b26c6fa4b5562c206feb6bc92679ed5f7"
