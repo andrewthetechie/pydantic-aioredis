@@ -68,7 +68,7 @@ pytest-xdist = "^3.1.0"
 bandit = "^1.7.4"
 fakeredis = {extras = ["json"], version = "2.16.0"}
 hypothesis = "^6.61.0"
-pytest-rerunfailures = "^11.1"
+pytest-rerunfailures = ">=11.1,<13.0"
 ruff = ">=0.0.249,<0.0.278"
 
 [tool.mypy]
