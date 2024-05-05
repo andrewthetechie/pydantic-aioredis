@@ -1,4 +1,5 @@
 """Test methods in abstract.py. Uses hypothesis"""
+
 from datetime import date
 from datetime import datetime
 from ipaddress import IPv4Address

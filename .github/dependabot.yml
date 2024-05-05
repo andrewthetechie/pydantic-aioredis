@@ -16,7 +16,7 @@ updates:
     directory: "/docs"
     schedule:
       interval: daily
-     commit-message:
+    commit-message:
       prefix: docs
   - package-ecosystem: pip
     directory: "/"
@@ -24,4 +24,3 @@ updates:
       interval: daily
     commit-message:
       prefix: deps
- 

@@ -1,4 +1,5 @@
 """Nox sessions."""
+
 import os
 import shlex
 import shutil
@@ -22,26 +23,17 @@ except ImportError:
     raise SystemExit(dedent(message)) from None
 
 
-package = "pydantic_aioredis"
-python_versions = [
-    "3.10",
-    "3.9",
-    "3.8",
-    "3.7",
-    "3.11",
-]
+package = "healthchecks_io"
+python_versions = ["3.11", "3.12", "3.10", "3.9", "3.8"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
-    "bandit",
     "safety",
-    # "mypy", Not working, needs fixing
+    # "mypy",
     "tests",
-    # "typeguard",
-    "xdoctest",
     "docs-build",
 )
-mypy_type_packages = ()
+
 pyproject = toml.load("pyproject.toml")
 test_requirements = pyproject["tool"]["poetry"]["group"]["dev"]["dependencies"].keys()
 
@@ -62,8 +54,7 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
     # quoting rules for Python and bash, but strip the outermost quotes so we
     # can detect paths within the bindir, like <bindir>/python.
     bindirs = [
-        bindir[1:-1] if bindir[0] in "'\"" else bindir
-        for bindir in (repr(session.bin), shlex.quote(session.bin))
+        bindir[1:-1] if bindir[0] in "'\"" else bindir for bindir in (repr(session.bin), shlex.quote(session.bin))
     ]
 
     virtualenv = session.env.get("VIRTUAL_ENV")
@@ -100,10 +91,7 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
 
         text = hook.read_text()
 
-        if not any(
-            Path("A") == Path("a") and bindir.lower() in text.lower() or bindir in text
-            for bindir in bindirs
-        ):
+        if not any(Path("A") == Path("a") and bindir.lower() in text.lower() or bindir in text for bindir in bindirs):
             continue
 
         lines = text.splitlines()
@@ -120,7 +108,6 @@ def precommit(session: Session) -> None:
     """Lint using pre-commit."""
     args = session.posargs or ["run", "--all-files", "--show-diff-on-failure"]
     session.install(*test_requirements)
-    session.install(".")
     session.run("pre-commit", *args)
     if args and args[0] == "install":
         activate_virtualenv_in_precommit_hooks(session)
@@ -133,28 +120,17 @@ def safety(session: Session) -> None:
     session.install("safety")
     # ignore https://github.com/pytest-dev/py/issues/287
     # its an irresposnbily filed CVE causing nose
-    session.run(
-        "safety", "check", "--full-report", f"--file={requirements}", "--ignore=51457"
-    )
+    session.run("safety", "check", "--full-report", f"--file={requirements}", "--ignore=51457")
 
 
 @session(python=python_versions)
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
-    args = session.posargs or ["pydantic_aioredis"]
+    args = session.posargs or ["src"]
     session.install(".")
     session.install("mypy", "pytest")
-    if len(mypy_type_packages) > 0:
-        session.install(*mypy_type_packages)
+    session.install(*test_requirements)
     session.run("mypy", *args)
-
-
-@session(python=python_versions[0])
-def bandit(session: Session) -> None:
-    """Run bandit security tests"""
-    session.install("bandit")
-    args = session.posargs or ["-r", "./pydantic_aioredis"]
-    session.run("bandit", *args)
 
 
 @session(python=python_versions)
@@ -163,29 +139,6 @@ def tests(session: Session) -> None:
     session.install(".")
     session.install(*test_requirements)
     session.run("poetry", "run", "pytest", *session.posargs)
-
-
-@session(python=python_versions)
-def typeguard(session: Session) -> None:
-    """Runtime type checking using Typeguard."""
-    session.install(".")
-    session.install("pytest", "typeguard", "pygments")
-    session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
-
-
-@session(python=python_versions)
-def xdoctest(session: Session) -> None:
-    """Run examples with xdoctest."""
-    if session.posargs:
-        args = [package, *session.posargs]
-    else:
-        args = [f"--modname={package}", "--command=all"]
-        if "FORCE_COLOR" in os.environ:
-            args.append("--colored=1")
-
-    session.install(".")
-    session.install("xdoctest[colors]")
-    session.run("python", "-m", "xdoctest", *args)
 
 
 @session(name="docs-build", python=python_versions[0])

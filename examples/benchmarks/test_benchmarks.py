@@ -1,4 +1,5 @@
 """Tests for the redis orm"""
+
 import asyncio
 from datetime import date
 from ipaddress import ip_network
@@ -93,10 +94,7 @@ class ModelWithFullCustomKey(Model):
     name: str
 
 
-extended_books = [
-    ExtendedBook(**book.dict(), editions=sample(editions, randint(0, len(editions))))
-    for book in books
-]
+extended_books = [ExtendedBook(**book.dict(), editions=sample(editions, randint(0, len(editions)))) for book in books]
 extended_books[0].editions = list()
 
 test_models = [

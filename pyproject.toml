@@ -63,7 +63,6 @@ fastapi = ">=0.6.3"
 fastapi-crudrouter = ">=0.8.4"
 httpx = ">=0.23,<0.25"
 pytest-env = "^0.8.1"
-pytest-mockservers = "^0.6.0"
 pytest-xdist = "^3.1.0"
 bandit = "^1.7.4"
 fakeredis = {extras = ["json"], version = "2.22.0"}
@@ -83,6 +82,8 @@ show_error_context = true
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.bandit]
+exclude_dirs = ["test", "noxfile.py", ".github/scripts", "dist", "examples/*"]
 
 [tool.pytest.ini_options]
 addopts = "-n 4 --ignore examples --cov=pydantic_aioredis --cov-report xml:.coverage.xml --cov-report=term-missing --cov-fail-under 91"

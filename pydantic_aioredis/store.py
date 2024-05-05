@@ -1,4 +1,5 @@
 """Module containing the store classes"""
+
 from typing import Any
 from typing import Dict
 from typing import Optional
@@ -40,9 +41,7 @@ class Store(_AbstractStore):
     def register_model(self, model_class: type(Model)):
         """Registers the model to this store"""
         if not isinstance(model_class.get_primary_key_field(), str):
-            raise NotImplementedError(
-                f"{model_class.__name__} should have a _primary_key_field"
-            )
+            raise NotImplementedError(f"{model_class.__name__} should have a _primary_key_field")
 
         model_class._store = self
         self.models[model_class.__name__.lower()] = model_class

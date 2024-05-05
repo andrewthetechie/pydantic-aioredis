@@ -1,4 +1,5 @@
 """Module containing the model classes"""
+
 import asyncio
 from contextlib import asynccontextmanager
 from functools import lru_cache
@@ -139,9 +140,7 @@ class Model(_AbstractModel):
         return f"{cls._get_prefix()}{cls._get_tablename()}{cls._get_separator()}__index"
 
     @classmethod
-    async def _ids_to_primary_keys(
-        cls, ids: Optional[Union[Any, List[Any]]] = None
-    ) -> Tuple[List[Optional[str]], str]:
+    async def _ids_to_primary_keys(cls, ids: Optional[Union[Any, List[Any]]] = None) -> Tuple[List[Optional[str]], str]:
         """Turn passed in ids into primary key values"""
         table_index_key = cls.get_table_index_key()
         if ids is None:

@@ -1,4 +1,5 @@
 """Tests from https://github.com/andrewthetechie/pydantic-aioredis/issues/379"""
+
 from typing import Union
 
 import pytest

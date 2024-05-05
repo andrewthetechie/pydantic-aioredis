@@ -1,4 +1,5 @@
 """Tests for the redis orm"""
+
 from datetime import date
 from enum import Enum
 from ipaddress import ip_network
@@ -97,10 +98,7 @@ class ModelWithFullCustomKey(Model):
     name: str
 
 
-extended_books = [
-    ExtendedBook(**book.dict(), editions=sample(editions, randint(0, len(editions))))
-    for book in books
-]
+extended_books = [ExtendedBook(**book.dict(), editions=sample(editions, randint(0, len(editions)))) for book in books]
 extended_books[0].editions = list()
 
 test_models = [
@@ -236,10 +234,7 @@ parameters = [
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 async def test_bulk_insert(store, models, model_class, key_prefix: str):
     """Providing a list of Model instances to the insert method inserts the records in redis"""
-    keys = [
-        f"{key_prefix}{getattr(model, type(model)._primary_key_field)}"
-        for model in models
-    ]
+    keys = [f"{key_prefix}{getattr(model, type(model)._primary_key_field)}" for model in models]
     # keys = [f"book:{book.title}" for book in models]
 
     await store.redis_store.delete(*keys)
@@ -254,10 +249,7 @@ async def test_bulk_insert(store, models, model_class, key_prefix: str):
         for key in keys:
             pipeline.hgetall(name=key)
         models_in_redis = await pipeline.execute()
-    models_deserialized = [
-        model_class(**model_class.deserialize_partially(model))
-        for model in models_in_redis
-    ]
+    models_deserialized = [model_class(**model_class.deserialize_partially(model)) for model in models_in_redis]
     assert models == models_deserialized
 
 
@@ -304,9 +296,7 @@ async def test_select_default(store, models, model_class, key_prefix):
 
 @pytest.mark.parametrize("store, models, model_class, key_prefix", parameters)
 @pytest.mark.parametrize("execution_count", range(5))
-async def test_select_pagination(
-    store, models, model_class, key_prefix, execution_count
-):
+async def test_select_pagination(store, models, model_class, key_prefix, execution_count):
     """Selecting with pagination"""
     limit = 2
     skip = randint(0, len(models) - limit)
@@ -447,9 +437,7 @@ async def test_delete_multiple(redis_store):
         for key in keys_to_leave_intact:
             pipeline.hgetall(name=key)
         books_in_redis = await pipeline.execute()
-    books_in_redis_as_models = [
-        Book(**Book.deserialize_partially(book)) for book in books_in_redis
-    ]
+    books_in_redis_as_models = [Book(**Book.deserialize_partially(book)) for book in books_in_redis]
     assert books_left_in_db == books_in_redis_as_models
 
 
@@ -475,8 +463,7 @@ async def test_delete_none(store, models, model_class, key_prefix):
 
 
 async def test_unserializable_object(redis_store):
-    class MyClass:
-        ...
+    class MyClass: ...
 
     class TestModel(Model):
         _primary_key_field = "name"
