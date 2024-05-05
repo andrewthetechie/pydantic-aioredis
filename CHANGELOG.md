@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.3...v1.3.0) (2024-05-05)
+
+
+### Features
+
+* drop 3.7, add 3.12 ([#850](https://github.com/andrewthetechie/pydantic-aioredis/issues/850)) ([67b8f08](https://github.com/andrewthetechie/pydantic-aioredis/commit/67b8f0866f24c2f757ce1d6b94d431b751def97f))
+
+
+### Documentation
+
+* add kraczak as a contributor for doc ([#547](https://github.com/andrewthetechie/pydantic-aioredis/issues/547)) ([c7310c1](https://github.com/andrewthetechie/pydantic-aioredis/commit/c7310c11c2f7bc9c02d1e5a0dc071eb89fcbf182))
+* update readme example ([992c4a1](https://github.com/andrewthetechie/pydantic-aioredis/commit/992c4a12ce83df793c13c9f266a704adb67ab7d4))
+
 ## [1.2.3](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.2...v1.2.3) (2023-03-30)
 
 
