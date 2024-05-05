@@ -25,12 +25,12 @@ classifiers = [
 Changelog = "https://github.com/andrewthetechie/pydantic-aioredis/releases"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 pydantic = "^1.10.2"
 redis = "^4.4.4"
 anyio = "^3.6.2"
 nest-asyncio = "^1.5.6"
-fastapi = {version = ">=0.91,<0.101", optional = true}
+fastapi = {version = ">=0.110", optional = true}
 fastapi-crudrouter = {version = "^0.8.6", optional = true}
 
 [tool.poetry.extras]
@@ -54,7 +54,7 @@ Pygments = "^2.13.0"
 pyupgrade = "^3.3.1"
 furo = ">=2021.11.12"
 pytest-cov = "^4.0.0"
-types-croniter = "^1.3.2"
+types-croniter = ">=1.3.2,<3.0.0"
 pytest_async = "^0.1.1"
 pytest-asyncio = ">=0.20.1,<0.22.0"
 pytest-mock = "^3.10.0"
@@ -63,13 +63,12 @@ fastapi = ">=0.6.3"
 fastapi-crudrouter = ">=0.8.4"
 httpx = ">=0.23,<0.25"
 pytest-env = "^0.8.1"
-pytest-mockservers = "^0.6.0"
 pytest-xdist = "^3.1.0"
-bandit = "^1.7.4"
-fakeredis = {extras = ["json"], version = "2.16.0"}
+bandit = "^1.7.8"
+fakeredis = {extras = ["json"], version = "2.22.0"}
 hypothesis = "^6.61.0"
 pytest-rerunfailures = ">=11.1,<13.0"
-ruff = ">=0.0.249,<0.0.279"
+ruff = "^0.4.2"
 
 [tool.mypy]
 strict = true
@@ -83,6 +82,8 @@ show_error_context = true
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.bandit]
+exclude_dirs = ["test", "noxfile.py", ".github/scripts", "dist", "examples/*"]
 
 [tool.pytest.ini_options]
 addopts = "-n 4 --ignore examples --cov=pydantic_aioredis --cov-report xml:.coverage.xml --cov-report=term-missing --cov-fail-under 91"

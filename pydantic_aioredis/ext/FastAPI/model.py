@@ -26,7 +26,9 @@ class FastAPIModel(Model):
         """
         result = await cls.select(columns=columns, ids=ids)
         if result is None:
-            raise HTTPException(
-                status_code=404, detail=f"{cls.__name__} not found"
-            ) if custom_exception is None else custom_exception
+            raise (
+                HTTPException(status_code=404, detail=f"{cls.__name__} not found")
+                if custom_exception is None
+                else custom_exception
+            )
         return result

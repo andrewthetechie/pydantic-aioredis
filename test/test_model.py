@@ -1,4 +1,5 @@
 """Test methods in model.py. Uses hypothesis"""
+
 from typing import Dict
 from typing import List
 

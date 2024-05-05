@@ -12,3 +12,4 @@ __pycache__/
 examples/benchmarks/.benchmarks
 examples/benchmarks/.coverage
 .hypothesis
+docs/_autosummary/*

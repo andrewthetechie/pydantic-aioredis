@@ -1,4 +1,5 @@
 """Entry point for pydantic-aioredis"""
+
 # set by poetry-dynamic-versioning
 __version__ = "1.2.3"  # noqa: E402
 

@@ -32,14 +32,10 @@ app = FastAPI()
 @app.on_event("startup")
 async def redis_setup():
     # Redisconfig. Change this configuration to match your redis server
-    redis_config = RedisConfig(
-        db=5, host="localhost", password="password", ssl=False, port=6379
-    )
+    redis_config = RedisConfig(db=5, host="localhost", password="password", ssl=False, port=6379)
 
     # Create the store and register your models
-    store = Store(
-        name="some_name", redis_config=redis_config, life_span_in_seconds=3600
-    )
+    store = Store(name="some_name", redis_config=redis_config, life_span_in_seconds=3600)
     store.register_model(Book)
     store.register_model(Library)
 

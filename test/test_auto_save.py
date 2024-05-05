@@ -1,4 +1,5 @@
 """Tests for the AutoModel"""
+
 from datetime import date
 
 import pytest_asyncio

@@ -54,9 +54,7 @@ class Book(Model):
 
 
 # Redisconfig. Change this configuration to match your redis server
-redis_config = RedisConfig(
-    db=5, host="localhost", password="password", ssl=False, port=6379
-)
+redis_config = RedisConfig(db=5, host="localhost", password="password", ssl=False, port=6379)
 
 
 # Create the store and register your models
@@ -125,18 +123,14 @@ async def work_with_orm():
     # Or select some of the columns. THIS RETURNS DICTIONARIES not MODEL Instances
     # The Dictionaries have values in string form so you might need to do some extra work
     books_with_few_fields = await Book.select(columns=["author", "cover"])
-    print(
-        books_with_few_fields
-    )  # Will print [{"author": "'Charles Dickens", "covker": Cover},...]
+    print(books_with_few_fields)  # Will print [{"author": "'Charles Dickens", "covker": Cover},...]
 
     # When _auto_sync = True (default), updating any attribute will update that field in Redis too
     this_book = Book(
         title="Moby Dick",
         author="Herman Melvill",
         published_on=date(year=1851, month=10, day=18),
-        cover=BookCover(
-            "https://m.media-amazon.com/images/I/411a8Moy1mL._SY346_.jpg", 333, 499
-        ),
+        cover=BookCover("https://m.media-amazon.com/images/I/411a8Moy1mL._SY346_.jpg", 333, 499),
     )
     await Book.insert(this_book)
     # oops, there was a typo. Fix it

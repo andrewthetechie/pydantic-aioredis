@@ -1,4 +1,5 @@
 """Module containing the main base classes"""
+
 import json
 from datetime import date
 from datetime import datetime
@@ -130,9 +131,7 @@ class _AbstractModel(BaseModel):
         raise NotImplementedError("delete should be implemented")
 
     @classmethod
-    async def select(
-        cls, columns: Optional[List[str]] = None, ids: Optional[List[Any]] = None
-    ):  # pragma: no cover
+    async def select(cls, columns: Optional[List[str]] = None, ids: Optional[List[Any]] = None):  # pragma: no cover
         """Select one or more object from the redis store"""
         raise NotImplementedError("select should be implemented")
 

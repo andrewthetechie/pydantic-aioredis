@@ -1,12 +1,35 @@
+exclude: ".*tests\/fixtures.*"
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.4.3
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: [ --fix ]
+      # Run the formatter.
+      - id: ruff-format
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.6.27
+    hooks:
+      - id: actionlint-docker
+        name: Actionlint
   - repo: local
     hooks:
-      - id: black
-        name: black
-        entry: black
+      - id: bandit
+        name: bandit
+        entry: bandit
         language: system
         types: [python]
         require_serial: true
+        args: ["-c", "pyproject.toml"]
       - id: check-added-large-files
         name: Check for added large files
         entry: check-added-large-files
@@ -27,38 +50,16 @@ repos:
         language: system
         types: [text]
         stages: [commit, push, manual]
-      - id: flake8
-        name: flake8
-        entry: flake8
-        language: system
-        types: [python]
-        exclude: "^(test/*|examples/*|noxfile.py)"
-        require_serial: true
-        args: ["--config=.flake8"]
       - id: pyupgrade
         name: pyupgrade
         description: Automatically upgrade syntax for newer versions.
         entry: pyupgrade
         language: system
         types: [python]
-        args: [--py37-plus]
-      - id: reorder-python-imports
-        name: Reorder python imports
-        entry: reorder-python-imports
-        language: system
-        types: [python]
-        args: [--application-directories=src]
+        args: [--py38-plus]
       - id: trailing-whitespace
         name: Trim Trailing Whitespace
         entry: trailing-whitespace-fixer
         language: system
         types: [text]
         stages: [commit, push, manual]
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
-    hooks:
-      - id: prettier
-  - repo: https://github.com/rhysd/actionlint
-    rev: v1.6.15
-    hooks:
-      - id: actionlint-docker
