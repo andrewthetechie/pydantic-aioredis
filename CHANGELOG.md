@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.3.0...v1.3.1) (2024-05-05)
+
+
+### Dependencies
+
+* bump anyio from 3.7.1 to 4.3.0 ([#855](https://github.com/andrewthetechie/pydantic-aioredis/issues/855)) ([9581b6e](https://github.com/andrewthetechie/pydantic-aioredis/commit/9581b6e5787d4a1218dc59447158010ba21d8d8e))
+
 ## [1.3.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.2.3...v1.3.0) (2024-05-05)
 
 
