@@ -2320,13 +2320,13 @@ files = [
 
 [[package]]
 name = "types-croniter"
-version = "1.4.0.1"
+version = "2.0.0.0"
 description = "Typing stubs for croniter"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
 files = [
-    {file = "types-croniter-1.4.0.1.tar.gz", hash = "sha256:5821688c93b874500b6863b8a164a8dbc49efdced985d00cbdddc029b81067b8"},
-    {file = "types_croniter-1.4.0.1-py3-none-any.whl", hash = "sha256:b8996c11d5e942be59d669388e2515e50ca4935b61e4337bac9e81bfdde9cf72"},
+    {file = "types-croniter-2.0.0.0.tar.gz", hash = "sha256:f6b47bce88054127551091e9e447824cbb610e8ff9b84565903f7a53fa4933aa"},
+    {file = "types_croniter-2.0.0.0-py3-none-any.whl", hash = "sha256:a49162276f97a2924609768bcc494039fd5182e8f94eba900ce2bee989e8baa6"},
 ]
 
 [[package]]
@@ -2531,4 +2531,4 @@ fastapi-crudrouter = ["fastapi-crudrouter"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "c0d82279c1ed61bf0a2b7dfc342555802d5e9bfbe19d2330c251f916df783c2f"
+content-hash = "1cc43d25d8dae130ba25e291ca0a3a409b94d56466507a19a9e76b85a61502c9"
