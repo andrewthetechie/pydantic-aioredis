@@ -15,8 +15,6 @@ def bytes_to_string(data: bytes):
 
 
 class NestedAsyncIO:
-    """Patch asyncio to allow nested event loops."""
-
     __slots__ = [
         "_loop",
         "orig_run",
@@ -106,10 +104,11 @@ class NestedAsyncIO:
             asyncio.all_tasks = asyncio.tasks.Task.all_tasks
         elif sys.version_info >= (3, 9, 0):
             self.orig_get_loops = {
-                "events__get_event_loop": events._get_event_loop,
                 "events_get_event_loop": events.get_event_loop,
                 "asyncio_get_event_loop": asyncio.get_event_loop,
             }
+            if sys.version_info <= (3, 12, 0):
+                self.orig_get_loops["events__get_event_loop"] = (events._get_event_loop,)
             events._get_event_loop = events.get_event_loop = asyncio.get_event_loop = _get_event_loop
         self.orig_run = asyncio.run
         asyncio.run = run
@@ -308,6 +307,6 @@ class NestedAsyncIO:
 
     def unpatch_tornado(self):
         if self.orig_tc:
-            import tornado.concurrent as tc  # noqa
+            import tornado.concurrent as tc
 
             tc.Future = self.orig_tc
