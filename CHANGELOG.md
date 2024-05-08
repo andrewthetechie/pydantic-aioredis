@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.4.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.3.1...v1.4.0) (2024-05-08)
+
+
+### Features
+
+* NestedAsyncIO contextmanager ([#872](https://github.com/andrewthetechie/pydantic-aioredis/issues/872)) ([f061046](https://github.com/andrewthetechie/pydantic-aioredis/commit/f06104661b16e516994b3469bb775bcb52ff6508))
+
+
+### Dependencies
+
+* bump anyio from 3.7.1 to 4.3.0 ([#863](https://github.com/andrewthetechie/pydantic-aioredis/issues/863)) ([eec20b7](https://github.com/andrewthetechie/pydantic-aioredis/commit/eec20b76216aa569b1b39a95ec047843387be0ca))
+* bump fakeredis from 2.22.0 to 2.23.0 ([f304bc8](https://github.com/andrewthetechie/pydantic-aioredis/commit/f304bc8840bc45b33ec9fb07a6f3def4ebc91281))
+* bump hypothesis from 6.100.4 to 6.100.5 ([7253067](https://github.com/andrewthetechie/pydantic-aioredis/commit/725306722d2aa8b31e736bcb3dbcf16a9440449b))
+* bump jinja2 from 3.1.3 to 3.1.4 ([450952e](https://github.com/andrewthetechie/pydantic-aioredis/commit/450952ecedee21734aa9fc633d41924e372cf0d4))
+* bump mypy from 1.4.1 to 1.10.0 ([89e1421](https://github.com/andrewthetechie/pydantic-aioredis/commit/89e14214b043b0dfbe36ce3ea792b13fa6602fd6))
+* bump pytest-env from 0.8.2 to 1.1.3 ([#862](https://github.com/andrewthetechie/pydantic-aioredis/issues/862)) ([e0e66a5](https://github.com/andrewthetechie/pydantic-aioredis/commit/e0e66a58fb0578337ff4f62ae909792a65a2a84f))
+* bump redis from 4.6.0 to 5.0.4 ([#860](https://github.com/andrewthetechie/pydantic-aioredis/issues/860)) ([5a30eb2](https://github.com/andrewthetechie/pydantic-aioredis/commit/5a30eb288a955161df8b026e032d9d4e9129727c))
+* bump sphinx from 5.3.0 to 7.1.2 ([#861](https://github.com/andrewthetechie/pydantic-aioredis/issues/861)) ([583c127](https://github.com/andrewthetechie/pydantic-aioredis/commit/583c1275c9ea78f76fc50e0a2dc08b2a83d833c6))
+
+
+### Documentation
+
+* add CharlieJiangXXX as a contributor for code ([#873](https://github.com/andrewthetechie/pydantic-aioredis/issues/873)) ([0bc4c67](https://github.com/andrewthetechie/pydantic-aioredis/commit/0bc4c67c2f9eb9dd3897710a06f49342021d618c))
+* bump furo from 2024.4.27 to 2024.5.6 in /docs ([94bbb44](https://github.com/andrewthetechie/pydantic-aioredis/commit/94bbb444a84a7c69c34632a6c695759003373682))
+
 ## [1.3.1](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.3.0...v1.3.1) (2024-05-05)
 
 
