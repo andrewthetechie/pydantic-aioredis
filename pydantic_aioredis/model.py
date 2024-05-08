@@ -10,9 +10,8 @@ from typing import Optional
 from typing import Tuple
 from typing import Union
 
-import nest_asyncio
 from pydantic_aioredis.abstract import _AbstractModel
-from pydantic_aioredis.utils import bytes_to_string
+from pydantic_aioredis.utils import bytes_to_string, NestedAsyncIO
 
 
 class Model(_AbstractModel):
@@ -69,8 +68,8 @@ class Model(_AbstractModel):
                 # Use nest_asyncio so we can call the async save
             except RuntimeError:
                 io_loop = asyncio.new_event_loop()
-        nest_asyncio.apply()
-        io_loop.run_until_complete(self.save())
+        with NestedAsyncIO():
+            io_loop.run_until_complete(self.save())
 
     @asynccontextmanager
     async def update(self):

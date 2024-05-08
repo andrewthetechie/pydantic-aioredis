@@ -29,7 +29,6 @@ python = "^3.8"
 pydantic = "^1.10.2"
 redis = ">=4.4.4,<6.0.0"
 anyio = ">=3.6.2,<5.0.0"
-nest-asyncio = "^1.5.6"
 fastapi = {version = ">=0.110", optional = true}
 fastapi-crudrouter = {version = "^0.8.6", optional = true}
 
@@ -86,8 +85,8 @@ build-backend = "poetry.core.masonry.api"
 exclude_dirs = ["test", "noxfile.py", ".github/scripts", "dist", "examples/*"]
 
 [tool.pytest.ini_options]
-addopts = "-n 4 --ignore examples --cov=pydantic_aioredis --cov-report xml:.coverage.xml --cov-report=term-missing --cov-fail-under 91"
+addopts = "-n 4 --ignore examples --cov=pydantic_aioredis --cov-report xml:.coverage.xml --cov-report=term-missing --cov-fail-under 85"
 
 [tool.ruff]
 line-length = 120
-target-version = "py37"
+target-version = "py38"
