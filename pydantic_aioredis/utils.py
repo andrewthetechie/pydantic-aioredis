@@ -99,17 +99,13 @@ class NestedAsyncIO:
         asyncio.Task = asyncio.tasks._CTask = asyncio.tasks.Task = asyncio.tasks._PyTask
         self.orig_futures = [asyncio.Future, asyncio.futures._CFuture, asyncio.futures.Future]
         asyncio.Future = asyncio.futures._CFuture = asyncio.futures.Future = asyncio.futures._PyFuture
-        if sys.version_info < (3, 7, 0):
-            asyncio.tasks._current_tasks = asyncio.tasks.Task._current_tasks
-            asyncio.all_tasks = asyncio.tasks.Task.all_tasks
-        elif sys.version_info >= (3, 9, 0):
-            self.orig_get_loops = {
-                "events_get_event_loop": events.get_event_loop,
-                "asyncio_get_event_loop": asyncio.get_event_loop,
-            }
-            if sys.version_info <= (3, 12, 0):
-                self.orig_get_loops["events__get_event_loop"] = (events._get_event_loop,)
-            events._get_event_loop = events.get_event_loop = asyncio.get_event_loop = _get_event_loop
+        self.orig_get_loops = {
+            "events_get_event_loop": events.get_event_loop,
+            "asyncio_get_event_loop": asyncio.get_event_loop,
+        }
+        if sys.version_info >= (3, 10, 0) and sys.version_info < (3, 12, 0):
+            self.orig_get_loops["events__get_event_loop"] = events._get_event_loop
+        events._get_event_loop = events.get_event_loop = asyncio.get_event_loop = _get_event_loop
         self.orig_run = asyncio.run
         asyncio.run = run
         asyncio._nest_patched = True
