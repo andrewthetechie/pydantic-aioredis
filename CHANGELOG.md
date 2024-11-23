@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.1](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.4.0...v1.4.1) (2024-11-23)
+
+
+### Dependencies
+
+* bump anyio from 4.3.0 to 4.4.0 ([2ab0c32](https://github.com/andrewthetechie/pydantic-aioredis/commit/2ab0c3299a2e1114297a3c643e8b04f9e998658c))
+* bump coverage from 7.5.1 to 7.5.2 ([e1b01a8](https://github.com/andrewthetechie/pydantic-aioredis/commit/e1b01a8b4fce969285d5fa6d9a3b3f94a085dd5b))
+* bump coverage from 7.5.2 to 7.5.3 ([30c603e](https://github.com/andrewthetechie/pydantic-aioredis/commit/30c603e481c1dd3e63f1cc14c4093c607a1e4063))
+* bump fakeredis from 2.23.0 to 2.23.1 ([a2ee175](https://github.com/andrewthetechie/pydantic-aioredis/commit/a2ee175504d576efefaff70e89e5a7e033c21bdf))
+* bump hypothesis from 6.100.5 to 6.100.6 ([9d2459e](https://github.com/andrewthetechie/pydantic-aioredis/commit/9d2459e1ea5ece392469a4e4c87a7ef597209430))
+* bump hypothesis from 6.100.6 to 6.102.1 ([3ba6284](https://github.com/andrewthetechie/pydantic-aioredis/commit/3ba6284f26e24834598d5175a6db7e8131d6b92d))
+* bump hypothesis from 6.102.1 to 6.102.4 ([0e6ebe0](https://github.com/andrewthetechie/pydantic-aioredis/commit/0e6ebe00f2089e20af52e42346aefc9be686d64d))
+* bump hypothesis from 6.102.4 to 6.102.6 ([040ac0d](https://github.com/andrewthetechie/pydantic-aioredis/commit/040ac0dd9aeca94d55f9c121ae1e4c3e9ca18daf))
+* bump hypothesis from 6.102.6 to 6.103.0 ([64a9905](https://github.com/andrewthetechie/pydantic-aioredis/commit/64a990573a0258662d281ece17ff9d28935e325b))
+* bump pep8-naming from 0.13.3 to 0.14.1 ([b2ae1d3](https://github.com/andrewthetechie/pydantic-aioredis/commit/b2ae1d389ee9c496bad156d55d94805ad3021991))
+* bump ruff from 0.4.3 to 0.4.4 ([1578bb5](https://github.com/andrewthetechie/pydantic-aioredis/commit/1578bb5cb383d3338aaf3ece7546ac60f54cac45))
+* bump ruff from 0.4.4 to 0.4.5 ([#888](https://github.com/andrewthetechie/pydantic-aioredis/issues/888)) ([a329cec](https://github.com/andrewthetechie/pydantic-aioredis/commit/a329cecab10e9d7b7c87e6041f32e4c0d1c86b53))
+* bump ruff from 0.4.5 to 0.4.6 ([4fdadb6](https://github.com/andrewthetechie/pydantic-aioredis/commit/4fdadb6dba405838d303d76ca81fe511a3235b0f))
+
 ## [1.4.0](https://github.com/andrewthetechie/pydantic-aioredis/compare/v1.3.1...v1.4.0) (2024-05-08)
 
 
